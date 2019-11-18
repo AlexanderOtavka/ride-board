@@ -18,6 +18,9 @@
     <nav>
       <ul>
         <li><%= link_to 'Rides', rides_path %></li>
+        <% if user_signed_in? && current_user.admin? %>
+          <li><%= link_to 'Locations', locations_path %></li>
+        <% end %>
         <% if user_signed_in? %>
           <li><%= link_to 'Sign Out', destroy_user_session_path,
                   method: :delete %></li>
