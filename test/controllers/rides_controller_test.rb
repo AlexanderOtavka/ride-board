@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class RidesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    sign_in users(:driver)
     @ride = rides(:one)
   end
 
@@ -17,7 +20,16 @@ class RidesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ride" do
     assert_difference('Ride.count') do
-      post rides_url, params: { ride: { driver_id: @ride.driver_id, end_datetime: @ride.end_datetime, end_location: @ride.end_location, price: @ride.price, start_datetime: @ride.start_datetime, start_location: @ride.start_location } }
+      post rides_url, params: {
+        ride: {
+          driver_id: @ride.driver_id,
+          end_datetime: @ride.end_datetime,
+          end_location_id: @ride.end_location_id,
+          price: @ride.price,
+          start_datetime: @ride.start_datetime,
+          start_location_id: @ride.start_location_id
+        }
+      }
     end
 
     assert_redirected_to ride_url(Ride.last)

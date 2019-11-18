@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class LocationsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @location = locations(:one)
+    sign_in users(:admin)
+    @location = locations(:grinnell)
   end
 
   test "should get index" do
@@ -40,7 +43,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy location" do
     assert_difference('Location.count', -1) do
-      delete location_url(@location)
+      delete location_url(locations(:unused))
     end
 
     assert_redirected_to locations_url

@@ -1,6 +1,7 @@
 class RidesController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_ride, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /rides
   # GET /rides.json
@@ -67,6 +68,12 @@ class RidesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_ride
       @ride = Ride.find(params[:id])
+    end
+
+    def authorize_user!
+      unless @ride.authorized_editor? current_user
+        render_unauthorized
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
