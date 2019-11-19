@@ -1,5 +1,6 @@
 class Ride < ApplicationRecord
   belongs_to :driver, class_name: "User"
+  belongs_to :created_by, class_name: "User"
   belongs_to :start_location, class_name: "Location"
   belongs_to :end_location, class_name: "Location"
 

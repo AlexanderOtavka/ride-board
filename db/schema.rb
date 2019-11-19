@@ -23,10 +23,12 @@ ActiveRecord::Schema.define(version: 2019_11_18_194123) do
     t.datetime "start_datetime", null: false
     t.integer "end_location_id", null: false
     t.datetime "end_datetime"
-    t.integer "driver_id", null: false
+    t.integer "driver_id"
+    t.integer "created_by_id", null: false
     t.decimal "price", precision: 2, scale: 3
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_rides_on_created_by_id"
     t.index ["driver_id"], name: "index_rides_on_driver_id"
     t.index ["end_location_id"], name: "index_rides_on_end_location_id"
     t.index ["start_location_id"], name: "index_rides_on_start_location_id"
@@ -47,5 +49,6 @@ ActiveRecord::Schema.define(version: 2019_11_18_194123) do
 
   add_foreign_key "rides", "locations", column: "end_location_id"
   add_foreign_key "rides", "locations", column: "start_location_id"
-  add_foreign_key "rides", "rides", column: "driver_id"
+  add_foreign_key "rides", "users", column: "created_by_id"
+  add_foreign_key "rides", "users", column: "driver_id"
 end
