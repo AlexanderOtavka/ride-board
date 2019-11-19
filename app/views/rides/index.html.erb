@@ -20,7 +20,7 @@
         <td><%= ride.start_datetime %></td>
         <td><%= ride.end_location.name %></td>
         <td><%= ride.end_datetime %></td>
-        <td><%= ride.driver.email %></td>
+        <td><%= ride.driver ? ride.driver.email : "" %></td>
         <td>$<%= ride.price %></td>
         <td><%= link_to 'Show', ride %></td>
         <td><%= link_to 'Edit', edit_ride_path(ride) %></td>

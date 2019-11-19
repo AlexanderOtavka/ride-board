@@ -12,3 +12,7 @@ admin:
   id: 3
   email: "admin@grinnell.edu"
   admin: true
+
+creator:
+  id: 4
+  email: "creator@grinnell.edu"

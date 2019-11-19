@@ -5,7 +5,7 @@ class RidesControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     sign_in users(:driver)
-    @ride = rides(:one)
+    @ride = rides(:creator_created)
   end
 
   test "should get index" do
@@ -22,12 +22,11 @@ class RidesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Ride.count') do
       post rides_url, params: {
         ride: {
-          driver_id: @ride.driver_id,
-          end_datetime: @ride.end_datetime,
-          end_location_id: @ride.end_location_id,
-          price: @ride.price,
+          start_location_id: @ride.start_location_id,
           start_datetime: @ride.start_datetime,
-          start_location_id: @ride.start_location_id
+          end_location_id: @ride.end_location_id,
+          end_datetime: @ride.end_datetime,
+          price: @ride.price,
         }
       }
     end
