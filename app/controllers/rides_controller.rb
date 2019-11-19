@@ -26,7 +26,6 @@ class RidesController < ApplicationController
   # POST /rides
   # POST /rides.json
   def create
-    puts ride_params
     @ride = Ride.new(ride_params)
 
     respond_to do |format|

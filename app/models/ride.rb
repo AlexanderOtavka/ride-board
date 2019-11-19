@@ -5,7 +5,9 @@ class Ride < ApplicationRecord
   belongs_to :end_location, class_name: "Location"
 
   def authorized_editor?(editor)
-    driver == editor || editor.admin?
+    driver == editor ||
+      (driver.nil? && created_by == editor) ||
+      editor.admin?
   end
 
   validate do |ride|
