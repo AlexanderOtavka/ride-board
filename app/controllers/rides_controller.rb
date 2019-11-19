@@ -87,7 +87,8 @@ class RidesController < ApplicationController
           :price
         )
         .merge(
-          driver: current_user
+          driver: current_user,
+          created_by: current_user,
         )
     end
 end
