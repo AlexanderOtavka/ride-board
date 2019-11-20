@@ -2,7 +2,7 @@
 
 <p>
   <strong>Start location:</strong>
-  <%= @ride.start_location %>
+  <%= @ride.start_location.name %>
 </p>
 
 <p>
@@ -12,7 +12,7 @@
 
 <p>
   <strong>End location:</strong>
-  <%= @ride.end_location %>
+  <%= @ride.end_location.name %>
 </p>
 
 <p>
@@ -22,7 +22,7 @@
 
 <p>
   <strong>Driver:</strong>
-  <%= @ride.driver_id %>
+  <%= @ride.driver ? @ride.driver.email : "None" %>
 </p>
 
 <p>
@@ -30,5 +30,5 @@
   <%= @ride.price %>
 </p>
 
-<%= link_to 'Edit', edit_ride_path(@ride) %> |
-<%= link_to 'Back', rides_path %>
+<%= link_to 'Edit', edit_rider_ride_path(@ride) %> |
+<%= link_to 'Back', rider_rides_path %>

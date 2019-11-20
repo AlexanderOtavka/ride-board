@@ -17,7 +17,8 @@
 
     <nav>
       <ul>
-        <li><%= link_to 'Rides', rides_path %></li>
+        <li><%= link_to 'Rider Rides', rider_rides_path %></li>
+        <li><%= link_to 'Driver Rides', driver_rides_path %></li>
         <% if user_signed_in? && current_user.admin? %>
           <li><%= link_to 'Locations', locations_path %></li>
         <% end %>
