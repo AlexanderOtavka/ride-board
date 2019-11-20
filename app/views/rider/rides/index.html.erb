@@ -22,9 +22,11 @@
         <td><%= ride.end_datetime %></td>
         <td><%= ride.driver ? ride.driver.email : "" %></td>
         <td>$<%= ride.price %></td>
-        <td><%= link_to 'Show', ride %></td>
-        <td><%= link_to 'Edit', edit_ride_path(ride) %></td>
-        <td><%= link_to 'Destroy', ride, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', rider_ride_path(ride) %></td>
+        <td><%= link_to 'Edit', edit_rider_ride_path(ride) %></td>
+        <td><%= link_to 'Destroy', rider_ride_path(ride),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +34,4 @@
 
 <br>
 
-<%= link_to 'New Ride', new_ride_path %>
+<%= link_to 'New Ride', new_rider_ride_path %>
