@@ -1,0 +1,12 @@
+<tr class="ride-thumbnail">
+  <td><%= ride.start_location.name %></td>
+  <td><%= ride.start_datetime %></td>
+  <td><%= ride.end_location.name %></td>
+  <td><%= ride.end_datetime %></td>
+  <td><%= ride.driver ? ride.driver.email : "" %></td>
+  <td>$<%= ride.price %></td>
+  <td><%= link_to 'Show', ride_path %></td>
+  <td><%= link_to 'Edit', edit_path %></td>
+  <td><%= link_to 'Destroy', ride_path, method: :delete,
+                             data: { confirm: 'Are you sure?' } %></td>
+</tr>
