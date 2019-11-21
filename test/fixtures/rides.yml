@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# Tests will start failing in November 2024, but that will Never Happen (TM)
+
 creator_created:
   id: 1
   start_location_id: 1
-  start_datetime: 2019-11-18 07:08:36
+  start_datetime: 2024-11-18 07:08:36
   end_location_id: 2
-  end_datetime: 2019-11-18 07:08:36
+  end_datetime: 2024-11-18 07:08:36
   driver_id: 2
   created_by_id: 4
   price: 9.99
@@ -13,9 +15,9 @@ creator_created:
 driver_created:
   id: 2
   start_location_id: 1
-  start_datetime: 2019-11-18 07:08:36
+  start_datetime: 2024-11-18 07:08:36
   end_location_id: 2
-  end_datetime: 2019-11-18 07:08:36
+  end_datetime: 2024-11-18 07:08:36
   driver_id: 2
   created_by_id: 2
   price: 9.99
@@ -23,8 +25,27 @@ driver_created:
 driverless:
   id: 3
   start_location_id: 1
-  start_datetime: 2019-11-18 07:08:36
+  start_datetime: 2024-11-18 07:08:36
   end_location_id: 2
-  end_datetime: 2019-11-18 07:08:36
+  end_datetime: 2024-11-18 07:08:36
+  created_by_id: 4
+  price: 9.99
+
+past_with_driver:
+  id: 4
+  start_location_id: 1
+  start_datetime: 2018-11-18 07:08:36
+  end_location_id: 2
+  end_datetime: 2018-11-18 07:08:36
+  driver_id: 2
+  created_by_id: 2
+  price: 9.99
+
+past_without_driver:
+  id: 5
+  start_location_id: 1
+  start_datetime: 2018-11-18 07:08:36
+  end_location_id: 2
+  end_datetime: 2018-11-18 07:08:36
   created_by_id: 4
   price: 9.99

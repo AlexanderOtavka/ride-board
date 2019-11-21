@@ -20,7 +20,7 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create ride" do
-    assert_difference('Ride.count') do
+    assert_difference -> {Ride.count} do
       post rider_rides_url, params: {
         ride: {
           start_location_id: @ride.start_location_id,
@@ -31,6 +31,8 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
+
+    assert_nil Ride.last.driver
 
     assert_redirected_to rider_ride_url(Ride.last)
   end

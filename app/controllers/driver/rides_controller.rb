@@ -5,9 +5,7 @@ module Driver
     # GET /rides
     # GET /rides.json
     def index
-      @rides = Ride.all.filter do |ride|
-        ride.driver.nil?
-      end
+      @rides = future_rides.where(driver_id: nil)
     end
 
     # GET /rides/1
@@ -27,7 +25,10 @@ module Driver
     # POST /rides
     # POST /rides.json
     def create
-      @ride = Ride.new(ride_params)
+      @ride = Ride.new(ride_params.merge(
+        driver: current_user,
+        created_by: current_user,
+      ))
 
       respond_to do |format|
         if @ride.save
