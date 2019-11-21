@@ -5,7 +5,9 @@ module Driver
     # GET /rides
     # GET /rides.json
     def index
-      @rides = Ride.all
+      @rides = Ride.all.filter do |ride|
+        ride.driver.nil?
+      end
     end
 
     # GET /rides/1

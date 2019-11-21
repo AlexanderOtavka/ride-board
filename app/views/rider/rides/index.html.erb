@@ -15,19 +15,9 @@
 
   <tbody>
     <% @rides.each do |ride| %>
-      <tr>
-        <td><%= ride.start_location.name %></td>
-        <td><%= ride.start_datetime %></td>
-        <td><%= ride.end_location.name %></td>
-        <td><%= ride.end_datetime %></td>
-        <td><%= ride.driver ? ride.driver.email : "" %></td>
-        <td>$<%= ride.price %></td>
-        <td><%= link_to 'Show', rider_ride_path(ride) %></td>
-        <td><%= link_to 'Edit', edit_rider_ride_path(ride) %></td>
-        <td><%= link_to 'Destroy', rider_ride_path(ride),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <%= render "rides/ride_thumbnail", ride: ride,
+                 ride_path: rider_ride_path(ride),
+                 edit_path: edit_rider_ride_path(ride) %>
     <% end %>
   </tbody>
 </table>

@@ -8,9 +8,10 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     @ride = rides(:creator_created)
   end
 
-  test "should get index" do
+  test "should get index showing rides without drivers" do
     get driver_rides_url
     assert_response :success
+    assert_select ".ride-thumbnail", 1
   end
 
   test "should get new" do
