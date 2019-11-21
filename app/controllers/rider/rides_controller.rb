@@ -5,9 +5,7 @@ module Rider
     # GET /rides
     # GET /rides.json
     def index
-      @rides = Ride.all.filter do |ride|
-        !ride.driver.nil?
-      end
+      @rides = future_rides.where.not(driver_id: nil)
     end
 
     # GET /rides/1
@@ -27,7 +25,10 @@ module Rider
     # POST /rides
     # POST /rides.json
     def create
-      @ride = Ride.new(ride_params)
+      @ride = Ride.new(ride_params.merge(
+        driver: nil,
+        created_by: current_user,
+      ))
 
       respond_to do |format|
         if @ride.save
@@ -61,7 +62,8 @@ module Rider
     def destroy
       @ride.destroy
       respond_to do |format|
-        format.html { redirect_to rider_rides_url, notice: 'Ride was successfully destroyed.' }
+        format.html { redirect_to rider_rides_url,
+                                  notice: 'Ride was successfully destroyed.' }
         format.json { head :no_content }
       end
     end

@@ -7,7 +7,11 @@ module RideManager
     before_action :authorize_user!, only: [:edit, :update, :destroy]
   end
 
-  # Use callbacks to share common setup or constraints between actions.
+  def future_rides
+    Ride.where("start_datetime > ?", Time.zone.now)
+        .order(:start_datetime, price: :desc)
+  end
+
   def set_ride
     @ride = Ride.find(params[:id])
   end
@@ -27,10 +31,6 @@ module RideManager
         :end_location_id,
         :end_datetime,
         :price
-      )
-      .merge(
-        driver: current_user,
-        created_by: current_user,
       )
   end
 end
