@@ -34,7 +34,7 @@
   </ul>
 </p>
 
-<% unless @ride.has_passenger?(current_user) %>
+<% unless @ride.passengers.include?(current_user) %>
   <% if @ride.driver == current_user %>
     <%= link_to 'Leave', driver_join_ride_path(@ride), method: :delete %> |
   <% elsif @ride.driver.nil? %>

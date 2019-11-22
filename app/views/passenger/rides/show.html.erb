@@ -36,7 +36,7 @@
 </p>
 
 <% unless @ride.driver == current_user %>
-  <% if @ride.has_passenger? current_user %>
+  <% if @ride.passengers.include? current_user %>
     <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %> |
   <% else %>
     <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post %> |

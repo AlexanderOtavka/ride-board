@@ -15,10 +15,6 @@ class Ride < ApplicationRecord
     )
   end
 
-  def has_passenger?(passenger)
-    !passenger.nil? && passengers.exists?(passenger.id)
-  end
-
   validate do |ride|
     if ride.seats == 0
       ride.errors[:seats] << "cannot have zero seats"
