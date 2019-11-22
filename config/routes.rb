@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
-  namespace :rider do
+  namespace :passenger do
     root to: "rides#index"
     resources :rides
     post   "/rides/:id/join", to: "rides#join",  as: :join_ride

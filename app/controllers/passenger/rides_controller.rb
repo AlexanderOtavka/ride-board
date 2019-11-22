@@ -1,4 +1,4 @@
-module Rider
+module Passenger
   class RidesController < ApplicationController
     include RideManager
 
@@ -29,7 +29,7 @@ module Rider
     # POST /rides
     # POST /rides.json
     def create
-      @ride = Ride.new(rider_ride_params.merge(
+      @ride = Ride.new(passenger_ride_params.merge(
         driver: nil,
         created_by: current_user,
         passengers: [current_user]
@@ -37,7 +37,7 @@ module Rider
 
       respond_to do |format|
         if @ride.save
-          format.html { redirect_to rider_ride_path(@ride),
+          format.html { redirect_to passenger_ride_path(@ride),
                                     notice: 'Ride was successfully created.' }
           format.json { render :show, status: :created, location: @ride }
         else
@@ -51,8 +51,8 @@ module Rider
     # PATCH/PUT /rides/1.json
     def update
       respond_to do |format|
-        if @ride.update(rider_ride_params)
-          format.html { redirect_to rider_ride_path(@ride),
+        if @ride.update(passenger_ride_params)
+          format.html { redirect_to passenger_ride_path(@ride),
                                     notice: 'Ride was successfully updated.' }
           format.json { render :show, status: :ok, location: @ride }
         else
@@ -67,7 +67,7 @@ module Rider
     def destroy
       @ride.destroy
       respond_to do |format|
-        format.html { redirect_to rider_rides_url,
+        format.html { redirect_to passenger_rides_url,
                                   notice: 'Ride was successfully destroyed.' }
         format.json { head :no_content }
       end
@@ -84,7 +84,7 @@ module Rider
 
       respond_to do |format|
         if valid
-          format.html { redirect_to rider_ride_path(@ride),
+          format.html { redirect_to passenger_ride_path(@ride),
                                     notice: 'Ride was successfully joined.' }
           format.json { render :show, status: :created, location: @ride }
         else
@@ -102,7 +102,7 @@ module Rider
         SeatAssignment.transaction do
           if @ride.passengers.include? current_user
             @ride.passengers.delete current_user
-            format.html { redirect_to rider_ride_path(@ride),
+            format.html { redirect_to passenger_ride_path(@ride),
                                       notice: 'You have left this ride.' }
             format.json { render :show, status: :created, location: @ride }
           else
@@ -117,7 +117,7 @@ module Rider
 
     private
 
-      def rider_ride_params
+      def passenger_ride_params
         ride_params
       end
 

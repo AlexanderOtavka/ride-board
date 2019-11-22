@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RiderRidesControllerTest < ActionDispatch::IntegrationTest
+class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
@@ -8,7 +8,7 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index showing ride groups with empty seats" do
-    get rider_rides_url
+    get passenger_rides_url
     assert_response :success
     assert_select "#available-rides" do
       assert_select ".ride-thumbnail", 1
@@ -20,13 +20,13 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    get new_rider_ride_url
+    get new_passenger_ride_url
     assert_response :success
   end
 
   test "should join a ride" do
     assert_difference -> {SeatAssignment.count} do
-      post rider_join_ride_url(rides(:driver_created))
+      post passenger_join_ride_url(rides(:driver_created))
     end
 
     assert rides(:driver_created).has_passenger? users(:admin)
@@ -36,27 +36,27 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:driver)
 
     assert_no_difference -> {SeatAssignment.count} do
-      post rider_join_ride_url(rides(:creator_created))
+      post passenger_join_ride_url(rides(:creator_created))
     end
 
     assert_not rides(:creator_created).has_passenger? users(:driver)
   end
 
   test "can't join a ride if it is full" do
-    sign_in users(:rider)
+    sign_in users(:passenger)
 
     assert_no_difference -> {SeatAssignment.count} do
-      post rider_join_ride_url(rides(:creator_created))
+      post passenger_join_ride_url(rides(:creator_created))
     end
 
-    assert_not rides(:creator_created).has_passenger? users(:rider)
+    assert_not rides(:creator_created).has_passenger? users(:passenger)
   end
 
   test "should leave a ride" do
     sign_in users(:creator)
 
     assert_difference -> {SeatAssignment.count}, -1 do
-      delete rider_join_ride_url(rides(:creator_created))
+      delete passenger_join_ride_url(rides(:creator_created))
     end
 
     assert_not rides(:creator_created).has_passenger? users(:creator)
@@ -64,7 +64,7 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create ride" do
     assert_difference -> {Ride.count} do
-      post rider_rides_url, params: {
+      post passenger_rides_url, params: {
         ride: {
           start_location_id: rides(:creator_created).start_location_id,
           start_datetime: rides(:creator_created).start_datetime,
@@ -78,21 +78,21 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
     assert_nil Ride.last.driver
     assert Ride.last.has_passenger? users(:admin)
 
-    assert_redirected_to rider_ride_url(Ride.last)
+    assert_redirected_to passenger_ride_url(Ride.last)
   end
 
   test "should show ride" do
-    get rider_ride_url(rides(:creator_created))
+    get passenger_ride_url(rides(:creator_created))
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_rider_ride_url(rides(:creator_created))
+    get edit_passenger_ride_url(rides(:creator_created))
     assert_response :success
   end
 
   test "should update ride" do
-    patch rider_ride_url(rides(:creator_created)), params: {
+    patch passenger_ride_url(rides(:creator_created)), params: {
       ride: {
         driver_id: rides(:creator_created).driver_id,
         end_datetime: rides(:creator_created).end_datetime,
@@ -102,14 +102,14 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
         start_location_id: rides(:creator_created).start_location_id,
       }
     }
-    assert_redirected_to rider_ride_url(rides(:creator_created))
+    assert_redirected_to passenger_ride_url(rides(:creator_created))
   end
 
   test "should destroy ride" do
     assert_difference('Ride.count', -1) do
-      delete rider_ride_url(rides(:creator_created))
+      delete passenger_ride_url(rides(:creator_created))
     end
 
-    assert_redirected_to rider_rides_url
+    assert_redirected_to passenger_rides_url
   end
 end

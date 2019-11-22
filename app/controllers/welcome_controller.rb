@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
       if current_user.drives?
         redirect_to driver_root_path
       else
-        redirect_to rider_root_path
+        redirect_to passenger_root_path
       end
     end
   end
