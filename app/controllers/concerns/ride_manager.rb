@@ -13,16 +13,6 @@ module RideManager
         .order(:start_datetime, price: :desc)
   end
 
-  def set_ride
-    @ride = Ride.find(params[:id])
-  end
-
-  def authorize_user!
-    unless @ride.authorized_editor? current_user
-      render_unauthorized
-    end
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def ride_params(permit: [])
     params.require(:ride)
@@ -35,4 +25,17 @@ module RideManager
         *permit
       )
   end
+
+  private
+
+    def set_ride
+      @ride = Ride.find(params[:id])
+    end
+
+    def authorize_user!
+      unless @ride.authorized_editor? current_user
+        render_unauthorized
+      end
+    end
+
 end
