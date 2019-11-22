@@ -26,60 +26,17 @@ module Rider
     def edit
     end
 
-    # POST /rides/1/join
-    def join
-      seat_assignment = SeatAssignment.new(
-        ride: @ride,
-        user: current_user,
-      )
-
-      respond_to do |format|
-        if seat_assignment.save
-          format.html { redirect_to rider_ride_path(@ride),
-                                    notice: 'Ride was successfully joined.' }
-          format.json { render :show, status: :created, location: @ride }
-        else
-          @errors = seat_assignment.errors
-          @problem = "Couldn't join ride"
-          format.html { render :show }
-          format.json { render json: seat_assignment.errors, status: :forbidden }
-        end
-      end
-    end
-
-    # DELETE /rides/1/join
-    def leave
-      seat_assignments = SeatAssignment.where(user: current_user, ride: @ride)
-      respond_to do |format|
-        if seat_assignments.exists?
-          seat_assignments.destroy_all
-          format.html { redirect_to rider_ride_path(@ride),
-                                    notice: 'You have left this ride.' }
-          format.json { render :show, status: :created, location: @ride }
-        else
-          message = 'You have alread left this ride'
-          format.html { render :show, notice: message }
-          format.json { render json: { message: message },
-                               status: :forbidden }
-        end
-      end
-    end
-
     # POST /rides
     # POST /rides.json
     def create
       @ride = Ride.new(rider_ride_params.merge(
         driver: nil,
         created_by: current_user,
+        passengers: [current_user]
       ))
 
-      seat_assignment = SeatAssignment.new(
-        ride: @ride,
-        user: current_user,
-      )
-
       respond_to do |format|
-        if @ride.save && seat_assignment.save
+        if @ride.save
           format.html { redirect_to rider_ride_path(@ride),
                                     notice: 'Ride was successfully created.' }
           format.json { render :show, status: :created, location: @ride }
@@ -116,10 +73,53 @@ module Rider
       end
     end
 
+    # POST /rides/1/join
+    def join
+      valid = false
+      SeatAssignment.transaction do
+        @ride.passengers << current_user
+        valid = @ride.save
+        raise ActiveRecord::Rollback unless valid
+      end
+
+      respond_to do |format|
+        if valid
+          format.html { redirect_to rider_ride_path(@ride),
+                                    notice: 'Ride was successfully joined.' }
+          format.json { render :show, status: :created, location: @ride }
+        else
+          @errors = @ride.errors
+          @problem = "Couldn't join ride"
+          format.html { render :show }
+          format.json { render json: @ride.errors, status: :forbidden }
+        end
+      end
+    end
+
+    # DELETE /rides/1/join
+    def leave
+      respond_to do |format|
+        SeatAssignment.transaction do
+          if @ride.passengers.include? current_user
+            @ride.passengers.delete current_user
+            format.html { redirect_to rider_ride_path(@ride),
+                                      notice: 'You have left this ride.' }
+            format.json { render :show, status: :created, location: @ride }
+          else
+            message = 'You have already left this ride'
+            format.html { render :show, notice: message }
+            format.json { render json: { message: message },
+                                 status: :forbidden }
+          end
+        end
+      end
+    end
+
     private
 
       def rider_ride_params
         ride_params
       end
+
   end
 end

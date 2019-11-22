@@ -67,6 +67,49 @@ module Driver
       end
     end
 
+    # POST /rides/1/join
+    def join
+      valid = true
+
+      unless @ride.driver.nil?
+        @ride.errors[:driver] << "has already taken this ride"
+        valid = false
+      end
+
+      @ride.driver = current_user
+
+      respond_to do |format|
+        if valid && @ride.save
+          format.html { redirect_to driver_ride_path(@ride),
+                                    notice: 'You are now the driver.' }
+          format.json { render :show, status: :created, location: @ride }
+        else
+          @errors = @ride.errors
+          @problem = "Cannot drive for ride"
+          format.html { render :show }
+          format.json { render json: @ride.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    # DELETE /rides/1/join
+    def leave
+      respond_to do |format|
+        if @ride.driver == current_user
+          @ride.driver = nil
+          @ride.save
+          format.html { redirect_to driver_ride_path(@ride),
+                                    notice: 'You have left this ride.' }
+          format.json { render :show, status: :created, location: @ride }
+        else
+          message = 'You have already left this ride'
+          format.html { render :show, notice: message }
+          format.json { render json: { message: message },
+                                status: :forbidden }
+        end
+      end
+    end
+
     private
 
       def driver_ride_params

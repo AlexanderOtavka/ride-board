@@ -56,7 +56,7 @@ class RiderRidesControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:creator)
 
     assert_difference -> {SeatAssignment.count}, -1 do
-      delete rider_leave_ride_url(rides(:creator_created))
+      delete rider_join_ride_url(rides(:creator_created))
     end
 
     assert_not rides(:creator_created).has_passenger? users(:creator)
