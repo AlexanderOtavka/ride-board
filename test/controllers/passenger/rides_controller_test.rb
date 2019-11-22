@@ -29,7 +29,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
       post passenger_join_ride_url(rides(:driver_created))
     end
 
-    assert rides(:driver_created).has_passenger? users(:admin)
+    assert rides(:driver_created).passengers.include? users(:admin)
   end
 
   test "can't join a ride if you are the driver" do
@@ -39,7 +39,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
       post passenger_join_ride_url(rides(:creator_created))
     end
 
-    assert_not rides(:creator_created).has_passenger? users(:driver)
+    assert_not rides(:creator_created).passengers.include? users(:driver)
   end
 
   test "can't join a ride if it is full" do
@@ -49,7 +49,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
       post passenger_join_ride_url(rides(:creator_created))
     end
 
-    assert_not rides(:creator_created).has_passenger? users(:passenger)
+    assert_not rides(:creator_created).passengers.include? users(:passenger)
   end
 
   test "should leave a ride" do
@@ -59,7 +59,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
       delete passenger_join_ride_url(rides(:creator_created))
     end
 
-    assert_not rides(:creator_created).has_passenger? users(:creator)
+    assert_not rides(:creator_created).passengers.include? users(:creator)
   end
 
   test "should create ride" do
@@ -76,7 +76,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_nil Ride.last.driver
-    assert Ride.last.has_passenger? users(:admin)
+    assert Ride.last.passengers.include? users(:admin)
 
     assert_redirected_to passenger_ride_url(Ride.last)
   end

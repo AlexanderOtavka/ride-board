@@ -22,15 +22,15 @@ class RideTest < ActiveSupport::TestCase
   end
 
   test "has a passenger with a seating assignment" do
-    assert rides(:creator_created).has_passenger? users(:creator)
+    assert rides(:creator_created).passengers.include? users(:creator)
   end
 
   test "doesn't have a passenger with no seating assignment" do
-    assert_not rides(:creator_created).has_passenger? users(:driver)
+    assert_not rides(:creator_created).passengers.include? users(:driver)
   end
 
   test "doesn't have nil passenger" do
-    assert_not rides(:creator_created).has_passenger? nil
+    assert_not rides(:creator_created).passengers.include? nil
   end
 
   test "ride does not allow a passenger to become the driver" do
