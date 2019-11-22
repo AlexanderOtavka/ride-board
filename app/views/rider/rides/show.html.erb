@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= render "rides/error_explanation", problem: @problem, errors: @errors %>
 
 <p>
   <strong>Start location:</strong>
@@ -29,6 +29,19 @@
   <strong>Price:</strong>
   <%= @ride.price %>
 </p>
+
+<p>
+  <strong>Seats remaining:</strong>
+  <%= seats_remaining @ride %>
+</p>
+
+<% unless @ride.driver == current_user %>
+  <% if @ride.has_passenger? current_user %>
+    <%= link_to 'Leave', rider_leave_ride_path(@ride), method: :delete %> |
+  <% else %>
+    <%= link_to 'Join', rider_join_ride_path(@ride), method: :post %> |
+  <% end %>
+<% end %>
 
 <%= link_to 'Edit', edit_rider_ride_path(@ride) %> |
 <%= link_to 'Back', rider_rides_path %>

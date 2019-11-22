@@ -28,6 +28,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
           end_location_id: @ride.end_location_id,
           end_datetime: @ride.end_datetime,
           price: @ride.price,
+          seats: @ride.seats,
         }
       }
     end
@@ -35,6 +36,21 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     assert_equal users(:driver), Ride.last.driver
 
     assert_redirected_to driver_ride_url(Ride.last)
+  end
+
+  test "shouldn't create a ride with 0 seats" do
+    assert_no_difference -> {Ride.count} do
+      post driver_rides_url, params: {
+        ride: {
+          start_location_id: @ride.start_location_id,
+          start_datetime: @ride.start_datetime,
+          end_location_id: @ride.end_location_id,
+          end_datetime: @ride.end_datetime,
+          price: @ride.price,
+          seats: 0,
+        }
+      }
+    end
   end
 
   test "should show ride" do

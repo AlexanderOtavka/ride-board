@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_19_203245) do
+ActiveRecord::Schema.define(version: 2019_11_21_213933) do
 
   create_table "locations", force: :cascade do |t|
     t.string "name", null: false
@@ -28,10 +28,21 @@ ActiveRecord::Schema.define(version: 2019_11_19_203245) do
     t.decimal "price", precision: 2, scale: 3
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "seats"
     t.index ["created_by_id"], name: "index_rides_on_created_by_id"
     t.index ["driver_id"], name: "index_rides_on_driver_id"
     t.index ["end_location_id"], name: "index_rides_on_end_location_id"
     t.index ["start_location_id"], name: "index_rides_on_start_location_id"
+  end
+
+  create_table "seat_assignments", force: :cascade do |t|
+    t.integer "ride_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ride_id", "user_id"], name: "index_seat_assignments_on_ride_id_and_user_id", unique: true
+    t.index ["ride_id"], name: "index_seat_assignments_on_ride_id"
+    t.index ["user_id"], name: "index_seat_assignments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

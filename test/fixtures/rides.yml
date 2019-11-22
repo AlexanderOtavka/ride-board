@@ -10,6 +10,7 @@ creator_created:
   end_datetime: 2024-11-18 07:08:36
   driver_id: 2
   created_by_id: 4
+  seats: 1
   price: 9.99
 
 driver_created:

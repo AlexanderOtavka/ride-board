@@ -20,4 +20,16 @@ class RideTest < ActiveSupport::TestCase
   test "ride does not allow rider edits" do
     assert_not rides(:creator_created).authorized_editor? users(:rider)
   end
+
+  test "has a passenger with a seating assignment" do
+    assert rides(:creator_created).has_passenger? users(:creator)
+  end
+
+  test "doesn't have a passenger with no seating assignment" do
+    assert_not rides(:creator_created).has_passenger? users(:driver)
+  end
+
+  test "doesn't have nil passenger" do
+    assert_not rides(:creator_created).has_passenger? nil
+  end
 end

@@ -2,7 +2,7 @@
 
 <p>
   <strong>Start location:</strong>
-  <%= @ride.start_location %>
+  <%= @ride.start_location.name %>
 </p>
 
 <p>
@@ -12,7 +12,7 @@
 
 <p>
   <strong>End location:</strong>
-  <%= @ride.end_location %>
+  <%= @ride.end_location.name %>
 </p>
 
 <p>
@@ -21,13 +21,13 @@
 </p>
 
 <p>
-  <strong>Driver:</strong>
-  <%= @ride.driver_id %>
+  <strong>Price:</strong>
+  <%= dollars(@ride.price * @ride.passengers.count) %>
 </p>
 
 <p>
-  <strong>Price:</strong>
-  <%= @ride.price %>
+  <strong>Seats needed:</strong>
+  <%= @ride.passengers.count %>
 </p>
 
 <%= link_to 'Edit', edit_driver_ride_path(@ride) %> |

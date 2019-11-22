@@ -1,0 +1,5 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+creator_in_ride_they_created:
+  ride_id: 1
+  user_id: 4
