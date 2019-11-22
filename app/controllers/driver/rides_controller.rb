@@ -25,7 +25,7 @@ module Driver
     # POST /rides
     # POST /rides.json
     def create
-      @ride = Ride.new(ride_params.merge(
+      @ride = Ride.new(driver_ride_params.merge(
         driver: current_user,
         created_by: current_user,
       ))
@@ -46,7 +46,7 @@ module Driver
     # PATCH/PUT /rides/1.json
     def update
       respond_to do |format|
-        if @ride.update(ride_params)
+        if @ride.update(driver_ride_params)
           format.html { redirect_to driver_ride_path(@ride),
                                     notice: 'Ride was successfully updated.' }
           format.json { render :show, status: :ok, location: @ride }
@@ -66,5 +66,12 @@ module Driver
         format.json { head :no_content }
       end
     end
+
+    private
+
+      def driver_ride_params
+        ride_params permit: [:seats]
+      end
+
   end
 end

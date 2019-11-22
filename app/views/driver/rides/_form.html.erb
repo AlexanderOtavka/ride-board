@@ -1,15 +1,6 @@
 <%= form_with(url: url, model: ride, local: true) do |form| %>
-  <% if ride.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(ride.errors.count, "error") %> prohibited this ride from being saved:</h2>
-
-      <ul>
-        <% ride.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render "rides/error_explanation", problem: "Couldn't save ride",
+                                        errors: @ride.errors %>
 
   <div class="field">
     <%= form.label :start_location %>
@@ -36,6 +27,11 @@
   <div class="field">
     <%= form.label :price, "Price ($)" %>
     <%= form.text_field :price %>
+  </div>
+
+  <div class="seats">
+    <%= form.label :seats %>
+    <%= form.text_field :seats %>
   </div>
 
   <div class="actions">

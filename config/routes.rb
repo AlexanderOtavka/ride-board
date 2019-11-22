@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
-  namespace :rider do
+  namespace :rider, mode: :rider do
     root to: "rides#index"
     resources :rides
+    post   "/rides/:id/join", to: "rides#join",  as: :join_ride
+    delete "/rides/:id/join", to: "rides#leave", as: :leave_ride
   end
 
   namespace :driver do
