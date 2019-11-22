@@ -32,4 +32,26 @@ class RideTest < ActiveSupport::TestCase
   test "doesn't have nil passenger" do
     assert_not rides(:creator_created).has_passenger? nil
   end
+
+  test "ride does not allow a passenger to become the driver" do
+    rides(:driverless).driver = users(:creator)
+    assert_not rides(:driverless).valid?
+  end
+
+  test "ride does not allow driver to become a passenger" do
+    rides(:driver_created).passengers << users(:driver)
+    assert_not rides(:driver_created).valid?
+  end
+
+  test "ride destorys itself when it has no more driver or passengers" do
+    assert_difference -> {Ride.count}, -1 do
+      rides(:driverless).passengers = []
+      rides(:driverless).save
+    end
+
+    assert_difference -> {Ride.count}, -1 do
+      rides(:driver_created).driver = nil
+      rides(:driver_created).save
+    end
+  end
 end

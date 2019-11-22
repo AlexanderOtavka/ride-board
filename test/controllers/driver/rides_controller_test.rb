@@ -19,6 +19,30 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should join ride as driver" do
+    post driver_join_ride_url(rides(:driverless))
+    assert_equal users(:driver), rides(:driverless).reload.driver
+  end
+
+  test "should not be able join ride that has a driver" do
+    sign_in users(:admin)
+    post driver_join_ride_url(rides(:creator_created))
+    assert_not_equal users(:admin), rides(:creator_created).reload.driver
+  end
+
+  test "should not be able drive for a ride when you are a passenger" do
+    sign_in users(:creator)
+    post driver_join_ride_url(rides(:driverless))
+    assert_nil rides(:driverless).reload.driver
+  end
+
+  test "should leave a ride as driver" do
+    ride = rides(:creator_created)
+    delete driver_join_ride_url(ride)
+    assert_nil ride.reload.driver
+    assert_redirected_to driver_ride_url(ride)
+  end
+
   test "should create ride" do
     assert_difference -> {Ride.count} do
       post driver_rides_url, params: {
