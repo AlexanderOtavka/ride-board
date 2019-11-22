@@ -5,7 +5,11 @@ module Rider
     # GET /rides
     # GET /rides.json
     def index
-      @rides = future_rides.where.not(driver_id: nil)
+      @available_rides = future_rides
+        .where.not(driver_id: nil)
+        .filter {|ride| ride.seats.nil? || ride.seats > ride.passengers.count}
+
+      @other_rides = future_rides.where(driver_id: nil)
     end
 
     # GET /rides/1
