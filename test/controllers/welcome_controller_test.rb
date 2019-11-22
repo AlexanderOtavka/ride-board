@@ -8,10 +8,10 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should redirect to rider app when user is a rider" do
-    sign_in users(:rider)
+  test "should redirect to passenger app when user is a passenger" do
+    sign_in users(:passenger)
     get root_url
-    assert_redirected_to rider_root_url
+    assert_redirected_to passenger_root_url
   end
 
   test "should redirect to driver app when user is a driver" do

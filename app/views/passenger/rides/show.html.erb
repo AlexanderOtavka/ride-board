@@ -37,11 +37,11 @@
 
 <% unless @ride.driver == current_user %>
   <% if @ride.has_passenger? current_user %>
-    <%= link_to 'Leave', rider_join_ride_path(@ride), method: :delete %> |
+    <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %> |
   <% else %>
-    <%= link_to 'Join', rider_join_ride_path(@ride), method: :post %> |
+    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post %> |
   <% end %>
 <% end %>
 
-<%= link_to 'Edit', edit_rider_ride_path(@ride) %> |
-<%= link_to 'Back', rider_rides_path %>
+<%= link_to 'Edit', edit_passenger_ride_path(@ride) %> |
+<%= link_to 'Back', passenger_rides_path %>

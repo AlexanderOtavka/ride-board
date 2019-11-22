@@ -19,8 +19,8 @@
     <tbody>
       <% @available_rides.each do |ride| %>
         <%= render "rides/ride_thumbnail", ride: ride,
-                   ride_path: rider_ride_path(ride),
-                   edit_path: edit_rider_ride_path(ride) %>
+                   ride_path: passenger_ride_path(ride),
+                   edit_path: edit_passenger_ride_path(ride) %>
       <% end %>
     </tbody>
   </table>
@@ -45,8 +45,8 @@
     <tbody>
       <% @other_rides.each do |ride| %>
         <%= render "rides/ride_thumbnail", ride: ride,
-                   ride_path: rider_ride_path(ride),
-                   edit_path: edit_rider_ride_path(ride) %>
+                   ride_path: passenger_ride_path(ride),
+                   edit_path: edit_passenger_ride_path(ride) %>
       <% end %>
     </tbody>
   </table>
@@ -54,4 +54,4 @@
 
 <br>
 
-<%= link_to 'New Ride', new_rider_ride_path %>
+<%= link_to 'New Ride', new_passenger_ride_path %>
