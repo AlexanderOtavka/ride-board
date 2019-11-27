@@ -1,0 +1,13 @@
+<section class="messages">
+  <strong>Messages:</strong>
+  <ul>
+    <% ride.messages.each do |message| %>
+      <li><%= message.created_by.email %>: <%= message.content %></li>
+    <% end %>
+  </ul>
+
+  <%= form_with(model: [namespace, ride, Message.new(ride: ride)], local: true) do |form| %>
+    <%= form.text_area :content %>
+    <%= form.submit "Post a Message" %>
+  <% end %>
+</section>

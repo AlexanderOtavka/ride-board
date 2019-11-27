@@ -9,4 +9,6 @@ class User < ApplicationRecord
 
   has_many :rides_driven, class_name: "Ride", foreign_key: :driver_id,
                           dependent: :nullify
+
+  has_many :messages_posted, class_name: "Message", dependent: :destroy
 end

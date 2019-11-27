@@ -35,6 +35,8 @@
   <%= seats_remaining @ride %>
 </p>
 
+<%= render "messages/pane", namespace: :passenger, ride: @ride %>
+
 <% unless @ride.driver == current_user %>
   <% if @ride.passengers.include? current_user %>
     <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %> |

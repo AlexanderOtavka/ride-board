@@ -7,6 +7,8 @@ class Ride < ApplicationRecord
   has_many :seat_assignments, dependent: :destroy
   has_many :passengers, through: :seat_assignments, source: :user
 
+  has_many :messages, dependent: :destroy
+
   def authorized_editor?(editor)
     !editor.nil? && (
       driver == editor ||

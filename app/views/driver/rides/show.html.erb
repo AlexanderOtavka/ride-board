@@ -34,6 +34,8 @@
   </ul>
 </p>
 
+<%= render "messages/pane", namespace: :driver, ride: @ride %>
+
 <% unless @ride.passengers.include?(current_user) %>
   <% if @ride.driver == current_user %>
     <%= link_to 'Leave', driver_join_ride_path(@ride), method: :delete %> |
