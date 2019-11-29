@@ -7,7 +7,6 @@ passenger:
 driver:
   id: 2
   email: "driver@grinnell.edu"
-  drives: true
 
 admin:
   id: 3
