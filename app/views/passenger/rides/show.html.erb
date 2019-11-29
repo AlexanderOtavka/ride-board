@@ -35,7 +35,9 @@
   <%= seats_remaining @ride %>
 </p>
 
-<%= render "messages/pane", namespace: :passenger, ride: @ride %>
+<% if user_signed_in? %>
+  <%= render "messages/pane", namespace: :passenger, ride: @ride %>
+<% end %>
 
 <% unless @ride.driver == current_user %>
   <% if @ride.passengers.include? current_user %>
@@ -45,5 +47,8 @@
   <% end %>
 <% end %>
 
-<%= link_to 'Edit', edit_passenger_ride_path(@ride) %> |
+<% if @ride.authorized_editor? current_user %>
+  <%= link_to 'Edit', edit_passenger_ride_path(@ride) %> |
+<% end %>
+
 <%= link_to 'Back', passenger_rides_path %>

@@ -34,7 +34,9 @@
   </ul>
 </p>
 
-<%= render "messages/pane", namespace: :driver, ride: @ride %>
+<% if user_signed_in? %>
+  <%= render "messages/pane", namespace: :driver, ride: @ride %>
+<% end %>
 
 <% unless @ride.passengers.include?(current_user) %>
   <% if @ride.driver == current_user %>
@@ -44,5 +46,8 @@
   <% end %>
 <% end %>
 
-<%= link_to 'Edit', edit_driver_ride_path(@ride) %> |
+<% if @ride.authorized_editor? current_user %>
+  <%= link_to 'Edit', edit_driver_ride_path(@ride) %> |
+<% end %>
+
 <%= link_to 'Back', driver_rides_path %>
