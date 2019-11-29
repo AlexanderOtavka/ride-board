@@ -13,23 +13,6 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <%= yield %>
-
-    <nav>
-      <ul>
-        <li><%= link_to 'Passenger Rides', passenger_rides_path %></li>
-        <li><%= link_to 'Driver Rides', driver_rides_path %></li>
-        <% if user_signed_in? && current_user.admin? %>
-          <li><%= link_to 'Locations', locations_path %></li>
-        <% end %>
-        <% if user_signed_in? %>
-          <li><%= link_to "Sign Out (#{current_user.email})",
-                  destroy_user_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to 'Sign In', new_user_session_path %></li>
-          <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-        <% end %>
-      </ul>
-    </nav>
+    <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
 </html>
