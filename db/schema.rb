@@ -75,4 +75,6 @@ ActiveRecord::Schema.define(version: 2019_11_23_004951) do
   add_foreign_key "rides", "locations", column: "start_location_id"
   add_foreign_key "rides", "users", column: "created_by_id"
   add_foreign_key "rides", "users", column: "driver_id"
+  add_foreign_key "seat_assignments", "rides"
+  add_foreign_key "seat_assignments", "users"
 end
