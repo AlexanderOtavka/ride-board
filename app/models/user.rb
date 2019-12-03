@@ -11,4 +11,7 @@ class User < ApplicationRecord
                           dependent: :nullify
 
   has_many :messages_posted, class_name: "Message", dependent: :destroy
+
+  validates_format_of :email, with: /\A.*@grinnell\.edu\z/i,
+                              message: 'Must be a grinnell.edu email'
 end
