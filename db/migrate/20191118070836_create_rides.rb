@@ -7,7 +7,7 @@ class CreateRides < ActiveRecord::Migration[6.0]
       t.datetime :end_datetime
       t.references :driver,                      foreign_key: {to_table: :users}
       t.references :created_by,     null: false, foreign_key: {to_table: :users}
-      t.decimal :price, precision: 2, scale: 3
+      t.decimal :price
 
       t.timestamps
     end
