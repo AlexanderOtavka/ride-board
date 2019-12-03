@@ -3,10 +3,12 @@
   <td><%= ride.start_datetime %></td>
   <td><%= ride.end_location.name %></td>
   <td><%= ride.end_datetime %></td>
-  <td><%= ride.driver ? ride.driver.email : "" %></td>
+  <td><%= ride.driver ? user_display_name(ride.driver) : "" %></td>
   <td><%= dollars ride.price %></td>
   <td><%= link_to 'Show', ride_path %></td>
-  <td><%= link_to 'Edit', edit_path %></td>
-  <td><%= link_to 'Destroy', ride_path, method: :delete,
-                             data: { confirm: 'Are you sure?' } %></td>
+  <% if ride.authorized_editor? current_user %>
+    <td><%= link_to 'Edit', edit_path %></td>
+    <td><%= link_to 'Destroy', ride_path, method: :delete,
+                              data: { confirm: 'Are you sure?' } %></td>
+  <% end %>
 </tr>
