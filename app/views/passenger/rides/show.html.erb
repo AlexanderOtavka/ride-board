@@ -1,23 +1,23 @@
 <%= render "rides/error_explanation", problem: @problem, errors: @errors %>
 
 <p>
-  <strong>Start location:</strong>
+  <strong>Departure:</strong>
   <%= @ride.start_location.name %>
 </p>
 
 <p>
-  <strong>Start datetime:</strong>
-  <%= @ride.start_datetime %>
+  <strong>Departure Time:</strong>
+  <%= @ride.start_datetime.to_s(:short) %>
 </p>
 
 <p>
-  <strong>End location:</strong>
+  <strong>Destination:</strong>
   <%= @ride.end_location.name %>
 </p>
 
 <p>
-  <strong>End datetime:</strong>
-  <%= @ride.end_datetime %>
+  <strong>Arrival Time:</strong>
+  <%= @ride.end_datetime.to_s(:short) %>
 </p>
 
 <p>
