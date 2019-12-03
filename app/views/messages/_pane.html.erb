@@ -2,7 +2,7 @@
   <strong>Messages:</strong>
   <ul>
     <% ride.messages.each do |message| %>
-      <li><%= message.created_by.email %>: <%= message.content %></li>
+      <li><%= user_display_name message.created_by %>: <%= message.content %></li>
     <% end %>
   </ul>
 

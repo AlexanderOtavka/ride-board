@@ -22,12 +22,12 @@
 
 <p>
   <strong>Driver:</strong>
-  <%= @ride.driver ? @ride.driver.email : "None" %>
+  <%= @ride.driver ? user_display_name(@ride.driver) : "None" %>
 </p>
 
 <p>
   <strong>Price:</strong>
-  <%= @ride.price %>
+  <%= dollars @ride.price %>
 </p>
 
 <p>
@@ -35,9 +35,7 @@
   <%= seats_remaining @ride %>
 </p>
 
-<% if user_signed_in? %>
-  <%= render "messages/pane", namespace: :passenger, ride: @ride %>
-<% end %>
+<%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
 <% unless @ride.driver == current_user %>
   <% if @ride.passengers.include? current_user %>

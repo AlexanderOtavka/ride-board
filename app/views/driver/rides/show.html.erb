@@ -32,14 +32,12 @@
   </strong>
   <ul>
     <% @ride.passengers.each do |passenger| %>
-      <li><%= passenger.email %></li>
+      <li><%= user_display_name passenger %></li>
     <% end %>
   </ul>
 </p>
 
-<% if user_signed_in? %>
-  <%= render "messages/pane", namespace: :driver, ride: @ride %>
-<% end %>
+<%= render "messages/pane", namespace: :driver, ride: @ride %>
 
 <% unless @ride.passengers.include?(current_user) %>
   <% if @ride.driver == current_user %>
