@@ -4,12 +4,4 @@
   </main>
 <% end %>
 
-<% content_for :rides_link do %>
-  <%= link_to 'Rides', passenger_rides_path %>
-<% end %>
-
-<% content_for :other_app_link do %>
-  <%= link_to 'Driver App', driver_root_path %>
-<% end %>
-
 <%= render template: "layouts/rides" %>
