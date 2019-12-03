@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_11_23_004951) do
     t.datetime "end_datetime"
     t.integer "driver_id"
     t.integer "created_by_id", null: false
-    t.decimal "price", precision: 2, scale: 3
+    t.decimal "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "seats"
