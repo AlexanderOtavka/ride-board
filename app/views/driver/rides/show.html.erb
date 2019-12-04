@@ -52,3 +52,22 @@
 <% end %>
 
 <%= link_to 'Back', driver_rides_path %>
+
+<hr />
+
+<section>
+  <strong>Share this ride</strong>
+  <p>Copy and paste the following into a post on ride boardt.</p>
+
+  <blockquote>
+    <p>
+      Driving from <%= @ride.start_location.name %> to
+      <%= @ride.end_location.name %> on <%= @ride.start_datetime.to_s(:short) %>.
+    </p>
+
+    <p>
+      To join the ride and see more details, got to
+      <%= link_to share_ride_url(@ride), share_ride_url(@ride) %>
+    </p>
+  </blockquote>
+</section>

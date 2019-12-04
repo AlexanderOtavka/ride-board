@@ -9,8 +9,9 @@ Rails.application.routes.draw do
     end
     post   "/rides/:id/join", to: "rides#join",  as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
-
   end
+
+  get "/s/:id", to: redirect('/passenger/rides/%{id}'), as: :share_ride
 
   namespace :driver do
     root to: "rides#index"
