@@ -14,7 +14,7 @@ module RidesHelper
       "Unlimited (#{taken} taken)"
     else
       remaining = total - taken
-      "#{remaining}/#{total}"
+      "#{remaining} of #{total}"
     end
   end
 end
