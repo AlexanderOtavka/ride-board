@@ -1,24 +1,25 @@
-# README
+# RideBoard.app
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> Ride sharing for Grinnell students
 
-Things you may want to cover:
+## Contributing
 
-* Ruby version
+Contributions welcome!  To avoid over-permissioning, please create a fork of this repository, then submit pull requests as usual.
 
-* System dependencies
+## Starting the Dev Server
 
-* Configuration
+This project uses [Docker](https://www.docker.com/products/docker-desktop), so you will need to install that.  Configure the database by running `docker-compose run web rails db:setup`.  Then just run `docker-compose up` from the project root to start the server at http://localhost:3000.
 
-* Database creation
+## Doing Things on the Container
 
-* Database initialization
+There are a number of commands you may want to run inside the container, such as `rails generate` or `rails console`.  To get a shell inside the container, just run `docker-compose exec web bash` once the server is running.  This will attach to the same container that the server is using and allow you to run whatever commands you want.
 
-* How to run the test suite
+## Running Tests
 
-* Services (job queues, cache servers, search engines, etc.)
+To just run all the tests once, run `docker-compose exec web rails test`.
 
-* Deployment instructions
+If you want tests to automatically rerun when you change files, run `docker-compose exec web bundle exec guard`.  Guard will only run certain tests when relevant files change.  To run all tests, just hit enter in the guard interactive console when you see the `> ` prompt.
 
-* ...
+## Deploying
+
+This project is deployed on heroku, and visible at https://rideboard.app.  Just create a pull request to the master branch, and I will take it from there.
