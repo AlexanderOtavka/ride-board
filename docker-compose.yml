@@ -2,9 +2,14 @@ version: "3.1"
 services:
   web:
     build: .
+    command: ./bin/run-dev.sh
+    depends_on:
+      - db
     volumes:
       - .:/srv:Z
       - /srv/node_modules
+      - /srv/tmp
+      - /srv/log
     ports:
       - "3000:3000"
   db:
