@@ -39,12 +39,12 @@
 
 <% unless @ride.driver == current_user %>
   <% if @ride.passengers.include? current_user %>
-    <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %> |
+    <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %>
   <% else %>
-    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post %> |
+    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post %>
   <% end %>
 <% end %>
 
 <% if @ride.authorized_editor? current_user %>
-  <%= link_to 'Edit', edit_passenger_ride_path(@ride) %> |
+  <%= link_to 'Edit', edit_passenger_ride_path(@ride) %>
 <% end %>
