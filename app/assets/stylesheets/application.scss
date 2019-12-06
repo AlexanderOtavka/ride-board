@@ -1,0 +1,11 @@
+@import "materialize/components/color-variables";
+$primary-color: color("blue", "lighten-2") !default;
+$secondary-color: color("green", "base") !default;
+@import "materialize";
+//NavBar Modification
+nav {
+  padding-bottom: 90px;
+}
+.logo {
+  font-size: 20px;
+}
