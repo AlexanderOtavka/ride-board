@@ -29,7 +29,7 @@ RUN mkdir -p log && chown www-data log
 
 # Switch to non-privileged user
 RUN mkdir -p /var/www && chown www-data /var/www
-USER www-data
+#USER www-data
 
 # Install gems
 COPY --chown=www-data Gemfile Gemfile.lock ./
