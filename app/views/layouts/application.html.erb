@@ -9,14 +9,14 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= controller_stylesheet %>
     <%= controller_javascript %>
   </head>
 
   <body>
     <% flash.each do |message_type, message| %>
-        <%= javascript_tag "Materialize.toast('#{message}', 4000)" %>
+        <%= javascript_tag "M.toast('#{message}', 4000)" %>
     <% end %>
     <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
