@@ -2,34 +2,36 @@
   <%= render "rides/error_explanation", problem: "Couldn't save ride",
                                         errors: ride.errors %>
 
-  <div class="field">
+  <div class="input-field">
+    <%= form.collection_select :start_location_id, Location.all, :id, :name, prompt: true %>
     <%= form.label :start_location %>
-    <%= form.collection_select :start_location_id, Location.all, :id, :name,
-                               prompt: true %>
   </div>
 
-  <div class="field">
+  <div class="input-field">
+    <%= form.text_field :start_datetime, default: Time.zone.now, class:"datepicker"%>
     <%= form.label :start_datetime %>
-    <%= form.datetime_select :start_datetime, default: Time.zone.now %>
+    <%= form.text_field :start_datetime, default: Time.zone.now, class:"timepicker"%>
+    <%= form.label :start_datetime %>
   </div>
 
-  <div class="field">
+  <div class="input-field">
+    <%= form.collection_select :end_location_id, Location.all, :id, :name, prompt: true %>
     <%= form.label :end_location %>
-    <%= form.collection_select :end_location_id, Location.all, :id, :name,
-                               prompt: true %>
   </div>
 
-  <div class="field">
+  <div class="input-field">
+    <%= form.text_field :end_datetime, class:"datepicker", default: Time.zone.now %>
     <%= form.label :end_datetime %>
-    <%= form.datetime_select :end_datetime, default: Time.zone.now %>
+    <%= form.text_field :end_datetime, class:"timepicker", default: Time.zone.now %>
+    <%= form.label :end_datetime %>
   </div>
 
-  <div class="field">
-    <%= form.label :price, "Price ($)" %>
+  <div class="input-field">
     <%= form.text_field :price %>
+    <%= form.label :price, "Price ($)" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn' %>
   </div>
 <% end %>

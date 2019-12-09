@@ -11,3 +11,4 @@
 // about supported directives.
 //
 // = require materialize-sprockets
+// = require_tree .
