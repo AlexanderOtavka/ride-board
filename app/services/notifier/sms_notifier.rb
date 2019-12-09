@@ -1,6 +1,6 @@
 require 'aws-sdk-sns'
 
-module Notifiers
+module Notifier
   class SmsNotifier < NotifierBase
     def initialize(real_messages)
       super(real_messages)
