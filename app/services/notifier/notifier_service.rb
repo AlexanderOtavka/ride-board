@@ -11,7 +11,7 @@ module Notifier
 
       # Where this_notifier is the one delegated too
       # this_notifier.send_message(user, message)
-      sms_notifier.send(user, message)
+      @sms_notifier.send(user, message)
     end
   end
 end
