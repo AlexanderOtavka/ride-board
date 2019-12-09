@@ -37,3 +37,4 @@ yarn-debug.log*
 
 # Ignore local environment variables
 .env.local
+.idea
