@@ -1,5 +1,5 @@
-module Notifiers
-  class Notifier
+module Notifier
+  class NotifierService
     def initialize
       sendReal = ENV['SEND_REAL_MESSAGES'] == 'true'
 

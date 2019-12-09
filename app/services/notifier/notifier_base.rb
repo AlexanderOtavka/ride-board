@@ -1,4 +1,4 @@
-module Notifiers
+module Notifier
   class NotImplementedError < NoMethodError
   end
 

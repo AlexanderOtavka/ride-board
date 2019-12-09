@@ -1,4 +1,4 @@
-module Notifiers
+module Notifier
   class FacebookMessengerNotifier < NotifierBase
     # user: a user model
     # message: string
