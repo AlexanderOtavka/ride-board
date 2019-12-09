@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("turbolinks:load", function() {
   var elems = document.querySelectorAll("select");
   var instances = M.FormSelect.init(elems);
   var elems = document.querySelectorAll('.datepicker');
