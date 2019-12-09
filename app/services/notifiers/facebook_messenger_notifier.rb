@@ -6,6 +6,8 @@ module Notifiers
       raise NotImelmentedError
     end
 
+    # user: a user model
+    # message: string
     def real_message(user, message)
       raise NotImelmentedError
     end
