@@ -1,11 +1,11 @@
 <div class="row container">
   <div class="col s12 m9 l3">
     <div class="card vh_center">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="card-content">
         <span class="card-title">Sign In</span>
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="field">
             <%= f.label :email %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -22,9 +22,8 @@
               </label>
             </div>
           <% end %>
-      </div>
-      <div class="card-action">
-        <div class="actions">
+        </div>
+        <div class="actions card-action">
           <div>
             <%= render "devise/shared/links" %>
           </div>
@@ -32,7 +31,6 @@
           <%= f.submit "Sign In", class: "btn-large waves-effect waves-light" %>
         </div>
       <% end %>
-      </div>
     </div>
   </div>
 </div>
