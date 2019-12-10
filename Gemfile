@@ -24,7 +24,8 @@ gem 'jbuilder', '~> 2.7'
 
 # Aws sdk for SMS
 gem 'aws-sdk', '~> 3'
-
+# Mailgun for email notification
+gem 'mailgun-ruby', '~>1.1.6'
 # Dotenv for environment variable management
 gem 'dotenv-rails', '~> 2'
 
