@@ -19,13 +19,17 @@
   <strong>End datetime:</strong>
   <%= @ride.end_datetime.to_s(:short) %>
 </p>
-
+<% if @ride.price %>
 <p>
   <strong>Total Fare:</strong>
+  <% if @ride.passengers.count != 0 %>
   <%= dollars(@ride.price * @ride.passengers.count) %>
   (<%= dollars @ride.price %> per passenger)
+    <% else %>
+    <%= dollars @ride.price %> per passenger
+    <% end %>
 </p>
-
+<%end %>
 <p>
   <strong>
     Passengers (<%= @ride.passengers.count %> out of <%= @ride.seats %> seats):
