@@ -6,6 +6,10 @@
 
 Contributions welcome!  To avoid over-permissioning, please create a fork of this repository, then submit pull requests as usual.
 
+## Setting Local Environment Variables
+
+There are some secrets or local defaults you may wish to override in your environment without committing them to git. Copy `.env.local.example` to `.env.local` and modify it to fit your needs.
+
 ## Starting the Dev Server
 
 This project uses [Docker](https://www.docker.com/products/docker-desktop), so you will need to install that.  Configure the database by running `docker-compose run web rails db:setup`.  Then just run `docker-compose up` from the project root to start the server at http://localhost:3000.
@@ -18,7 +22,7 @@ There are a number of commands you may want to run inside the container, such as
 
 To just run all the tests once, run `docker-compose exec web rails test`.
 
-If you want tests to automatically rerun when you change files, run `docker-compose exec web bundle exec guard`.  Guard will only run certain tests when relevant files change.  To run all tests, just hit enter in the guard interactive console when you see the `> ` prompt.
+If you want tests to automatically rerun when you change files, run `docker-compose exec web bundle exec guard`.  Guard will only run certain tests when relevant files change.  To run all tests, just hit enter in the guard interactive console when you see the `>` prompt.
 
 ## Deploying
 
