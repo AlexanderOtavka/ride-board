@@ -1,4 +1,4 @@
-<h1>Rides</h1>
+<h1>My Rides</h1>
 
 <table>
   <thead>
@@ -16,13 +16,12 @@
   <tbody>
     <% @rides.each do |ride| %>
       <%= render "rides/ride_thumbnail", ride: ride,
-                 ride_path: driver_ride_path(ride),
-                 edit_path: edit_driver_ride_path(ride) %>
+                 ride_path: passenger_ride_path(ride),
+                 edit_path: edit_passenger_ride_path(ride) %>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'My Rides', driver_my_rides_path %> |
-<%= link_to 'New Ride', new_driver_ride_path %>
+<%= link_to 'All Rides', passenger_rides_path %>

@@ -19,6 +19,13 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "should get my rides" do
+    sign_in users(:creator)
+    get passenger_my_rides_url
+    assert_response :success
+    assert_select ".ride-thumbnail", 2
+  end
+
   test "should get new" do
     get new_passenger_ride_url
     assert_response :success
