@@ -8,9 +8,7 @@
   </div>
 
   <div class="input-field">
-    <%= form.text_field :start_datetime, default: Time.zone.now, class:"datepicker"%>
-    <%= form.label :start_datetime %>
-    <%= form.text_field :start_datetime, default: Time.zone.now, class:"timepicker"%>
+    <%= form.text_field :start_datetime, default: Time.zone.now, class:"datetimepicker"%>
     <%= form.label :start_datetime %>
   </div>
 
@@ -20,9 +18,7 @@
   </div>
 
   <div class="input-field">
-    <%= form.text_field :end_datetime, class:"datepicker", default: Time.zone.now %>
-    <%= form.label :end_datetime %>
-    <%= form.text_field :end_datetime, class:"timepicker", default: Time.zone.now %>
+    <%= form.text_field :end_datetime, class:"datetimepicker", default: Time.zone.now %>
     <%= form.label :end_datetime %>
   </div>
 
