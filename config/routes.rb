@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :locations
 
   get "/s/:id", to: redirect('/passenger/rides/%{id}'), as: :share_ride
+  get "/d/:id", to: redirect('/driver/rides/%{id}'), as: :short_driver_ride
 
   namespace :passenger do
     root to: "rides#index"
