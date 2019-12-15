@@ -62,10 +62,10 @@ module Notifier
     end
 
     def _get_full_phone_number(user)
-      if user.phone == nil
+      if user.phone_number == nil
         raise InvalidStateError
       end
-      return "+1#{user.phone.to_s}"
+      return "+1#{user.phone_number.to_s}"
     end
 
     # phone_number: String w/ country code

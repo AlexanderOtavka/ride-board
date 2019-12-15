@@ -13,5 +13,19 @@ class User < ApplicationRecord
   has_many :messages_posted, class_name: "Message", dependent: :destroy
 
   validates_format_of :email, with: /\A.*@grinnell\.edu\z/i,
-                              message: 'Must be a grinnell.edu email'
+                              message: 'must be a grinnell.edu email'
+
+  validates           :phone_number, presence: true, if: :notify_sms?
+  validates_format_of :phone_number, with: /\A[0-9]{10}\z/, allow_nil: true,
+                                     message: 'must be a valid US phone number'
+
+  def notify?
+    notify_sms? || notify_email?
+  end
+
+  def formatted_phone_number
+    phone_number.match(/(.{3})(.{3})(.{4})/) do |area_code, prefix, suffix|
+      "(#{area_code}) #{prefix}-#{suffix}"
+    end
+  end
 end

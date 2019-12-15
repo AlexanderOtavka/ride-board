@@ -1,6 +1,6 @@
 <%= form_with(model: [:driver, ride], local: true) do |form| %>
-  <%= render "rides/error_explanation", problem: "Couldn't save ride",
-                                        errors: ride.errors %>
+  <%= render "shared/error_explanation", problem: "Couldn't save ride",
+                                         errors: ride.errors %>
 
   <div class="field">
     <%= form.label :start_location %>
