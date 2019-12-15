@@ -27,7 +27,11 @@
 
 <p>
   <strong>Fare:</strong>
+  <% if @ride.price %>
   <%= dollars @ride.price %>
+    <% else %>
+  Contact Driver
+    <% end %>
 </p>
 
 <p>
@@ -48,3 +52,21 @@
 <% if @ride.authorized_editor? current_user %>
   <%= link_to 'Edit', edit_passenger_ride_path(@ride) %>
 <% end %>
+
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your share button code -->
+  <div class="fb-share-button"
+    data-href=<%= share_ride_url(@ride)%>
+    data-layout="button_count">
+  </div>
+
+

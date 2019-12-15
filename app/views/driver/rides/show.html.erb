@@ -1,6 +1,6 @@
 <%= render "rides/error_explanation", problem: @problem, errors: @errors %>
 
-<p>
+  <p>
   <strong>Start location:</strong>
   <%= @ride.start_location.name %>
 </p>
@@ -19,13 +19,17 @@
   <strong>End datetime:</strong>
   <%= @ride.end_datetime.to_s(:short) %>
 </p>
-
+<% if @ride.price %>
 <p>
   <strong>Total Fare:</strong>
+  <% if @ride.passengers.count != 0 %>
   <%= dollars(@ride.price * @ride.passengers.count) %>
   (<%= dollars @ride.price %> per passenger)
+    <% else %>
+    <%= dollars @ride.price %> per passenger
+    <% end %>
 </p>
-
+<%end %>
 <p>
   <strong>
     Passengers (<%= @ride.passengers.count %> out of <%= @ride.seats %> seats):
@@ -71,3 +75,19 @@
     </p>
   </blockquote>
 </section>
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Your share button code -->
+  <div class="fb-share-button"
+    data-href=<%= share_ride_url(@ride)%>
+    data-layout="button_count">
+  </div>
+
