@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do
       resources :messages, as: :messages, only: [:create]
+
+      get   "/notify", to: "notifications#show", as: :notify
+      patch "/notify", to: "notifications#update"
     end
   end
 

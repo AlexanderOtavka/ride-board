@@ -48,9 +48,8 @@
                 'Notification Preferences' :
                 'Notify Me About Updates to this Ride',
               driver_ride_notify_path(@ride) %>
+  <br />
 <% end %>
-
-<br />
 
 <% unless @ride.passengers.include?(current_user) %>
   <% if @ride.driver == current_user %>
