@@ -56,7 +56,7 @@ module Driver
 
           notifier = Notifier::Service.new
           @ride.passengers.each do |passenger|
-            notifier.send_notification(passenger,
+            notifier.notify(passenger,
               "Your driver made a change to your ride. " +
               "See #{share_ride_url(@ride)} for details")
           end

@@ -11,6 +11,11 @@ module NotificationManager
 
   def update
     if current_user.update(notify_params)
+      notifier = Notifier::Service.new
+      notifier.notify(current_user,
+        "You are now receiving notifications from RideBoard.app. " +
+        "Change you preferences any time at #{notify_url}")
+
       redirect_to redirect_path,
                   notice: 'Notification preferences were successfully updated.'
     else
