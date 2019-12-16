@@ -73,7 +73,7 @@ Rails.application.configure do
   }
   config.action_mailer.perform_deliveries = true
   # TODO: set a proper host
-  config.action_mailer.default_url_options = { host: 'mg.rideboard.app', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'rideboard.app', port: 3000 }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
