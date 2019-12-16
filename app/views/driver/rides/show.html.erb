@@ -1,3 +1,13 @@
+<% content_for :head do %>
+  <meta property="og:url"   content="<%=share_ride_url(@ride)%>" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:title"
+        content="Ride to <%=@ride.end_location.name%> on <%= @ride.start_datetime.to_s(:short_ampm) %>"/>
+  <meta property="og:description"
+        content="I am offering a ride from <%= @ride.start_location.name %> to <%= @ride.end_location.name %> on <%=@ride.start_datetime.to_s(:short_ampm)%>. Please click on this link to join." />
+  <meta property="fb:app_id" content="2479083255670794" />
+<% end %>
+
 <%= render "shared/error_explanation", problem: @problem, errors: @errors %>
 
   <p>
