@@ -112,12 +112,12 @@ module Driver
         if @ride.driver == current_user
           @ride.driver = nil
           @ride.save
-          format.html { redirect_to driver_ride_path(@ride),
+          format.html { redirect_to driver_rides_path,
                                     notice: 'You have left this ride.' }
           format.json { render :show, status: :created, location: @ride }
         else
           message = 'You have already left this ride'
-          format.html { render :show, notice: message }
+          format.html { redirect_to driver_rides_path, notice: message }
           format.json { render json: { message: message },
                                 status: :forbidden }
         end
