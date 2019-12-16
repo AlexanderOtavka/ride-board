@@ -46,7 +46,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     ride = rides(:creator_created)
     delete driver_join_ride_url(ride)
     assert_nil ride.reload.driver
-    assert_redirected_to driver_ride_url(ride)
+    assert_redirected_to driver_rides_url
   end
 
   test "should create ride" do

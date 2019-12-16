@@ -1,7 +1,7 @@
 require 'mailgun-ruby'
 
 module Notifier
-  class EmailNotifier < NotifierBase
+  class EmailNotifier < Notifier::Base
     def initialize(real_messages)
       super real_messages
       if real_messages

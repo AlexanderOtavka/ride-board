@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_04_050017) do
+ActiveRecord::Schema.define(version: 2019_12_13_030308) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "locations", force: :cascade do |t|
     t.string "name", null: false
@@ -19,8 +22,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_050017) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "ride_id", null: false
-    t.integer "created_by_id", null: false
+    t.bigint "ride_id", null: false
+    t.bigint "created_by_id", null: false
     t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -29,12 +32,12 @@ ActiveRecord::Schema.define(version: 2019_12_04_050017) do
   end
 
   create_table "rides", force: :cascade do |t|
-    t.integer "start_location_id", null: false
+    t.bigint "start_location_id", null: false
     t.datetime "start_datetime", null: false
-    t.integer "end_location_id", null: false
+    t.bigint "end_location_id", null: false
     t.datetime "end_datetime"
-    t.integer "driver_id"
-    t.integer "created_by_id", null: false
+    t.bigint "driver_id"
+    t.bigint "created_by_id", null: false
     t.decimal "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -46,8 +49,8 @@ ActiveRecord::Schema.define(version: 2019_12_04_050017) do
   end
 
   create_table "seat_assignments", force: :cascade do |t|
-    t.integer "ride_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "ride_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["ride_id", "user_id"], name: "index_seat_assignments_on_ride_id_and_user_id", unique: true
@@ -64,7 +67,9 @@ ActiveRecord::Schema.define(version: 2019_12_04_050017) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "admin"
-    t.integer "phone"
+    t.boolean "notify_sms"
+    t.boolean "notify_email"
+    t.string "phone_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
