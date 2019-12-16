@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :validatable
 
   has_many :seat_assignments, dependent: :destroy
@@ -28,4 +28,10 @@ class User < ApplicationRecord
       "(#{area_code}) #{prefix}-#{suffix}"
     end
   end
+
+  protected
+  # Uncomment this if we want to skip email confirmation
+  #def confirmation_required?
+  #  false
+  #end
 end
