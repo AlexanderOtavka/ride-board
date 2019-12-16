@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "ride-board@#{EVN['MAILGUN_DOMAIN']}"
+  default from: "ride-board@#{ENV['MAILGUN_DOMAIN']}"
   layout 'mailer'
 end

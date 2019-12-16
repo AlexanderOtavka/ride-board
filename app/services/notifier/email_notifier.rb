@@ -8,7 +8,7 @@ module Notifier
         @mg_client = Mailgun::Client.new ENV['MAILGUN_API_KEY']
       end
       @logger = Rails.logger
-      @from_email = "grinnell-rideboard@#{ENV['MAILGUN_DOMAIN']}"
+      @from_email = "notifications@#{ENV['MAILGUN_DOMAIN']}"
 
     end
 
