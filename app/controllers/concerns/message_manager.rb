@@ -16,12 +16,12 @@ module MessageManager
       notifier = Notifier::Service.new
       if current_user == @ride.driver
         @ride.passengers.each do |passenger|
-          notifier.send_notification(passenger,
+          notifier.notify(passenger,
             "Your driver posted a message. " +
             "See #{share_ride_url(@ride)} for details")
         end
       else
-        notifier.send_notification(@ride.driver,
+        notifier.notify(@ride.driver,
           "A message was posted on your ride. " +
           "See #{short_driver_ride_url(@ride)} for details")
       end

@@ -6,7 +6,7 @@ class Notifier::Base
   end
 
   # Subclasses should implement real_message and log_message
-  def send(user, message)
+  def notify(user, message)
     if @send_real_messages
       real_message(user, message)
     else
