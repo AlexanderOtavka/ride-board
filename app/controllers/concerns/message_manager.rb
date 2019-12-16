@@ -17,13 +17,19 @@ module MessageManager
       if current_user == @ride.driver
         @ride.passengers.each do |passenger|
           notifier.notify(passenger,
-            "Your driver posted a message. " +
-            "See #{share_ride_url(@ride)} for details")
+            ellipsize(
+              "Your driver says: \"",
+              message.content,
+              "\" See #{share_ride_url(@ride)} for details"
+            ))
         end
       else
         notifier.notify(@ride.driver,
-          "A message was posted on your ride. " +
-          "See #{short_driver_ride_url(@ride)} for details")
+          ellipsize(
+            "Your passenger says: \"",
+            message.content,
+            "\" See #{short_driver_ride_url(@ride)} for details"
+          ))
       end
 
       redirect_to ride_path(message.ride), notice: 'Message posted.'
@@ -39,5 +45,15 @@ module MessageManager
 
     def message_params
       params.require(:message).permit(:content)
+    end
+
+    def ellipsize(prefix, long_text, suffix, max_length: 160)
+      length = prefix.length + long_text.length + suffix.length
+      if length > max_length
+        target_length = max_length - prefix.length - suffix.length - '...'.length
+        long_text = long_text[0..target_length] + '...'
+      end
+
+      prefix + long_text + suffix
     end
 end
