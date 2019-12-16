@@ -69,20 +69,6 @@
 
 <section>
   <strong>Share this ride</strong>
-  <p>Copy and paste the following into a post on ride boardt.</p>
-
-  <blockquote>
-    <p>
-      Driving from <%= @ride.start_location.name %> to
-      <%= @ride.end_location.name %> on <%= @ride.start_datetime.to_s(:short) %>.
-    </p>
-
-    <p>
-      To join the ride and see more details, got to
-      <%= link_to share_ride_url(@ride), share_ride_url(@ride) %>
-    </p>
-  </blockquote>
-</section>
   <!-- Load Facebook SDK for JavaScript -->
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
@@ -99,3 +85,19 @@
     data-layout="button_count">
   </div>
 
+  <p><strong>- or -</strong></p>
+
+  <p>Copy and paste the following into a post on ride boardt.</p>
+
+  <blockquote>
+    <p>
+      Driving from <%= @ride.start_location.name %> to
+      <%= @ride.end_location.name %> on <%= @ride.start_datetime.to_s(:short) %>.
+    </p>
+
+    <p>
+      To join the ride and see more details, got to
+      <%= link_to share_ride_url(@ride), share_ride_url(@ride) %>
+    </p>
+  </blockquote>
+</section>
