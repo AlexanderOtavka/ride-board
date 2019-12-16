@@ -1,6 +1,6 @@
 <%= form_with(model: [:driver, ride], local: true) do |form| %>
-  <%= render "rides/error_explanation", problem: "Couldn't save ride",
-                                        errors: ride.errors %>
+  <%= render "shared/error_explanation", problem: "Couldn't save ride",
+                                         errors: ride.errors %>
 
   <div class="input-field">
     <%= form.collection_select :start_location_id, Location.all, :id, :name, prompt: true %>

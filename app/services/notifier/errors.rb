@@ -1,4 +1,4 @@
-module Notifier
+module Notifier::Errors
   class InvalidStateError < Exception
   end
   class AuthError < StandardError

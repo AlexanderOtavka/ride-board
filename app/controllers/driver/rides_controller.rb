@@ -53,6 +53,14 @@ module Driver
     def update
       respond_to do |format|
         if @ride.update(driver_ride_params)
+
+          notifier = Notifier::Service.new
+          @ride.passengers.each do |passenger|
+            notifier.notify(passenger,
+              "Your driver made a change to your ride. " +
+              "See #{share_ride_url(@ride)} for details")
+          end
+
           format.html { redirect_to driver_ride_path(@ride),
                                     notice: 'Ride was successfully updated.' }
           format.json { render :show, status: :ok, location: @ride }
@@ -104,12 +112,12 @@ module Driver
         if @ride.driver == current_user
           @ride.driver = nil
           @ride.save
-          format.html { redirect_to driver_ride_path(@ride),
+          format.html { redirect_to driver_rides_path,
                                     notice: 'You have left this ride.' }
           format.json { render :show, status: :created, location: @ride }
         else
           message = 'You have already left this ride'
-          format.html { render :show, notice: message }
+          format.html { redirect_to driver_rides_path, notice: message }
           format.json { render json: { message: message },
                                 status: :forbidden }
         end
