@@ -7,7 +7,7 @@
 
 <p>
   <strong>Start datetime:</strong>
-  <%= @ride.start_datetime.to_s(:short) %>
+  <%= @ride.start_datetime.to_s(:short_ampm) %>
 </p>
 
 <p>
@@ -17,7 +17,7 @@
 
 <p>
   <strong>End datetime:</strong>
-  <%= @ride.end_datetime.to_s(:short) %>
+  <%= @ride.end_datetime.to_s(:short_ampm) %>
 </p>
 <% if @ride.price %>
 <p>
@@ -92,7 +92,7 @@
   <blockquote>
     <p>
       Driving from <%= @ride.start_location.name %> to
-      <%= @ride.end_location.name %> on <%= @ride.start_datetime.to_s(:short) %>.
+      <%= @ride.end_location.name %> on <%= @ride.start_datetime.to_s(:short_ampm) %>.
     </p>
 
     <p>

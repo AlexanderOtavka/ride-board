@@ -7,7 +7,7 @@
 
 <p>
   <strong>Departure Time:</strong>
-  <%= @ride.start_datetime.to_s(:short) %>
+  <%= @ride.start_datetime.to_s(:short_ampm) %>
 </p>
 
 <p>
@@ -17,7 +17,7 @@
 
 <p>
   <strong>Arrival Time:</strong>
-  <%= @ride.end_datetime.to_s(:short) %>
+  <%= @ride.end_datetime.to_s(:short_ampm) %>
 </p>
 
 <p>
