@@ -10,7 +10,7 @@
 
   <div class="field">
     <%= form.label :start_datetime %>
-    <%= form.datetime_select :start_datetime, default: Time.zone.now %>
+    <%= form.datetime_select :start_datetime, default: Time.zone.now, ampm: true %>
   </div>
 
   <div class="field">
@@ -21,7 +21,7 @@
 
   <div class="field">
     <%= form.label :end_datetime %>
-    <%= form.datetime_select :end_datetime, default: Time.zone.now %>
+    <%= form.datetime_select :end_datetime, default: Time.zone.now, ampm: true %>
   </div>
 
   <div class="field">
