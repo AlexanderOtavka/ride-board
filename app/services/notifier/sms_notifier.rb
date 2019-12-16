@@ -1,7 +1,7 @@
 require 'aws-sdk-sns'
 
 module Notifier
-  class SmsNotifier < NotifierBase
+  class SmsNotifier < Base
     def initialize(real_messages)
       super(real_messages)
       if real_messages
@@ -45,27 +45,27 @@ module Notifier
       begin
         @sns.publish(msg)
       rescue Aws::SNS::Errors::AuthorizationErrorException
-        raise AuthError
+        raise Errors::AuthError
       rescue Aws::Errors::MissingCredentialsError
-        raise AuthError
+        raise Errors::AuthError
       rescue Aws::SNS::Errors::ConcurrentAccessException
-        raise ExternalServiceError
+        raise Errors::ExternalServiceError
       rescue Aws::SNS::Errors::EndpointDisabledException
-        raise MalformedRequestException
+        raise Errors::MalformedRequestException
       rescue Aws::SNS::Errors::InternalErrorException
-        raise ExternalServiceError
+        raise Errors::ExternalServiceError
       rescue Aws::SNS::Errors::NotFoundException
-        raise MalformedRequestException
+        raise Errors::MalformedRequestException
       rescue Aws::SNS::Errors::StaleTagException
-        raise MalformedRequestException
+        raise Errors::MalformedRequestException
       end
     end
 
     def _get_full_phone_number(user)
-      if user.phone == nil
-        raise InvalidStateError
+      if user.phone_number == nil
+        raise Errors::InvalidStateError
       end
-      return "+1#{user.phone.to_s}"
+      return "+1#{user.phone_number.to_s}"
     end
 
     # phone_number: String w/ country code

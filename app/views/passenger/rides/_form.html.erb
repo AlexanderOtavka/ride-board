@@ -1,5 +1,5 @@
 <%= form_with(model: [:passenger, ride], local: true) do |form| %>
-  <%= render "rides/error_explanation", problem: "Couldn't save ride",
+  <%= render "shared/error_explanation", problem: "Couldn't save ride",
                                         errors: ride.errors %>
 
   <div class="input-field">
