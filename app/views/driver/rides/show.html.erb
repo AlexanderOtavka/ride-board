@@ -1,4 +1,4 @@
-<%= render "rides/error_explanation", problem: @problem, errors: @errors %>
+<%= render "shared/error_explanation", problem: @problem, errors: @errors %>
 
   <p>
   <strong>Start location:</strong>
@@ -42,6 +42,14 @@
 </p>
 
 <%= render "messages/pane", namespace: :driver, ride: @ride %>
+
+<% if user_signed_in? && @ride.driver == current_user %>
+  <%= link_to current_user.notify? ?
+                'Notification Preferences' :
+                'Notify Me About Updates to this Ride',
+              driver_ride_notify_path(@ride) %>
+  <br />
+<% end %>
 
 <% unless @ride.passengers.include?(current_user) %>
   <% if @ride.driver == current_user %>
