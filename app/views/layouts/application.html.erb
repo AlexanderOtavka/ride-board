@@ -12,7 +12,18 @@
     <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= controller_javascript %>
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+=======
+    <% if @ride && @ride.id %>
+     <meta property="og:url"         content=<%=share_ride_url(@ride)%> />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Ride to <%=@ride.end_location.name%> on <%=@ride.start_datetime.to_s(:short)%>"/>
+  <meta property="og:description"   content="I am offering a ride from <%=@ride.start_location.name%>
+  to <%=@ride.end_location.name%> on <%=@ride.start_datetime.to_s(:short)%>. Please click on this link to join." />
+  <meta property="fb:app_id"        content="2479083255670794" />
+   <% end %>
+>>>>>>> 714bc04af555e38fd1a75fe425c63fe5efbbac6b
   </head>
 
   <body>

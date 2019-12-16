@@ -8,6 +8,12 @@ module Driver
       @rides = future_rides.where(driver_id: nil)
     end
 
+    # GET /rides/mine
+    # GET /rides/mine.json
+    def mine
+      @rides = future_rides.where(driver: current_user)
+    end
+
     # GET /rides/1
     # GET /rides/1.json
     def show
