@@ -1,37 +1,53 @@
 <%# Navbar%>
 <nav class="welcome">
-  <div class="container-wide">
-    <div class="row">
-      <div class="col s12 m3">
-        <a href="/" class="logo">RideBoard.app</a>
-      </div><div class="col s12 m9">
-        <div class="right">
-          <ul>
-            <% if content_for? :rides_link %>
-              <li><%= yield :rides_link %></li>
-            <% end %>
+  <div class="nav-wrapper">
+    <a href="/" class="logo">RideBoard.app</a>
+    <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <% if content_for? :rides_link %>
+        <li><%= yield :rides_link %></li>
+      <% end %>
 
-            <% if user_signed_in? && current_user.admin? %>
-              <li><%= link_to 'Locations', locations_path %></li>
-            <% end %>
+      <% if user_signed_in? && current_user.admin? %>
+        <li><%= link_to 'Locations', locations_path %></li>
+      <% end %>
 
-            <% if user_signed_in? %>
-              <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
-                      destroy_user_session_path, method: :delete %></li>
-            <% else %>
-              <li><%= link_to 'Sign In', new_user_session_path %></li>
-              <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-            <% end %>
+      <% if user_signed_in? %>
+        <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
+                destroy_user_session_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to 'Sign In', new_user_session_path %></li>
+        <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+      <% end %>
 
-            <% if content_for? :other_app_link %>
-              <li><%= yield :other_app_link %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <% if content_for? :other_app_link %>
+        <li><%= yield :other_app_link %></li>
+      <% end %>
+    </ul>
   </div>
 </nav>
+
+<ul class="sidenav" id="mobile-sidenav">
+  <% if content_for? :rides_link %>
+    <li><%= yield :rides_link %></li>
+  <% end %>
+
+  <% if user_signed_in? && current_user.admin? %>
+    <li><%= link_to 'Locations', locations_path %></li>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
+            destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to 'Sign In', new_user_session_path %></li>
+    <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+  <% end %>
+
+  <% if content_for? :other_app_link %>
+    <li><%= yield :other_app_link %></li>
+  <% end %>
+</ul>
 <%# Call to Action%>
 <div class="row container call_to_action">
   <h1 class="white-text">Are you a driver or passenger?</h1>
