@@ -41,6 +41,12 @@
   </ul>
 </p>
 
+<% if @ride.passengers.all? {|passenger| passenger.notify?} %>
+  <p>All passengers are receiving notifications</p>
+<% else %>
+  <p>Not all passengers are receiving notifications</p>
+<% end %>
+
 <%= render "messages/pane", namespace: :driver, ride: @ride %>
 
 <% if user_signed_in? && @ride.driver == current_user %>

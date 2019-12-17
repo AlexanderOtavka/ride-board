@@ -56,13 +56,22 @@
   <%= seats_remaining @ride %>
 </p>
 
+<% if @ride.driver.notify? %>
+  <p>Your driver is receiving notifications</p>
+<% else %>
+  <p>Your driver is not receiving notifications</p>
+<% end %>
+
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
 <% if user_signed_in? && @ride.passengers.include?(current_user) %>
-  <%= link_to current_user.notify? ?
-                'Notification Preferences' :
-                'Notify Me About Updates to this Ride',
-              passenger_ride_notify_path(@ride) %>
+  <% if current_user.notify? %>
+    <%= link_to 'Notification Preferences',
+                passenger_ride_notify_path(@ride) %>
+  <% else %>
+    <%= link_to 'Notify Me About Updates to this Ride',
+                passenger_ride_notify_path(@ride), class: 'big-boi' %>
+  <% end %>
   <br />
 <% end %>
 
@@ -71,7 +80,7 @@
     <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %>
   <% else %>
     <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post,
-                style: 'display: inline-block; font-size: 2rem; line-height: 2rem; border: 2px solid black; border-radius: 0.25rem; padding: 0.5rem; margin: 0.5rem 0' %>
+                class: 'big-boi' %>
   <% end %>
 <% end %>
 
