@@ -56,10 +56,12 @@
   <%= seats_remaining @ride %>
 </p>
 
-<% if @ride.driver.notify? %>
-  <p>Your driver is receiving notifications</p>
-<% else %>
-  <p>Your driver is not receiving notifications</p>
+<% unless @ride.driver.nil? %>
+  <% if @ride.driver.notify? %>
+    <p>Your driver is receiving notifications</p>
+  <% else %>
+    <p>Your driver is not receiving notifications</p>
+  <% end %>
 <% end %>
 
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
