@@ -43,15 +43,6 @@
 </p>
 
 <p>
-  <strong>Fare:</strong>
-  <% if @ride.price %>
-  <%= dollars @ride.price %>
-    <% else %>
-  Contact Driver
-    <% end %>
-</p>
-
-<p>
   <strong>Seats remaining:</strong>
   <%= seats_remaining @ride %>
 </p>
