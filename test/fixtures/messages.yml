@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  ride: 1
-  created_by: 1
-  content: MyText
+  ride_id: 1
+  created_by_id: 5
+  content: Hello there
 
 two:
-  ride: 1
-  created_by: 1
-  content: MyText
+  ride_id: 1
+  created_by_id: 5
+  content: I'm not a passenger, but I am engaged

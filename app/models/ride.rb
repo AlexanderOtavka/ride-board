@@ -17,6 +17,12 @@ class Ride < ApplicationRecord
     )
   end
 
+  def engaged_users
+    message_users = messages.map {|message| message.created_by}
+    all_users = passengers + message_users
+    all_users.uniq
+  end
+
   validate do |ride|
     if ride.seats == 0
       ride.errors[:seats] << "cannot have zero seats"

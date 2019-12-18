@@ -16,3 +16,7 @@ admin:
 creator:
   id: 4
   email: "creator@grinnell.edu"
+
+message_poster:
+  id: 5
+  email: "message_poster@grinnell.edu"

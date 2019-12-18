@@ -54,4 +54,11 @@ class RideTest < ActiveSupport::TestCase
       rides(:driver_created).save
     end
   end
+
+  test "ride lists engaged users" do
+    engaged_users = rides(:creator_created).engaged_users
+    assert_equal 2, engaged_users.count
+    assert_includes engaged_users, users(:creator)
+    assert_includes engaged_users, users(:message_poster)
+  end
 end
