@@ -30,8 +30,8 @@ class User < ApplicationRecord
   end
 
   protected
-  # Uncomment this if we want to skip email confirmation
-  #def confirmation_required?
-  #  false
-  #end
+   # Uncomment this if we want to skip email confirmation
+  def confirmation_required?
+    false
+  end
 end
