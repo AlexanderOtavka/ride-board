@@ -1,6 +1,6 @@
 <%= form_with(model: [:driver, ride], local: true) do |form| %>
-  <%= render "rides/error_explanation", problem: "Couldn't save ride",
-                                        errors: ride.errors %>
+  <%= render "shared/error_explanation", problem: "Couldn't save ride",
+                                         errors: ride.errors %>
 
   <div class="field">
     <%= form.label :start_location %>
@@ -10,7 +10,7 @@
 
   <div class="field">
     <%= form.label :start_datetime %>
-    <%= form.datetime_select :start_datetime, default: Time.zone.now %>
+    <%= form.datetime_select :start_datetime, default: Time.zone.now, ampm: true %>
   </div>
 
   <div class="field">
@@ -21,12 +21,7 @@
 
   <div class="field">
     <%= form.label :end_datetime %>
-    <%= form.datetime_select :end_datetime, default: Time.zone.now %>
-  </div>
-
-  <div class="field">
-    <%= form.label :price, "Price ($)" %>
-    <%= form.text_field :price %>
+    <%= form.datetime_select :end_datetime, default: Time.zone.now, ampm: true %>
   </div>
 
   <div class="field">

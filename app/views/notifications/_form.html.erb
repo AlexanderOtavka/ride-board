@@ -1,0 +1,24 @@
+<%= form_with(url: url, model: current_user, local: true) do |form| %>
+  <%= render "shared/error_explanation",
+             problem: "Couldn't save notification preferences",
+             errors: current_user.errors %>
+
+  <div class="field">
+    <%= form.label :notify_sms, "Send me text message notifications" %>
+    <%= form.check_box :notify_sms %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone_number, "Phone number for text message notifications" %>
+    <%= form.text_field :phone_number %>
+  </div>
+
+  <%# <div class="field"> %>
+    <%#= form.label :notify_email, "Send me email notifications" %>
+    <%#= form.check_box :notify_email %>
+  <%# </div> %>
+
+  <div class="controls">
+    <%= form.submit 'Save Notification Preferences' %>
+  </div>
+<% end %>

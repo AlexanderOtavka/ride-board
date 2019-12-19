@@ -67,6 +67,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_not rides(:creator_created).passengers.include? users(:creator)
+    assert_redirected_to passenger_rides_url
   end
 
   test "should create ride" do
