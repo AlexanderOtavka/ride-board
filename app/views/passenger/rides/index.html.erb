@@ -2,7 +2,42 @@
 
 <section id="available-rides">
   <h2>Available Rides with Drivers</h2>
+  <div class="btns-bar">
+    <%= search_form_for @q1, url: "", class: "rides-search" do |f| %>
 
+        <div class="field">
+          <%= f.label "Start Location",
+                      class: "col rides-search__origin-label" %>
+          <%= f.collection_select(:start_location_id_eq,
+                                  Location.all,
+                                  :id, :name, include_blank: true) %>
+        </div>
+      <div class="field">
+        <%= f.label "End Location",
+                    class: "col rides-search__origin-label" %>
+        <%= f.collection_select(:end_location_id_eq,
+                                Location.all,
+                                :id, :name, include_blank: true) %>
+      </div>
+      <div class="field">
+        <%= f.label "Leaves Before" %>
+        <%= f.datetime_select :start_datetime_lteq, include_blank: true ,ampm: true %>
+      </div>
+
+      <div class="field">
+        <%= f.label "Arrives Before" %>
+        <%= f.datetime_select :end_datetime_lteq, include_blank: true ,ampm: true %>
+      </div>
+
+      </div>
+
+        <div class="rides-search__button-container">
+          <%= f.submit "Search", class: "rides-search__button" %>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
   <table>
     <thead>
       <tr>

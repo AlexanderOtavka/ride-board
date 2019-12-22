@@ -5,7 +5,8 @@ module Driver
     # GET /rides
     # GET /rides.json
     def index
-      @rides = future_rides.where(driver_id: nil)
+      @q = Ride.ransack(params[:q])
+      @rides = @q.result.where(driver_id: nil)
     end
 
     # GET /rides/mine
