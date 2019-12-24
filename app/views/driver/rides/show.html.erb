@@ -19,17 +19,7 @@
   <strong>End datetime:</strong>
   <%= @ride.end_datetime.to_s(:short_ampm) %>
 </p>
-<% if @ride.price %>
-<p>
-  <strong>Total Fare:</strong>
-  <% if @ride.passengers.count != 0 %>
-  <%= dollars(@ride.price * @ride.passengers.count) %>
-  (<%= dollars @ride.price %> per passenger)
-    <% else %>
-    <%= dollars @ride.price %> per passenger
-    <% end %>
-</p>
-<%end %>
+
 <p>
   <strong>
     Passengers (<%= @ride.passengers.count %> out of <%= @ride.seats %> seats):
@@ -40,6 +30,12 @@
     <% end %>
   </ul>
 </p>
+
+<% if @ride.passengers.all? {|passenger| passenger.notify?} %>
+  <p>All passengers are receiving notifications</p>
+<% else %>
+  <p>Not all passengers are receiving notifications</p>
+<% end %>
 
 <%= render "messages/pane", namespace: :driver, ride: @ride %>
 

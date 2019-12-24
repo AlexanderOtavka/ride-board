@@ -92,6 +92,12 @@ module Passenger
 
       respond_to do |format|
         if valid
+          unless @ride.driver.nil?
+            Notifier::Service.new.notify(@ride.driver,
+              "A new passenger (#{current_user.email}) just joined your ride. " +
+              "See #{short_driver_ride_url(@ride)} for details.")
+          end
+
           format.html { redirect_to passenger_ride_path(@ride),
                                     notice: 'Ride was successfully joined.' }
           format.json { render :show, status: :created, location: @ride }
@@ -110,6 +116,13 @@ module Passenger
         SeatAssignment.transaction do
           if @ride.passengers.include? current_user
             @ride.passengers.delete current_user
+
+            unless @ride.driver.nil?
+              Notifier::Service.new.notify(@ride.driver,
+                "A passenger (#{current_user.email}) just left your ride. " +
+                "See #{short_driver_ride_url(@ride)} for details.")
+            end
+
             format.html { redirect_to passenger_rides_path,
                                       notice: 'You have left this ride.' }
             format.json { render :show, status: :created, location: @ride }
