@@ -1,11 +1,5 @@
 <% if !errors.nil? && errors.any? %>
-  <div id="error_explanation">
-    <h2><%= problem %> (<%= pluralize(errors.count, "error") %>):</h2>
-
-    <ul>
-      <% errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+  <% errors.full_messages.each do |message| %>
+    <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
+  <% end %>
 <% end %>

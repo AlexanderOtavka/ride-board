@@ -1,15 +1,85 @@
-<h1>RideBoard.app</h1>
+<%# Navbar%>
+<nav class="welcome">
+  <div class="nav-wrapper">
+    <a href="/" class="logo">RideBoard.app</a>
+    <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <% if content_for? :rides_link %>
+        <li><%= yield :rides_link %></li>
+      <% end %>
 
-<div>
-<%= link_to "I am a passenger", passenger_root_path %>
-</div>
-<div>
-<%= link_to "I am a driver", driver_root_path %>
-</div>
+      <% if user_signed_in? && current_user.admin? %>
+        <li><%= link_to 'Locations', locations_path %></li>
+      <% end %>
 
-<section>
+      <% if user_signed_in? %>
+        <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
+                destroy_user_session_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to 'Sign In', new_user_session_path %></li>
+        <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+      <% end %>
+
+      <% if content_for? :other_app_link %>
+        <li><%= yield :other_app_link %></li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+
+<ul class="sidenav" id="mobile-sidenav">
+  <% if content_for? :rides_link %>
+    <li><%= yield :rides_link %></li>
+  <% end %>
+
+  <% if user_signed_in? && current_user.admin? %>
+    <li><%= link_to 'Locations', locations_path %></li>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
+            destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to 'Sign In', new_user_session_path %></li>
+    <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+  <% end %>
+</ul>
+<%# Call to Action%>
+<div class="row container call_to_action">
+  <h1 class="white-text">Are you a driver or passenger?</h1>
+  <h2 class="white-text">RideBoard lets you find drivers or passengers to share a ride with, wherever.</h2>
+  <div class="col s12 m6 l4">
+    <div class="card z-depth-3">
+      <div class="card-image">
+        <img src="/assets/images/driver.jpg">
+        <span class="card-title">Driver</span>
+      </div>
+      <div class="card-content">
+        <p>Sign up and list a ride to start making money.</p>
+      </div>
+      <div class="card-action">
+        <%= link_to "I am a driver", driver_root_path, class: "waves-effect waves-light btn-large" %>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m6 l4">
+    <div class="card z-depth-3">
+      <div class="card-image">
+        <img src="/assets/images/passenger.jpg">
+        <span class="card-title">Passenger</span>
+      </div>
+      <div class="card-content">
+        <p>View listed rides or request a new one.</p>
+      </div>
+      <div class="card-action">
+        <%= link_to "I am a passenger", passenger_root_path, class: "waves-effect waves-light btn-large" %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="info">
+<section class="container">
   <h2>What is this app?</h2>
-
   <p>
     RideBoard.app is a passion project built by and for Grinnell students.
     Our goal is to make a seamless ride sharing experience that is more
@@ -17,24 +87,20 @@
     only a few features to start off. We would love to hear your feedback as
     we iterate and improve the app to make the best experience for everyone.
   </p>
-
   <p>
     If you have 3 minutes, please fill out our
     <%= link_to 'form', 'https://docs.google.com/forms/d/e/1FAIpQLScL36vosPM6reoV8grxpYCvAB3ALlnzZJiu9_9sdnrRFfaw_g/viewform?usp=sf_link'%>.
     Your feedback will help us make a better app!
   </p>
 </section>
-
-<section>
+<section class="container">
   <h2>Meet the Team</h2>
-
   <p>
     We are a small team of Grinnell students dedicated to improving the
     ride-sharing experience for the whole Grinnell community. If you are
     interested joining the team or contributing in other ways, email us at
     <%= link_to 'contribute@rideboard.app', 'mailto:contribute@rideboard.app' %>!
   </p>
-
   <ul>
     <li>Zander Otavka - Team Lead</li>
     <li>David Jin - User Experience Designer</li>
@@ -43,3 +109,10 @@
     <li>Tran Le - Engineer</li>
   </ul>
 </section>
+</div>
+<style media="screen">
+  body {
+    background-image: url('/assets/images/background.jpg');
+    background-repeat: no-repeat;
+  }
+</style>
