@@ -1,7 +1,7 @@
 <%= form_with(model: location, local: true) do |form| %>
   <% if location.errors.any? %>
       <% location.errors.full_messages.each do |message| %>
-        <%= javascript_tag "M.toast({html: '#{message}'}, 4000)" %>
+        <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
       <% end %>
   <% end %>
 

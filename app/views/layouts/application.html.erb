@@ -16,7 +16,7 @@
 
   <body>
     <% flash.each do |message_type, message| %>
-        <%= javascript_tag "M.toast({html: '#{message}'}, 4000)" %>
+        <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
     <% end %>
     <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
