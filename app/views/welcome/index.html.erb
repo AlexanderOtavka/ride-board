@@ -4,10 +4,6 @@
     <a href="/" class="logo">RideBoard.app</a>
     <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
-      <% if content_for? :rides_link %>
-        <li><%= yield :rides_link %></li>
-      <% end %>
-
       <% if user_signed_in? && current_user.admin? %>
         <li><%= link_to 'Locations', locations_path %></li>
       <% end %>
@@ -19,19 +15,11 @@
         <li><%= link_to 'Sign In', new_user_session_path %></li>
         <li><%= link_to 'Sign Up', new_user_registration_path %></li>
       <% end %>
-
-      <% if content_for? :other_app_link %>
-        <li><%= yield :other_app_link %></li>
-      <% end %>
     </ul>
   </div>
 </nav>
 
 <ul class="sidenav" id="mobile-sidenav">
-  <% if content_for? :rides_link %>
-    <li><%= yield :rides_link %></li>
-  <% end %>
-
   <% if user_signed_in? && current_user.admin? %>
     <li><%= link_to 'Locations', locations_path %></li>
   <% end %>
