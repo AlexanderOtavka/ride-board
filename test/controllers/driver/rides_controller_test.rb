@@ -30,6 +30,14 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     assert_equal users(:driver), rides(:driverless).reload.driver
   end
 
+  test "joining a ride subscribes you" do
+    assert_difference -> {RideNotificationSubscription.count} do
+      post driver_join_ride_url(rides(:driverless))
+    end
+
+    assert rides(:driverless).notification_subscribers.include? users(:driver)
+  end
+
   test "should not be able join ride that has a driver" do
     sign_in users(:admin)
     post driver_join_ride_url(rides(:creator_created))
@@ -46,6 +54,27 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     ride = rides(:creator_created)
     delete driver_join_ride_url(ride)
     assert_nil ride.reload.driver
+    assert_redirected_to driver_rides_url
+  end
+
+  test "leaving a ride unsubscribes you" do
+    sign_in users(:driver)
+
+    assert_difference -> {RideNotificationSubscription.count}, -1 do
+      delete driver_join_ride_url(rides(:driver_created))
+    end
+
+    assert_not rides(:driver_created).notification_subscribers.include? users(:driver)
+  end
+
+  test "can leave a ride you aren't subscribed to" do
+    sign_in users(:driver)
+
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      delete driver_join_ride_url(rides(:creator_created))
+    end
+
+    assert_not rides(:creator_created).notification_subscribers.include? users(:driver)
     assert_redirected_to driver_rides_url
   end
 

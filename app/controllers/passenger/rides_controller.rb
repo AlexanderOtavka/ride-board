@@ -92,7 +92,9 @@ module Passenger
 
       respond_to do |format|
         if valid
-          unless @ride.driver.nil?
+          @ride.notification_subscribers << current_user
+
+          if @ride.notification_subscribers.include? @ride.driver
             Notifier::Service.new.notify(@ride.driver,
               "A new passenger (#{current_user.email}) just joined your ride. " +
               "See #{short_driver_ride_url(@ride)} for details.")
@@ -116,6 +118,7 @@ module Passenger
         SeatAssignment.transaction do
           if @ride.passengers.include? current_user
             @ride.passengers.delete current_user
+            @ride.notification_subscribers.delete current_user
 
             unless @ride.driver.nil?
               Notifier::Service.new.notify(@ride.driver,

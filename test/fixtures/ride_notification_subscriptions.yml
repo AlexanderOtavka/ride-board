@@ -3,3 +3,7 @@
 creator_and_ride_they_created:
   ride_id: 1
   user_id: 4
+
+driver_and_ride_they_created:
+  ride_id: 2
+  user_id: 2

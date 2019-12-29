@@ -94,6 +94,8 @@ module Driver
 
       respond_to do |format|
         if valid && @ride.save
+          @ride.notification_subscribers << current_user
+
           @ride.passengers.each do |passenger|
             Notifier::Service.new.notify(passenger,
               "A driver (#{current_user.email}) just accepted your ride request. " +
@@ -118,6 +120,8 @@ module Driver
         if @ride.driver == current_user
           @ride.driver = nil
           @ride.save
+
+          @ride.notification_subscribers.delete current_user
 
           @ride.passengers.each do |passenger|
             Notifier::Service.new.notify(passenger,
