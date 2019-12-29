@@ -1,9 +1,5 @@
 <%= form_with(model: location, local: true) do |form| %>
-  <% if location.errors.any? %>
-      <% location.errors.full_messages.each do |message| %>
-        <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
-      <% end %>
-  <% end %>
+  <%= render 'shared/error_explanation', errors: location.errors %>
 
   <div class="field">
     <%= form.label :name %>

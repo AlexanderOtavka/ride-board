@@ -1,5 +1,5 @@
 <% if !errors.nil? && errors.any? %>
   <% errors.full_messages.each do |message| %>
-    <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
+    <%= javascript_tag "M.toast({html: '#{j(h(message))}'}, 4000)" %>
   <% end %>
 <% end %>
