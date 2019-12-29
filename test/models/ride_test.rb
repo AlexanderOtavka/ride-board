@@ -33,6 +33,18 @@ class RideTest < ActiveSupport::TestCase
     assert_not rides(:creator_created).passengers.include? nil
   end
 
+  test "has a subscriber with a subscription" do
+    assert rides(:creator_created).notification_subscribers.include? users(:creator)
+  end
+
+  test "doesn't have a subscriber with no subscription" do
+    assert_not rides(:creator_created).notification_subscribers.include? users(:driver)
+  end
+
+  test "doesn't have nil subscriber" do
+    assert_not rides(:creator_created).notification_subscribers.include? nil
+  end
+
   test "ride does not allow a passenger to become the driver" do
     rides(:driverless).driver = users(:creator)
     assert_not rides(:driverless).valid?
