@@ -55,7 +55,7 @@ module Driver
         if @ride.update(driver_ride_params)
 
           notifier = Notifier::Service.new
-          @ride.passengers.each do |passenger|
+          @ride.notified_passengers.each do |passenger|
             notifier.notify(passenger,
               "Your driver made a change to your ride. " +
               "See #{share_ride_url(@ride)} for details")
@@ -96,8 +96,9 @@ module Driver
         if valid && @ride.save
           @ride.notification_subscribers << current_user
 
-          @ride.passengers.each do |passenger|
-            Notifier::Service.new.notify(passenger,
+          notifier = Notifier::Service.new
+          @ride.notified_passengers.each do |passenger|
+            notifier.notify(passenger,
               "A driver (#{current_user.email}) just accepted your ride request. " +
               "See #{share_ride_url(@ride)} for details.")
           end
@@ -123,8 +124,9 @@ module Driver
 
           @ride.notification_subscribers.delete current_user
 
-          @ride.passengers.each do |passenger|
-            Notifier::Service.new.notify(passenger,
+          notifier = Notifier::Service.new
+          @ride.notified_passengers.each do |passenger|
+            notifier.notify(passenger,
               "Your driver (#{current_user.email}) will no longer be driving for you! " +
               "See #{share_ride_url(@ride)} for details.")
           end

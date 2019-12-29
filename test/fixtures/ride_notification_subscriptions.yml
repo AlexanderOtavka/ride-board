@@ -4,6 +4,10 @@ creator_and_ride_they_created:
   ride_id: 1
   user_id: 4
 
+passenger_and_a_ride_they_are_not_in:
+  ride_id: 1
+  user_id: 1
+
 driver_and_ride_they_created:
   ride_id: 2
   user_id: 2

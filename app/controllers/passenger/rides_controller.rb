@@ -120,7 +120,7 @@ module Passenger
             @ride.passengers.delete current_user
             @ride.notification_subscribers.delete current_user
 
-            unless @ride.driver.nil?
+            if @ride.notification_subscribers.include? @ride.driver
               Notifier::Service.new.notify(@ride.driver,
                 "A passenger (#{current_user.email}) just left your ride. " +
                 "See #{short_driver_ride_url(@ride)} for details.")

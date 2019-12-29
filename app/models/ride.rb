@@ -11,6 +11,9 @@ class Ride < ApplicationRecord
   has_many :notification_subscribers, through: :ride_notification_subscriptions,
                                       source: :user
 
+  has_many :notified_passengers, -> { joins(:ride_notification_subscriptions) },
+           through: :seat_assignments, source: :user
+
   has_many :messages, dependent: :destroy
 
   def authorized_editor?(editor)

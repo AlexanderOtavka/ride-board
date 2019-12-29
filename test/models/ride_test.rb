@@ -33,8 +33,10 @@ class RideTest < ActiveSupport::TestCase
     assert_not rides(:creator_created).passengers.include? nil
   end
 
-  test "has a subscriber with a subscription" do
+  test "has a subscribers with subscriptions" do
+    assert_equal 2, rides(:creator_created).notification_subscribers.count
     assert rides(:creator_created).notification_subscribers.include? users(:creator)
+    assert rides(:creator_created).notification_subscribers.include? users(:passenger)
   end
 
   test "doesn't have a subscriber with no subscription" do
@@ -43,6 +45,11 @@ class RideTest < ActiveSupport::TestCase
 
   test "doesn't have nil subscriber" do
     assert_not rides(:creator_created).notification_subscribers.include? nil
+  end
+
+  test "not all subscribers are passenger subscribers" do
+    assert_equal 1, rides(:creator_created).notified_passengers.count
+    assert rides(:creator_created).notified_passengers.include? users(:creator)
   end
 
   test "ride does not allow a passenger to become the driver" do
