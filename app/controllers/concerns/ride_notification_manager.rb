@@ -1,4 +1,4 @@
-module NotificationManager
+module RideNotificationManager
   extend ActiveSupport::Concern
 
   included do

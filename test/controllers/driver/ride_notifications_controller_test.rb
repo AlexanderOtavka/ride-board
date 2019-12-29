@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Driver::NotificationsControllerTest < ActionDispatch::IntegrationTest
+class Driver::RideNotificationsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do

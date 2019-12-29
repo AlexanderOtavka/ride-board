@@ -1,5 +1,5 @@
-class Passenger::NotificationsController < ApplicationController
-  include NotificationManager
+class Passenger::RideNotificationsController < ApplicationController
+  include RideNotificationManager
 
   def notify_url
     passenger_ride_notify_url(@ride)

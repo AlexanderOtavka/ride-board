@@ -16,8 +16,8 @@ Rails.application.routes.draw do
     resources :rides do
       resources :messages, as: :messages, only: [:create]
 
-      get   "/notify", to: "notifications#show", as: :notify
-      patch "/notify", to: "notifications#update"
+      get   "/notify", to: "ride_notifications#show", as: :notify
+      patch "/notify", to: "ride_notifications#update"
     end
   end
 
@@ -30,8 +30,8 @@ Rails.application.routes.draw do
     resources :rides do
       resources :messages, as: :messages, only: [:create]
 
-      get   "/notify", to: "notifications#show", as: :notify
-      patch "/notify", to: "notifications#update"
+      get   "/notify", to: "ride_notifications#show", as: :notify
+      patch "/notify", to: "ride_notifications#update"
     end
   end
 

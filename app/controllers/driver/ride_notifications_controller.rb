@@ -1,5 +1,5 @@
-class Driver::NotificationsController < ApplicationController
-  include NotificationManager
+class Driver::RideNotificationsController < ApplicationController
+  include RideNotificationManager
 
   def notify_url
     driver_ride_notify_url(@ride)
