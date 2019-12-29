@@ -18,4 +18,6 @@ jobs:
       - name: Initialize database
         run: docker-compose run web bin/initialize.sh
       - name: Run tests
-        run: docker-compose run web bin/test.sh
+        run: docker-compose run web bin/test.sh --ruby
+      - name: Yarn integrity check
+        run: docker-compose run web bin/test.sh --yarn-integrity
