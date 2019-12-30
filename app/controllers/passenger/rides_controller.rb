@@ -5,11 +5,11 @@ module Passenger
     # GET /rides
     # GET /rides.json
     def index
-      @q1 = Ride.ransack(params[:q])
-      @available_rides = @q1.result
+      @search = Ride.ransack(params[:search])
+      @available_rides = @search.result
                              .where.not(driver_id: nil)
                              .filter {|ride| ride.seats.nil? || ride.seats > ride.passengers.count}
-      @other_rides = @q1.result.where(driver_id: nil)
+      @other_rides = @search.result.where(driver_id: nil)
     end
 
     # GET /rides/mine
