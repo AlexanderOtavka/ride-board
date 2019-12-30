@@ -1,5 +1,1 @@
-<% if resource.errors.any? %>
-  <% resource.errors.full_messages.each do |message| %>
-    <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
-  <% end %>
-<% end %>
+<%= render 'shared/error_explanation', errors: resource.errors %>

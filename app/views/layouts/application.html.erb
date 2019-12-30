@@ -9,14 +9,17 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <%= yield(:head) %>
   </head>
 
   <body>
     <% flash.each do |message_type, message| %>
-        <%= javascript_tag "M.toast({html: '<%= j message =>'}, 4000)" %>
+      <%= javascript_tag "M.toast({html: '#{j(h(message))}'}, 4000)" %>
     <% end %>
     <%= content_for?(:content) ? yield(:content) : yield %>
   </body>
