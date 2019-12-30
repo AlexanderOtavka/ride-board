@@ -92,7 +92,8 @@ module Passenger
 
       respond_to do |format|
         if valid
-          @ride.notification_subscribers << current_user
+          @ride.ride_notification_subscriptions.create!(
+            user: current_user, app: :passenger)
 
           if @ride.notification_subscribers.include? @ride.driver
             Notifier::Service.new.notify(@ride.driver,

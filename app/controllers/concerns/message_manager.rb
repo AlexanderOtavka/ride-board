@@ -15,18 +15,40 @@ module MessageManager
     if message.save
       notifier = Notifier::Service.new
       if @ride.driver == nil || @ride.driver == current_user
-        @ride.notified_passengers.each do |passenger|
+        if @ride.driver == current_user
+          sender = "Your driver"
+        else
+          sender = current_user.email
+        end
+
+        subscribers = @ride.notification_subscribers.where.not(
+          id: current_user.id)
+        drivers = @ride.notification_subscribers.where(
+          ride_notification_subscriptions: {app: :driver})
+        passengers = @ride.notification_subscribers.where(
+          ride_notification_subscriptions: {app: :passenger})
+
+        drivers.each do |driver|
+          notifier.notify(driver,
+            ellipsize("#{sender} says: \"", message.content,
+                      "\" See #{short_driver_ride_url(@ride)} for details"))
+        end
+
+        passengers.each do |passenger|
           notifier.notify(passenger,
-            ellipsize(
-              "Your driver says: \"",
-              message.content,
-              "\" See #{share_ride_url(@ride)} for details"
-            ))
+            ellipsize("#{sender} says: \"", message.content,
+                      "\" See #{share_ride_url(@ride)} for details"))
         end
       else
+        if @ride.passengers.include? current_user
+          sender = "Your passenger"
+        else
+          sender = current_user.email
+        end
+
         notifier.notify(@ride.driver,
           ellipsize(
-            "Your passenger says: \"",
+            "#{sender} says: \"",
             message.content,
             "\" See #{short_driver_ride_url(@ride)} for details"
           ))

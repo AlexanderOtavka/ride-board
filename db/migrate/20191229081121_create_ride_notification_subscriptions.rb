@@ -6,5 +6,7 @@ class CreateRideNotificationSubscriptions < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+    add_index :ride_notification_subscriptions, [:ride_id, :user_id], unique: true
   end
 end

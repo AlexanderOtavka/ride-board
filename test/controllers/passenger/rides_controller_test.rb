@@ -45,6 +45,11 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert rides(:driver_created).notification_subscribers.include? users(:admin)
+    assert_equal(
+      "passenger",
+      rides(:driver_created).ride_notification_subscriptions
+        .where(user: users(:admin)).first.app
+    )
   end
 
   test "can't join a ride if you are the driver" do

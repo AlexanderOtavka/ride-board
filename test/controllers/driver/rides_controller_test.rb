@@ -36,6 +36,11 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert rides(:driverless).notification_subscribers.include? users(:driver)
+    assert_equal(
+      "driver",
+      rides(:driverless).ride_notification_subscriptions
+        .where(user: users(:driver)).first.app
+    )
   end
 
   test "should not be able join ride that has a driver" do
