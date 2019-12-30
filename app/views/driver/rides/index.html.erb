@@ -17,8 +17,8 @@
                               :id, :name, include_blank: true) %>
     </div>
     <div class="field">
-      <%= f.label "Leaves Before" %>
-      <%= f.datetime_select :start_datetime_lteq, include_blank: true ,ampm: true %>
+      <%= f.label "Leaves After" %>
+      <%= f.datetime_select :start_datetime_gteq, include_blank: true ,ampm: true %>
     </div>
 
     <div class="field">

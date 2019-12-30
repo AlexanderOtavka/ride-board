@@ -5,7 +5,7 @@ module Driver
     # GET /rides
     # GET /rides.json
     def index
-      @search = Ride.ransack(params[:search])
+      @search = Ride.ransack(params[:q])
       @rides = @search.result.where(driver_id: nil)
     end
 
