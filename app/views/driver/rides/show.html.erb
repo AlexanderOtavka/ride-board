@@ -41,9 +41,9 @@
 
 <% if user_signed_in? && @ride.driver == current_user %>
   <%= link_to current_user.notify? ?
-                'Notification Preferences' :
-                'Notify Me About Updates to this Ride',
-              driver_ride_notify_path(@ride) %>
+                '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe :
+                '<i class="material-icons left">notifications</i>Notify Me'.html_safe,
+              driver_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
   <br />
 <% end %>
 

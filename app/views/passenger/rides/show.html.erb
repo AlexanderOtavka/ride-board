@@ -59,11 +59,11 @@
 
 <% if user_signed_in? && @ride.passengers.include?(current_user) %>
   <% if current_user.notify? %>
-    <%= link_to 'Notification Preferences',
-                passenger_ride_notify_path(@ride) %>
+    <%= link_to '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe,
+                passenger_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
   <% else %>
-    <%= link_to 'Notify Me About Updates to this Ride',
-                passenger_ride_notify_path(@ride), class: 'big-boi' %>
+    <%= link_to '<i class="material-icons left">notifications</i>Notify Me'.html_safe,
+                passenger_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
   <% end %>
   <br />
 <% end %>
@@ -96,5 +96,3 @@
     data-href=<%= share_ride_url(@ride)%>
     data-layout="button_count">
   </div>
-
-
