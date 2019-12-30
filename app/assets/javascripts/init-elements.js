@@ -73,3 +73,7 @@ document.addEventListener("turbolinks:load", function() {
         MaterialDateTimePicker.create(end_datetime);
   }
 });
+
+document.addEventListener("turbolinks:before-visit", function() {
+  M.Sidenav.getInstance(document.getElementById('mobile-sidenav')).destroy();
+});
