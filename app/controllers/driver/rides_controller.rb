@@ -94,7 +94,7 @@ module Driver
 
       respond_to do |format|
         if valid && @ride.save
-          @ride.ride_notification_subscriptions.create!(
+          @ride.notification_subscriptions.create!(
             user: current_user, app: :driver)
 
           notifier = Notifier::Service.new

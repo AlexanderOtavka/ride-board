@@ -7,8 +7,9 @@ class Ride < ApplicationRecord
   has_many :seat_assignments, dependent: :destroy
   has_many :passengers, through: :seat_assignments, source: :user
 
-  has_many :ride_notification_subscriptions, dependent: :destroy
-  has_many :notification_subscribers, through: :ride_notification_subscriptions,
+  has_many :notification_subscriptions, class_name: "RideNotificationSubscription",
+                                        dependent: :destroy
+  has_many :notification_subscribers, through: :notification_subscriptions,
                                       source: :user
 
   has_many :notified_passengers, -> { joins(:ride_notification_subscriptions) },

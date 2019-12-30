@@ -47,7 +47,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     assert rides(:driver_created).notification_subscribers.include? users(:admin)
     assert_equal(
       "passenger",
-      rides(:driver_created).ride_notification_subscriptions
+      rides(:driver_created).notification_subscriptions
         .where(user: users(:admin)).first.app
     )
   end
