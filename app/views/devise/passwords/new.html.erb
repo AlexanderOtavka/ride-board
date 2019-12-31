@@ -6,8 +6,6 @@
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <div class="card-content">
         <span class="card-title">Forgot your password?</span>
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
         <%= render "devise/shared/error_messages", resource: resource %>
 
         <div class="field">
