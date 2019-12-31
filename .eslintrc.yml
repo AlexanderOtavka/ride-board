@@ -33,11 +33,11 @@ rules:
   no-unused-vars:
     - error
     - vars: local
-      argsIgnorePattern: "^_+$" # The only allowed unused argument names are _, __, ___, ...
+      argsIgnorePattern: "^_"
   no-import-assign:
     - error
   eqeqeq:
-    - warn
+    - error
   curly:
     - error
     - all
