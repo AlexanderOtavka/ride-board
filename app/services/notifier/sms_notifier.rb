@@ -10,6 +10,7 @@ module Notifier
       end
 
       @logger = Rails.logger
+      # rubocop:disable Style/StringHashKeys
       @message_attributes = {
         "AWS.SNS.SMS.SenderID" => {
           data_type: "String",
@@ -29,6 +30,7 @@ module Notifier
           string_value: "Transactional",
         }
       }
+      # rubocop:enable Style/StringHashKeys
     end
 
     # user: a user model
@@ -65,7 +67,7 @@ module Notifier
       if user.phone_number == nil
         raise Errors::InvalidStateError
       end
-      return "+1#{user.phone_number.to_s}"
+      return "+1#{user.phone_number}"
     end
 
     # phone_number: String w/ country code

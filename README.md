@@ -38,6 +38,13 @@ If you want tests to automatically rerun when you change files, run
 tests when relevant files change. To run all tests, just hit enter in the
 guard interactive console when you see the `>` prompt.
 
+## Linting
+
+This project uses [rubocop](https://www.rubocop.org/en/stable/) to lint ruby code.
+To run ruby linting, call `docker-compose run web bin/lint.sh --ruby`.
+Linting gets automatically run in on all pull requests against master, and github will complain if it does not pass.
+The rules for rubocop can be found in [.rubocop.yml](.rubocop.yml).
+
 ## Deploying
 
 This project is deployed on heroku, and available at https://rideboard.app.

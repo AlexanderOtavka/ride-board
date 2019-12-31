@@ -54,9 +54,11 @@ module Notifier
           :to => user,
           :subject => email_subject,
           :text => body,
+          # rubocop:disable Style/StringHashKeys
           "o:tracking" => tracking,
           "o:tracking-click" => tracking_click,
           "o:tracking-opens" => tracking_opens
+          # rubocop:enable Style/StringHashKeys
       }
       if tags != nil
         msg["o:tag"] = tags
