@@ -31,10 +31,10 @@ To stop all docker processes for this project, you can run `docker-compose stop`
 
 ## Running Tests
 
-To just run all the tests once, run `docker-compose exec web rails test`.
+To just run all the tests once, run `docker-compose run web rails test`.
 
 If you want tests to automatically rerun when you change files, run
-`docker-compose exec web bundle exec guard`. Guard will only run certain
+`docker-compose run web bundle exec guard`. Guard will only run certain
 tests when relevant files change. To run all tests, just hit enter in the
 guard interactive console when you see the `>` prompt.
 
