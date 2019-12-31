@@ -35,7 +35,7 @@ guard interactive console when you see the `>` prompt.
 ## Linting
 
 This project uses [rubocop](https://www.rubocop.org/en/stable/) to lint ruby code.
-To run ruby linting, call `docker-compose (exec or run) web bin/lint.sh --ruby`.
+To run ruby linting, call `docker-compose run web bin/lint.sh --ruby`.
 Linting gets automatically run in on all pull requests against master, and github will complain if it does not pass.
 The rules for rubocop can be found in [.rubocop.yml](.rubocop.yml).
 
