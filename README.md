@@ -23,6 +23,12 @@ just run `docker-compose exec web bash` once the server is running. This will
 attach to the same container that the server is using and allow you to run
 whatever commands you want.
 
+If you want to get a shell in side the container when the server is *not* running, you can run `docker-compose run web bash`.
+This will spin up a new instance and give you a shell inside of it.
+Note that if you have a `docker-compose run` instance and a `docker-compose up` instance running at the same time both may work, but weird problems are likely to appear.
+
+To stop all docker processes for this project, you can run `docker-compose stop` in any shell in a project folder.
+
 ## Running Tests
 
 To just run all the tests once, run `docker-compose exec web rails test`.
