@@ -2,7 +2,6 @@
 
 ![Tests](https://github.com/AlexanderOtavka/ride-board/workflows/Tests/badge.svg)
 ![Linting](https://github.com/AlexanderOtavka/ride-board/workflows/Linting/badge.svg)
-![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m784075821-17bbb702b73c8668f358cb12)
 
 > Ride sharing for Grinnell students
 
