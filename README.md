@@ -1,5 +1,8 @@
 # RideBoard.app
 
+![Tests](https://github.com/AlexanderOtavka/ride-board/workflows/Tests/badge.svg)
+![Linting](https://github.com/AlexanderOtavka/ride-board/workflows/Linting/badge.svg)
+
 > Ride sharing for Grinnell students
 
 ## Setting Local Environment Variables
