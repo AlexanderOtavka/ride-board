@@ -1,8 +1,7 @@
 <%= image_tag 'background.jpg', class: 'background-image' %>
 
-<div class="row container">
-  <div class="col s12 m9 l3">
-    <div class="card sign-in-modal">
+  <div class="center-content">
+    <div class="card">
       <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
       <div class="card-content">
         <span class="card-title">Change your password</span>
@@ -33,4 +32,3 @@
       <% end %>
     </div>
   </div>
-</div>
