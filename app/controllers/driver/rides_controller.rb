@@ -85,7 +85,10 @@ module Driver
     def join
       valid = true
 
-      unless @ride.driver.nil?
+      if @ride.driver == current_user
+        @ride.errors[:base] << "you are already the driver"
+        valid = false
+      elsif !@ride.driver.nil?
         @ride.errors[:driver] << "has already taken this ride"
         valid = false
       end

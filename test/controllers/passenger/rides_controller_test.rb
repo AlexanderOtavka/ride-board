@@ -39,6 +39,19 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     assert rides(:driver_created).passengers.include? users(:admin)
   end
 
+  test "join fails gracefully if they are already joined" do
+    user = users(:creator)
+    ride = rides(:creator_created)
+    sign_in user
+
+    assert_no_difference -> {SeatAssignment.count} do
+      post passenger_join_ride_url(ride)
+    end
+
+    assert_response :success
+    assert ride.passengers.include? user
+  end
+
   test "joining a ride subscribes you" do
     assert_difference -> {RideNotificationSubscription.count} do
       post passenger_join_ride_url(rides(:driver_created))
@@ -53,7 +66,15 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "subscription on join is idempotent" do
-    skip
+    user = users(:passenger)
+    ride = rides(:creator_created)
+    sign_in user
+
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      post passenger_join_ride_url(ride)
+    end
+
+    assert ride.notification_subscribers.include? user
   end
 
   test "can't join a ride if you are the driver" do

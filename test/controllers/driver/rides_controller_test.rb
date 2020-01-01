@@ -44,7 +44,15 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "subscription on join is idempotent" do
-    skip
+    user = users(:driver)
+    ride = rides(:driver_created)
+    sign_in user
+
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      post driver_join_ride_url(ride)
+    end
+
+    assert ride.notification_subscribers.include? user
   end
 
   test "should not be able join ride that has a driver" do
