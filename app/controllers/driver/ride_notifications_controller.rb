@@ -1,6 +1,10 @@
 class Driver::RideNotificationsController < ApplicationController
   include RideNotificationManager
 
+  def app
+    :driver
+  end
+
   def notify_url
     driver_ride_notify_url(@ride)
   end

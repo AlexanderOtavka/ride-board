@@ -1,6 +1,10 @@
 class Passenger::RideNotificationsController < ApplicationController
   include RideNotificationManager
 
+  def app
+    :passenger
+  end
+
   def notify_url
     passenger_ride_notify_url(@ride)
   end

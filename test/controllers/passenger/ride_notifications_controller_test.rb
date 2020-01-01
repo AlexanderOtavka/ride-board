@@ -14,8 +14,11 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     assert_response :success
   end
 
-  test "can update notification preferences" do
+  test "can update user notification preferences" do
     patch passenger_ride_notify_url(@ride, {
+      ride: {
+        notify: "0",
+      },
       user: {
         notify_sms: true,
         notify_email: true,
@@ -27,6 +30,75 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     assert @user.notify_sms?
     assert @user.notify_email?
     assert_equal "1234567890", @user.phone_number
+  end
+
+  test "can add a subscription" do
+    @ride = rides(:driver_created)
+
+    assert_difference -> {RideNotificationSubscription.count} do
+      patch passenger_ride_notify_url(@ride, {
+        ride: {
+          notify: "1",
+        },
+        user: {
+          notify_sms: false,
+          notify_email: true,
+          phone_number: ""
+        }
+      })
+    end
+
+    assert @ride.notification_subscribers.include? @user
+    assert_equal "passenger", @ride.notification_subscriptions.where(user: @user).first.app
+  end
+
+  test "adding a subscription is idempotent" do
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      patch passenger_ride_notify_url(@ride, {
+        ride: {
+          notify: "1",
+        },
+        user: {
+          notify_sms: false,
+          notify_email: true,
+          phone_number: ""
+        }
+      })
+    end
+  end
+
+  test "can remove a subscription" do
+    assert_difference -> {RideNotificationSubscription.count}, -1 do
+      patch passenger_ride_notify_url(@ride, {
+        ride: {
+          notify: "0",
+        },
+        user: {
+          notify_sms: false,
+          notify_email: true,
+          phone_number: ""
+        }
+      })
+    end
+
+    assert_not @ride.notification_subscribers.include? @user
+  end
+
+  test "removing a subscription is idempotent" do
+    @ride = rides(:driver_created)
+
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      patch passenger_ride_notify_url(@ride, {
+        ride: {
+          notify: "0",
+        },
+        user: {
+          notify_sms: false,
+          notify_email: true,
+          phone_number: ""
+        }
+      })
+    end
   end
 
   test "can't notify sms without a phone number" do
