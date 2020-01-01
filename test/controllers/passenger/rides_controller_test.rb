@@ -127,6 +127,10 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to passenger_ride_url(Ride.last)
   end
 
+  test "creating a ride subscribes to it" do
+    skip
+  end
+
   test "should show ride" do
     get passenger_ride_url(rides(:creator_created))
     assert_response :success

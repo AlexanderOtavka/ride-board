@@ -5,8 +5,8 @@ class Driver::RideNotificationsController < ApplicationController
     :driver
   end
 
-  def notify_url
-    driver_ride_notify_url(@ride)
+  def root_notify_url
+    driver_notify_url
   end
 
   def redirect_path

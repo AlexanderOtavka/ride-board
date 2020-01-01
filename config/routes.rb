@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   namespace :passenger do
     root to: "rides#index"
 
+    get   "/notify", to: "notifications#show", as: :notify
+    patch "/notify", to: "notifications#update"
+
     get    "/myrides",        to: "rides#mine", as: :my_rides
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
@@ -23,6 +26,9 @@ Rails.application.routes.draw do
 
   namespace :driver do
     root to: "rides#index"
+
+    get   "/notify", to: "notifications#show", as: :notify
+    patch "/notify", to: "notifications#update"
 
     get    "/myrides",        to: "rides#mine", as: :my_rides
     post   "/rides/:id/join", to: "rides#join", as: :join_ride

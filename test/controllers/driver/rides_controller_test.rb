@@ -121,6 +121,10 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "creating a ride subscribes to it" do
+    skip
+  end
+
   test "should show ride" do
     get driver_ride_url(@ride)
     assert_response :success

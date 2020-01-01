@@ -5,8 +5,8 @@ class Passenger::RideNotificationsController < ApplicationController
     :passenger
   end
 
-  def notify_url
-    passenger_ride_notify_url(@ride)
+  def root_notify_url
+    passenger_notify_url
   end
 
   def redirect_path
