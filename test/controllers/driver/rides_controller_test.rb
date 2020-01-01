@@ -4,8 +4,9 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:driver)
+    @user = users(:driver)
     @ride = rides(:creator_created)
+    sign_in @user
   end
 
   test "should get index showing rides without drivers" do
@@ -44,6 +45,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "subscription on join is idempotent" do
+    skip "Doesn't actually test the behavior"
     user = users(:driver)
     ride = rides(:driver_created)
     sign_in user
@@ -130,7 +132,22 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "creating a ride subscribes to it" do
-    skip
+    assert_difference -> {RideNotificationSubscription.count} do
+      post driver_rides_url, params: {
+        ride: {
+          start_location_id: @ride.start_location_id,
+          start_datetime: @ride.start_datetime,
+          end_location_id: @ride.end_location_id,
+          end_datetime: @ride.end_datetime,
+          seats: @ride.seats,
+        }
+      }
+    end
+
+    ride = Ride.last
+
+    assert ride.notification_subscribers.include? @user
+    assert_equal "driver", ride.notification_subscriptions.where(user: @user).first.app
   end
 
   test "should show ride" do

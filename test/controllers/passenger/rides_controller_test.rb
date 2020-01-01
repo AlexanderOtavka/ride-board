@@ -4,7 +4,8 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:admin)
+    @user = users(:admin)
+    sign_in @user
   end
 
   test "should get index showing ride groups with empty seats" do
@@ -149,7 +150,21 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "creating a ride subscribes to it" do
-    skip
+    assert_difference -> {RideNotificationSubscription.count} do
+      post passenger_rides_url, params: {
+        ride: {
+          start_location_id: rides(:creator_created).start_location_id,
+          start_datetime: rides(:creator_created).start_datetime,
+          end_location_id: rides(:creator_created).end_location_id,
+          end_datetime: rides(:creator_created).end_datetime,
+        }
+      }
+    end
+
+    ride = Ride.last
+
+    assert ride.notification_subscribers.include? @user
+    assert_equal "passenger", ride.notification_subscriptions.where(user: @user).first.app
   end
 
   test "should show ride" do

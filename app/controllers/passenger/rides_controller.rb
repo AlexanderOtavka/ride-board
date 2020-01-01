@@ -40,7 +40,11 @@ module Passenger
       @ride = Ride.new(passenger_ride_params.merge(
         driver: nil,
         created_by: current_user,
-        passengers: [current_user]
+        passengers: [current_user],
+        notification_subscriptions: [RideNotificationSubscription.new(
+          user: current_user,
+          app: :passenger
+        )],
       ))
 
       respond_to do |format|
