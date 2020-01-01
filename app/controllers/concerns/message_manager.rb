@@ -15,6 +15,10 @@ module MessageManager
     if message.save
       send_notification(message)
 
+      unless @ride.notification_subscribers.include? current_user
+        @ride.notification_subscriptions.create!(user: current_user, app: app)
+      end
+
       redirect_to ride_path(message.ride), notice: 'Message posted.'
     else
       redirect_to ride_path(message.ride), notice: 'Cannot post message.'

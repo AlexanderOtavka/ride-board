@@ -52,6 +52,10 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test "subscription on join is idempotent" do
+    skip
+  end
+
   test "can't join a ride if you are the driver" do
     sign_in users(:driver)
 

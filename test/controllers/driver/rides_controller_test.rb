@@ -43,6 +43,10 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test "subscription on join is idempotent" do
+    skip
+  end
+
   test "should not be able join ride that has a driver" do
     sign_in users(:admin)
     post driver_join_ride_url(rides(:creator_created))
