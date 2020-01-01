@@ -23,9 +23,9 @@ module MessageManager
 
         subscribers = @ride.notification_subscribers.where.not(
           id: current_user.id)
-        drivers = @ride.notification_subscribers.where(
+        drivers = subscribers.where(
           ride_notification_subscriptions: {app: :driver})
-        passengers = @ride.notification_subscribers.where(
+        passengers = subscribers.where(
           ride_notification_subscriptions: {app: :passenger})
 
         drivers.each do |driver|
