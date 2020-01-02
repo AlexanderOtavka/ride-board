@@ -1,14 +1,14 @@
 {
-    "name": "Ride Board",
-    "description": "Helping Grinnellians get on the road",
-    "website": "https://rideboard.app/",
-    "repository": "https://github.com/AlexanderOtavka/ride-board",
-    "environments": {
-        "review": {
-            "scripts": {
-                "postdeploy": "bin/initialize.sh -R && bundle exec rake db:seed",
-                "pr-predestroy": "bundle exec rake cleanup"
-            }
-        }
+  "name": "RideBoard.app",
+  "description": "Ride sharing for Grinnell students",
+  "website": "https://rideboard.app/",
+  "repository": "https://github.com/AlexanderOtavka/ride-board",
+  "environments": {
+    "review": {
+      "scripts": {
+        "postdeploy": "bundle exec rake db:seed",
+        "pr-predestroy": "bundle exec rake cleanup"
+      }
     }
+  }
 }
