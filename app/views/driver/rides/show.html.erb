@@ -31,22 +31,30 @@
   </ul>
 </p>
 
-<% if @ride.passengers.all? {|passenger| passenger.notify?} %>
-  <p>All passengers are receiving notifications</p>
-<% else %>
-  <p>Not all passengers are receiving notifications</p>
+<% unless @ride.passengers.empty? %>
+  <% not_notified_passenger_names = (@ride.passengers
+    .filter {|passenger| !passenger.notified_by_ride?(@ride)}
+    .map {|passenger| user_display_name passenger}) %>
+  <% if not_notified_passenger_names.empty? %>
+    <p>All passengers are receiving notifications</p>
+  <% else %>
+    <p>
+      Some passengers are not receiving notifications
+      (<%= not_notified_passenger_names.to_sentence %>)
+    </p>
+  <% end %>
 <% end %>
 
 <%= render "messages/pane", namespace: :driver, ride: @ride %>
 
-<% if user_signed_in? && @ride.driver == current_user %>
-<% if current_user.notify? %>
-  <%= link_to '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe,
-              passenger_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
-<% else %>
-  <%= link_to '<i class="material-icons left">notifications</i>Notify Me'.html_safe,
-              passenger_ride_notify_path(@ride), class: "btn waves-effect" %>
-<% end %>
+<% if user_signed_in? %>
+  <% if current_user.notified_by_ride?(@ride) %>
+    <%= link_to '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe,
+                driver_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
+  <% else %>
+    <%= link_to '<i class="material-icons left">notifications</i>Notify Me'.html_safe,
+                driver_ride_notify_path(@ride), class: "btn waves-effect" %>
+  <% end %>
   <br />
 <% end %>
 

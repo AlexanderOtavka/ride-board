@@ -48,7 +48,7 @@
 </p>
 
 <% unless @ride.driver.nil? %>
-  <% if @ride.driver.notify? %>
+  <% if @ride.driver.notified_by_ride?(@ride) %>
     <p>Your driver is receiving notifications</p>
   <% else %>
     <p>Your driver is not receiving notifications</p>
@@ -57,8 +57,8 @@
 
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
-<% if user_signed_in? && @ride.passengers.include?(current_user) %>
-  <% if current_user.notify? %>
+<% if user_signed_in? %>
+  <% if current_user.notified_by_ride?(@ride) %>
     <%= link_to '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe,
                 passenger_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
   <% else %>

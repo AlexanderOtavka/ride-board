@@ -27,6 +27,10 @@ class User < ApplicationRecord
     notify_sms? || notify_email?
   end
 
+  def notified_by_ride?(ride)
+    notify? && notifying_rides.include?(ride)
+  end
+
   def formatted_phone_number
     phone_number.match(/(.{3})(.{3})(.{4})/) do |area_code, prefix, suffix|
       "(#{area_code}) #{prefix}-#{suffix}"
