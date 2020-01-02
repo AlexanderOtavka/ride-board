@@ -15,7 +15,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
   end
 
   test "can update user notification preferences" do
-    patch passenger_ride_notify_url(@ride, {
+    patch passenger_ride_notify_url(@ride), params: {
       ride: {
         notify: "0",
       },
@@ -24,7 +24,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
         notify_email: true,
         phone_number: "1234567890"
       }
-    })
+    }
 
     @user.reload
     assert @user.notify_sms?
@@ -36,7 +36,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     @ride = rides(:driver_created)
 
     assert_difference -> {RideNotificationSubscription.count} do
-      patch passenger_ride_notify_url(@ride, {
+      patch passenger_ride_notify_url(@ride), params: {
         ride: {
           notify: "1",
         },
@@ -45,7 +45,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
           notify_email: true,
           phone_number: ""
         }
-      })
+      }
     end
 
     assert @ride.notification_subscribers.include? @user
@@ -54,7 +54,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
 
   test "adding a subscription is idempotent" do
     assert_no_difference -> {RideNotificationSubscription.count} do
-      patch passenger_ride_notify_url(@ride, {
+      patch passenger_ride_notify_url(@ride), params: {
         ride: {
           notify: "1",
         },
@@ -63,13 +63,13 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
           notify_email: true,
           phone_number: ""
         }
-      })
+      }
     end
   end
 
   test "can remove a subscription" do
     assert_difference -> {RideNotificationSubscription.count}, -1 do
-      patch passenger_ride_notify_url(@ride, {
+      patch passenger_ride_notify_url(@ride), params: {
         ride: {
           notify: "0",
         },
@@ -78,7 +78,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
           notify_email: true,
           phone_number: ""
         }
-      })
+      }
     end
 
     assert_not @ride.notification_subscribers.include? @user
@@ -88,7 +88,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     @ride = rides(:driver_created)
 
     assert_no_difference -> {RideNotificationSubscription.count} do
-      patch passenger_ride_notify_url(@ride, {
+      patch passenger_ride_notify_url(@ride), params: {
         ride: {
           notify: "0",
         },
@@ -97,16 +97,16 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
           notify_email: true,
           phone_number: ""
         }
-      })
+      }
     end
   end
 
   test "can't notify sms without a phone number" do
-    patch passenger_ride_notify_url(@ride, {
+    patch passenger_ride_notify_url(@ride), params: {
       user: {
         notify_sms: true,
       }
-    })
+    }
 
     @user.reload
     assert_not @user.notify_sms?
