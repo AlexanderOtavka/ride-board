@@ -33,10 +33,11 @@ class RideTest < ActiveSupport::TestCase
     assert_not rides(:creator_created).passengers.include? nil
   end
 
-  test "has a subscribers with subscriptions" do
-    assert_equal 2, rides(:creator_created).notification_subscribers.count
-    assert rides(:creator_created).notification_subscribers.include? users(:creator)
-    assert rides(:creator_created).notification_subscribers.include? users(:passenger)
+  test "has subscribers with subscriptions" do
+    ride = rides(:driver_created)
+    assert_equal 2, ride.notification_subscribers.count
+    assert ride.notification_subscribers.include? users(:driver)
+    assert ride.notification_subscribers.include? users(:passenger)
   end
 
   test "doesn't have a subscriber with no subscription" do
@@ -69,8 +70,8 @@ class RideTest < ActiveSupport::TestCase
     end
 
     assert_difference -> {Ride.count}, -1 do
-      rides(:driver_created).driver = nil
-      rides(:driver_created).save
+      rides(:past_with_driver).driver = nil
+      rides(:past_with_driver).save
     end
   end
 end

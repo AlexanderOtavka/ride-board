@@ -11,6 +11,11 @@ driver_and_ride_they_created:
   app: 1
 
 passenger_and_a_ride_they_are_not_in:
-  ride_id: 1
+  ride_id: 2
   user_id: 1
   app: 0
+
+admin_and_a_ride_they_dont_drive_for:
+  ride_id: 3
+  user_id: 3
+  app: 1

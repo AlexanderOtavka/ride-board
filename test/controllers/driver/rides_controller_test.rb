@@ -45,9 +45,8 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "subscription on join is idempotent" do
-    skip "Doesn't actually test the behavior"
-    user = users(:driver)
-    ride = rides(:driver_created)
+    user = users(:admin)
+    ride = rides(:driverless)
     sign_in user
 
     assert_no_difference -> {RideNotificationSubscription.count} do
@@ -77,23 +76,28 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "leaving a ride unsubscribes you" do
-    sign_in users(:driver)
+    user = users(:driver)
+    ride = rides(:driver_created)
+    sign_in user
 
-    assert_difference -> {RideNotificationSubscription.count}, -1 do
-      delete driver_join_ride_url(rides(:driver_created))
+    assert_difference -> {Ride.count} => 0,
+                      -> {RideNotificationSubscription.count} => -1 do
+      delete driver_join_ride_url(ride)
     end
 
-    assert_not rides(:driver_created).notification_subscribers.include? users(:driver)
+    assert_not ride.notification_subscribers.include? user
   end
 
   test "can leave a ride you aren't subscribed to" do
-    sign_in users(:driver)
+    user = users(:driver)
+    ride = rides(:creator_created)
+    sign_in user
 
     assert_no_difference -> {RideNotificationSubscription.count} do
-      delete driver_join_ride_url(rides(:creator_created))
+      delete driver_join_ride_url(ride)
     end
 
-    assert_not rides(:creator_created).notification_subscribers.include? users(:driver)
+    assert_not ride.notification_subscribers.include? user
     assert_redirected_to driver_rides_url
   end
 
