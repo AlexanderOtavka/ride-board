@@ -6,8 +6,7 @@
   "environments": {
     "review": {
       "scripts": {
-        "postdeploy": "bundle exec rake db:seed",
-        "pr-predestroy": "bundle exec rake cleanup"
+        "postdeploy": "bundle exec rake db:seed"
       }
     }
   }
