@@ -25,9 +25,13 @@ body{
   .explain_text {
   font-family: 'Montserrat', sans-serif;
   color: white;
-  font-size: 2vw;
+  font-size: 2rem;
   text-align: center;
   text-transform: uppercase;
+  }
+
+  .explain_text a {
+  color: white;
   }
 
   .glitch {
