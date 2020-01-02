@@ -10,34 +10,30 @@ Rails.application.routes.draw do
   namespace :passenger do
     root to: "rides#index"
 
-    get   "/notify", to: "notifications#show", as: :notify
-    patch "/notify", to: "notifications#update"
+    resource :notifications, as: :notify, only: [:show, :update]
 
     get    "/myrides",        to: "rides#mine", as: :my_rides
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do
-      resources :messages, as: :messages, only: [:create]
-
-      get   "/notify", to: "ride_notifications#show", as: :notify
-      patch "/notify", to: "ride_notifications#update"
+      resources :messages, only: [:create]
+      resource :ride_notifications, as: :notify, path: "notifications",
+                                    only: [:show, :update]
     end
   end
 
   namespace :driver do
     root to: "rides#index"
 
-    get   "/notify", to: "notifications#show", as: :notify
-    patch "/notify", to: "notifications#update"
+    resource :notifications, as: :notify, only: [:show, :update]
 
     get    "/myrides",        to: "rides#mine", as: :my_rides
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do
       resources :messages, as: :messages, only: [:create]
-
-      get   "/notify", to: "ride_notifications#show", as: :notify
-      patch "/notify", to: "ride_notifications#update"
+      resource :ride_notifications, as: :notify, path: "notifications",
+                                    only: [:show, :update]
     end
   end
 
