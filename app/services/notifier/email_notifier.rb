@@ -13,7 +13,7 @@ module Notifier
     end
 
     def real_message(user, message)
-      send_message(user, message, "Someone commented on your post!")
+      send_message(user, message, "Update on Your Ride")
     end
 
     # user: a user model
@@ -32,7 +32,7 @@ module Notifier
     end
 
     def log_message(user, message)
-      send_log(user, message, "Update on your Ride")
+      send_log(user, message, "Update on Your Ride")
     end
 
     def send_log(user, message, subject)
