@@ -14,8 +14,8 @@ module RideNotificationManager
     if current_user.update(user_params)
       maybe_send_initial_notification
 
-      if !ride_params[:notify?].nil? && ride_params[:notify?] != notify_this_ride?
-        if ride_params[:notify?]
+      if !ride_params[:notify].nil? && ride_params[:notify] != notify_this_ride?
+        if ride_params[:notify]
           @ride.notification_subscriptions.create!(user: current_user, app: app)
         else
           @ride.notification_subscribers.delete current_user
@@ -41,9 +41,7 @@ module RideNotificationManager
     def ride_params
       filtered_params = params.require(:ride).permit(:notify)
 
-      unless filtered_params[:notify].nil?
-        filtered_params[:notify?] = !["0", "", false].include?(filtered_params[:notify])
-      end
+      boolify_param!(filtered_params, :notify)
 
       filtered_params
     end

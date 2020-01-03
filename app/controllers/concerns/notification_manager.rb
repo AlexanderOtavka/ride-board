@@ -20,10 +20,21 @@ module NotificationManager
     end
   end
 
+  def boolify_param!(params, name)
+    unless params[name].nil?
+      params[name] = !["0", "", false].include?(params[name])
+    end
+
+    params
+  end
+
   def user_params
     filtered_params = params
       .require(:user)
       .permit(:notify_email, :notify_sms, :phone_number)
+
+    boolify_param!(filtered_params, :notify_email)
+    boolify_param!(filtered_params, :notify_sms)
 
     unless filtered_params[:phone_number].nil?
       if filtered_params[:phone_number] == ''
