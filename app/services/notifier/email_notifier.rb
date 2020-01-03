@@ -18,13 +18,10 @@ module Notifier
 
     # user: a user model
     # message: string
-    def send_message(user,
-                     message,
-                     subject,
-                     tracking: true,
-                     tracking_click: true,
-                     tracking_opens: true,
-                     tags: "Comment Notifications")
+    def send_message(user, message, subject, tags: "Notifications")
+      tracking = false
+      tracking_click = false
+      tracking_opens = false
       msg = _build_message_and_log(user, message, subject,
                                    tracking, tracking_click,
                                    tracking_opens, tags)
@@ -47,7 +44,7 @@ module Notifier
                                tracking=true,
                                tracking_click=true,
                                tracking_opens=true,
-                               tags="Comment Notifications") # tags are used to categorize email traffic
+                               tags="Notifications") # tags are used to categorize email traffic
 
       msg = {
           :from => @from_email,
