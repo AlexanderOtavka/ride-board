@@ -32,7 +32,7 @@ module Notifier
     end
 
     def log_message(user, message)
-      send_log(user, message, "Someone commented on your post!")
+      send_log(user, message, "Update on your Ride")
     end
 
     def send_log(user, message, subject)
@@ -51,7 +51,7 @@ module Notifier
 
       msg = {
           :from => @from_email,
-          :to => user,
+          :to => user.email,
           :subject => email_subject,
           :text => body,
           # rubocop:disable Style/StringHashKeys
