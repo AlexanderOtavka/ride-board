@@ -1,39 +1,5 @@
 <h1>Requested Rides</h1>
-<div class="btns-bar">
-  <%= search_form_for @search, url: "", class: "rides-search" do |f| %>
-
-    <div class="field">
-      <%= f.label "Start Location",
-                  class: "col rides-search__origin-label" %>
-      <%= f.collection_select(:start_location_id_eq,
-                              Location.all,
-                              :id, :name, include_blank: true) %>
-    </div>
-    <div class="field">
-      <%= f.label "End Location",
-                  class: "col rides-search__origin-label" %>
-      <%= f.collection_select(:end_location_id_eq,
-                              Location.all,
-                              :id, :name, include_blank: true) %>
-    </div>
-    <div class="field">
-      <%= f.label "Leaves After" %>
-      <%= f.datetime_select :start_datetime_gteq, include_blank: true ,ampm: true %>
-    </div>
-
-    <div class="field">
-      <%= f.label "Arrives Before" %>
-      <%= f.datetime_select :end_datetime_lteq, include_blank: true ,ampm: true %>
-    </div>
-
-    </div>
-
-    <div class="rides-search__button-container">
-      <%= f.submit "Search", class: "rides-search__button" %>
-
-    </div>
-    </div>
-    <% end %>
+<%= render 'rides/search' %>
 <table>
   <thead>
     <tr>

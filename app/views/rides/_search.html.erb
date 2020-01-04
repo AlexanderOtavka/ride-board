@@ -1,0 +1,34 @@
+<div class="btns-bar">
+  <%= search_form_for @search, url: "", class: "rides-search" do |f| %>
+
+    <div class="input-field">
+      <%= f.label "Start Location",
+                  class: "col rides-search__origin-label" %>
+      <%= f.collection_select(:start_location_id_eq,
+                              Location.all,
+                              :id, :name, include_blank: true) %>
+    </div>
+    <div id="ride_start_search">
+      <%= f.label :start_datetime, "Leaves Before" %>
+      <%= f.text_field :start_datetime_lteq, default: Time.zone.now, class:"datetimepicker"%>
+    </div>
+    <div class="input-field">
+      <%= f.label "End Location",
+                  class: "col rides-search__origin-label" %>
+      <%= f.collection_select(:end_location_id_eq,
+                              Location.all,
+                              :id, :name, include_blank: true) %>
+    </div>
+
+    <div id="ride_start_search">
+      <%= f.label :end_datetime, "Arrives Before" %>
+      <%= f.text_field :end_datetime_lteq, default: Time.zone.now, class:"datetimepicker"%>
+    </div>
+
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Search", class: "btn" %>
+
+    </div>
+  <% end %>

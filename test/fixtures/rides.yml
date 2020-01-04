@@ -15,7 +15,7 @@ creator_created:
 
 driver_created:
   id: 2
-  start_location_id: 1
+  start_location_id: 3
   start_datetime: 2024-11-18 07:08:36
   end_location_id: 2
   end_datetime: 2024-11-18 07:08:36
@@ -44,9 +44,28 @@ past_with_driver:
 
 past_without_driver:
   id: 5
-  start_location_id: 1
+  start_location_id: 3
   start_datetime: 2018-11-18 07:08:36
   end_location_id: 2
   end_datetime: 2018-11-18 07:08:36
   created_by_id: 4
+  price: 9.99
+
+past_without_driver2:
+  id: 6
+  start_location_id: 4
+  start_datetime: 2018-11-20 07:08:36
+  end_location_id: 2
+  end_datetime: 2018-11-30 07:08:36
+  created_by_id: 4
+  price: 9.99
+
+driver_created2:
+  id: 7
+  start_location_id: 1
+  start_datetime: 2024-11-18 07:08:36
+  end_location_id: 2
+  end_datetime: 2024-11-30 07:08:36
+  driver_id: 2
+  created_by_id: 2
   price: 9.99

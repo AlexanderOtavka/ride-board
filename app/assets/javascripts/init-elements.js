@@ -72,4 +72,10 @@ document.addEventListener("turbolinks:load", function() {
         MaterialDateTimePicker.create(start_datetime);
         MaterialDateTimePicker.create(end_datetime);
   }
+  var search_start_datetime = document.getElementById('q_start_datetime_lteq');
+  var search_end_datetime = document.getElementById('q_end_datetime_lteq');
+  if (search_start_datetime && search_end_datetime){
+    MaterialDateTimePicker.create(search_start_datetime);
+    MaterialDateTimePicker.create(search_end_datetime);
+  }
 });

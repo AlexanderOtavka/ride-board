@@ -11,6 +11,26 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   test "should get index showing rides without drivers" do
     get driver_rides_url
     assert_response :success
+    assert_select ".ride-thumbnail", 2
+  end
+
+  test "should get rides for location search" do
+    get driver_rides_url, params: {
+        q: {
+            start_location_id_eq: 3
+        }
+    }
+    assert_response :success
+    assert_select ".ride-thumbnail", 1
+  end
+
+  test "should get rides for time search" do
+    get driver_rides_url, params: {
+        q: {
+            start_datetime_lteq: "2018-11-19 07:08:36"
+        }
+    }
+    assert_response :success
     assert_select ".ride-thumbnail", 1
   end
 
