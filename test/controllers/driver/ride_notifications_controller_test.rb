@@ -17,7 +17,7 @@ class Driver::RideNotificationsControllerTest < ActionDispatch::IntegrationTest
   test "can update notification preferences" do
     patch driver_ride_notify_url(@ride), params: {
       ride: {
-        notify: "0",
+        notify: false,
       },
       user: {
         notify_sms: true,
@@ -36,7 +36,7 @@ class Driver::RideNotificationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> {RideNotificationSubscription.count} do
       patch driver_ride_notify_url(@ride), params: {
         ride: {
-          notify: "1",
+          notify: true,
         },
         user: {
           notify_sms: false,
@@ -56,7 +56,7 @@ class Driver::RideNotificationsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference -> {RideNotificationSubscription.count} do
       patch driver_ride_notify_url(@ride), params: {
         ride: {
-          notify: "1",
+          notify: true,
         },
         user: {
           notify_sms: false,
@@ -73,7 +73,7 @@ class Driver::RideNotificationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> {RideNotificationSubscription.count}, -1 do
       patch driver_ride_notify_url(@ride), params: {
         ride: {
-          notify: "0",
+          notify: false,
         },
         user: {
           notify_sms: false,
@@ -90,7 +90,7 @@ class Driver::RideNotificationsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference -> {RideNotificationSubscription.count} do
       patch driver_ride_notify_url(@ride), params: {
         ride: {
-          notify: "0",
+          notify: false,
         },
         user: {
           notify_sms: false,

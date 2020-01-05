@@ -20,12 +20,13 @@ module NotificationManager
     end
   end
 
-  def boolify_param!(params, name)
-    unless params[name].nil?
-      params[name] = !["0", "", false].include?(params[name])
+  def boolify_param!(filtered_params, name)
+    unless filtered_params[name].nil?
+      falsy_values = ["", "0", "false", false]
+      filtered_params[name] = !falsy_values.include?(filtered_params[name])
     end
 
-    params
+    filtered_params
   end
 
   def user_params

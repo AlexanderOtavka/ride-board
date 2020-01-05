@@ -17,7 +17,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
   test "can update user notification preferences" do
     patch passenger_ride_notify_url(@ride), params: {
       ride: {
-        notify: "0",
+        notify: false,
       },
       user: {
         notify_sms: true,
@@ -38,7 +38,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     assert_difference -> {RideNotificationSubscription.count} do
       patch passenger_ride_notify_url(@ride), params: {
         ride: {
-          notify: "1",
+          notify: true,
         },
         user: {
           notify_sms: false,
@@ -56,7 +56,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     assert_no_difference -> {RideNotificationSubscription.count} do
       patch passenger_ride_notify_url(@ride), params: {
         ride: {
-          notify: "1",
+          notify: true,
         },
         user: {
           notify_sms: false,
@@ -71,7 +71,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     assert_difference -> {RideNotificationSubscription.count}, -1 do
       patch passenger_ride_notify_url(@ride), params: {
         ride: {
-          notify: "0",
+          notify: false,
         },
         user: {
           notify_sms: false,
@@ -90,7 +90,7 @@ class Passenger::RideNotificationsControllerTest < ActionDispatch::IntegrationTe
     assert_no_difference -> {RideNotificationSubscription.count} do
       patch passenger_ride_notify_url(@ride), params: {
         ride: {
-          notify: "0",
+          notify: false,
         },
         user: {
           notify_sms: false,
