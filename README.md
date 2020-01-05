@@ -1,5 +1,8 @@
 # RideBoard.app
 
+![Tests](https://github.com/AlexanderOtavka/ride-board/workflows/Tests/badge.svg)
+![Linting](https://github.com/AlexanderOtavka/ride-board/workflows/Linting/badge.svg)
+
 > Ride sharing for Grinnell students
 
 ## Setting Local Environment Variables
@@ -23,14 +26,27 @@ just run `docker-compose exec web bash` once the server is running. This will
 attach to the same container that the server is using and allow you to run
 whatever commands you want.
 
+If you want to get a shell in side the container when the server is *not* running, you can run `docker-compose run web bash`.
+This will spin up a new instance and give you a shell inside of it.
+Note that if you have a `docker-compose run` instance and a `docker-compose up` instance running at the same time both may work, but weird problems are likely to appear.
+
+To stop all docker processes for this project, you can run `docker-compose stop` in any shell in a project folder.
+
 ## Running Tests
 
-To just run all the tests once, run `docker-compose exec web rails test`.
+To just run all the tests once, run `docker-compose run web rails test`.
 
 If you want tests to automatically rerun when you change files, run
-`docker-compose exec web bundle exec guard`. Guard will only run certain
+`docker-compose run web bundle exec guard`. Guard will only run certain
 tests when relevant files change. To run all tests, just hit enter in the
 guard interactive console when you see the `>` prompt.
+
+## Linting
+
+This project uses [rubocop](https://www.rubocop.org/en/stable/) to lint ruby code.
+To run ruby linting, call `docker-compose run web bin/lint.sh --ruby`.
+Linting gets automatically run in on all pull requests against master, and github will complain if it does not pass.
+The rules for rubocop can be found in [.rubocop.yml](.rubocop.yml).
 
 ## Deploying
 

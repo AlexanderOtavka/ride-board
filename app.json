@@ -1,0 +1,13 @@
+{
+  "name": "RideBoard.app",
+  "description": "Ride sharing for Grinnell students",
+  "website": "https://rideboard.app/",
+  "repository": "https://github.com/AlexanderOtavka/ride-board",
+  "environments": {
+    "review": {
+      "scripts": {
+        "postdeploy": "bundle exec rake db:seed"
+      }
+    }
+  }
+}
