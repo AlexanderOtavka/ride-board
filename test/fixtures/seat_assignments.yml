@@ -11,3 +11,11 @@ creator_in_driverless:
 other_passenger_in_driver_created:
   ride_id: 2
   user_id: 5
+
+several_rides_passenger_in_driver_created:
+  ride_id: 2
+  user_id: 6
+
+several_rides_passenger_in_driverless:
+  ride_id: 3
+  user_id: 6

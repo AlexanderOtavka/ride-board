@@ -19,3 +19,13 @@ admin_and_a_ride_they_dont_drive_for:
   ride_id: 3
   user_id: 3
   app: 1
+
+several_rides_passenger_in_driver_created:
+  ride_id: 2
+  user_id: 6
+  app: 0
+
+several_rides_passenger_in_driverless:
+  ride_id: 3
+  user_id: 6
+  app: 0
