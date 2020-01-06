@@ -53,7 +53,7 @@ past_without_driver:
 
 past_without_driver2:
   id: 6
-  start_location_id: 4
+  start_location_id: 3
   start_datetime: 2018-11-20 07:08:36
   end_location_id: 2
   end_datetime: 2018-11-30 07:08:36
