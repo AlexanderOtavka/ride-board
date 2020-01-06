@@ -35,45 +35,52 @@ module MessageManager
     end
 
     def send_notification(message)
+      ride = message.ride
+
       notifier = Notifier::Service.new
-      if message.ride.driver == nil || message.ride.driver == message.created_by
-        if message.ride.driver == message.created_by
+
+      subscribers = ride.notification_subscribers.where.not(
+        id: message.created_by.id)
+      drivers = subscribers.where(
+        ride_notification_subscriptions: {app: :driver})
+      passengers = subscribers.where(
+        ride_notification_subscriptions: {app: :passenger})
+
+      if ride.driver == nil || message.created_by == ride.driver
+        if message.created_by == ride.driver
           sender = "Your driver"
         else
           sender = message.created_by.email
         end
 
-        subscribers = message.ride.notification_subscribers.where.not(
-          id: message.created_by.id)
-        drivers = subscribers.where(
-          ride_notification_subscriptions: {app: :driver})
-        passengers = subscribers.where(
-          ride_notification_subscriptions: {app: :passenger})
-
         drivers.each do |driver|
           notifier.notify(driver,
             ellipsize("#{sender} says: \"", message.content,
-                      "\" See #{short_driver_ride_url(message.ride)} for details"))
+                      "\" See #{short_driver_ride_url(ride)} for details"))
         end
 
         passengers.each do |passenger|
           notifier.notify(passenger,
             ellipsize("#{sender} says: \"", message.content,
-                      "\" See #{share_ride_url(message.ride)} for details"))
+                      "\" See #{share_ride_url(ride)} for details"))
         end
       else
-        if message.ride.passengers.include? message.created_by
-          sender = "Your passenger"
-        else
-          sender = message.created_by.email
-        end
+        drivers.each do |driver|
+          if driver == ride.driver &&
+             ride.passengers.include?(message.created_by)
 
-        notifier.notify(message.ride.driver,
-          ellipsize(
-            "#{sender} says: \"",
-            message.content,
-            "\" See #{short_driver_ride_url(message.ride)} for details"
-          ))
+            sender = "Your passenger"
+          else
+            sender = message.created_by.email
+          end
+
+          notifier.notify(driver,
+            ellipsize(
+              "#{sender} says: \"",
+              message.content,
+              "\" See #{short_driver_ride_url(ride)} for details"
+            ))
+        end
       end
     end
 
