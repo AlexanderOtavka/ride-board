@@ -10,6 +10,10 @@ class User < ApplicationRecord
   has_many :rides_driven, class_name: "Ride", foreign_key: :driver_id,
                           dependent: :nullify
 
+  has_many :ride_notification_subscriptions, dependent: :destroy
+  has_many :notifying_rides, through: :ride_notification_subscriptions,
+                             source: :ride
+
   has_many :messages_posted, class_name: "Message", dependent: :destroy
 
   validates_format_of :email, with: /\A.*@grinnell\.edu\z/i,
@@ -21,6 +25,10 @@ class User < ApplicationRecord
 
   def notify?
     notify_sms? || notify_email?
+  end
+
+  def notified_by_ride?(ride)
+    notify? && notifying_rides.include?(ride)
   end
 
   def formatted_phone_number

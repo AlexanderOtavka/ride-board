@@ -1,0 +1,7 @@
+<h1 class="rb-notifications__heading">Notification Preferences</h1>
+
+<%= render 'notifications/form', url: driver_ride_notify_path(@ride) do |form| %>
+  <%= render 'notifications/ride_fields', form: form %>
+<% end %>
+
+<%= link_to 'Back', driver_ride_path(@ride), class: "rb-notifications__back" %>

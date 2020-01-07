@@ -7,7 +7,18 @@ class Ride < ApplicationRecord
   has_many :seat_assignments, dependent: :destroy
   has_many :passengers, through: :seat_assignments, source: :user
 
+  has_many :notification_subscriptions, class_name: "RideNotificationSubscription",
+                                        dependent: :destroy
+  has_many :notification_subscribers, through: :notification_subscriptions,
+                                      source: :user
+
   has_many :messages, dependent: :destroy
+
+  def notified_passengers
+    User.joins(:seat_assignments, :ride_notification_subscriptions)
+      .where("seat_assignments.ride_id = ride_notification_subscriptions.ride_id")
+      .where(seat_assignments: {ride_id: id})
+  end
 
   def authorized_editor?(editor)
     !editor.nil? && (
