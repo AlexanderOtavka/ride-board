@@ -1,4 +1,4 @@
-class Driver::NotificationsController < ApplicationController
+class Driver::NotificationsController < Driver::BaseController
   include NotificationManager
 
   def notify_url

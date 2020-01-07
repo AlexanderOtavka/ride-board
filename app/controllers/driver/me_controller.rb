@@ -1,4 +1,4 @@
-class Driver::MeController < ApplicationController
+class Driver::MeController < Driver::BaseController
   include ProfileManager
 
   def show

@@ -1,4 +1,4 @@
-class Passenger::MeController < ApplicationController
+class Passenger::MeController < Passenger::BaseController
   include ProfileManager
 
   def show
