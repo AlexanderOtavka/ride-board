@@ -12,14 +12,6 @@ module Passenger
       @other_rides = future_rides.where(driver_id: nil)
     end
 
-    # GET /rides/mine
-    # GET /rides/mine.json
-    def mine
-      @rides = future_rides
-        .joins(:seat_assignments)
-        .where(seat_assignments: {user: current_user})
-    end
-
     # GET /rides/1
     # GET /rides/1.json
     def show

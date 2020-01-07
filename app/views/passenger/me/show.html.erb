@@ -1,0 +1,4 @@
+<%= render "me/ride_list",
+           upcoming_rides: @upcoming_rides, past_rides: @past_rides,
+           ride_path: -> (ride) {passenger_ride_path(ride)},
+           edit_path: -> (ride) {edit_passenger_ride_path(ride)} %>

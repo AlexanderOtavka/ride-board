@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   namespace :passenger do
     root to: "rides#index"
 
-    get    "/myrides",        to: "rides#mine", as: :my_rides
+    get "/me", to: "me#show", as: :me
+
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do
@@ -24,7 +25,8 @@ Rails.application.routes.draw do
   namespace :driver do
     root to: "rides#index"
 
-    get    "/myrides",        to: "rides#mine", as: :my_rides
+    get "/me", to: "me#show", as: :me
+
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do

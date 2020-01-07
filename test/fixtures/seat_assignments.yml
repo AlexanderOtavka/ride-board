@@ -7,3 +7,7 @@ creator_in_ride_they_created:
 creator_in_driverless:
   ride_id: 3
   user_id: 4
+
+creator_in_past_with_driver:
+  ride_id: 4
+  user_id: 4

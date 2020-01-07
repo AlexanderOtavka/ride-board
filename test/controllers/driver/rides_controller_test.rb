@@ -14,12 +14,6 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".ride-thumbnail", 1
   end
 
-  test "should get my rides" do
-    get driver_my_rides_url
-    assert_response :success
-    assert_select ".ride-thumbnail", 2
-  end
-
   test "should get new" do
     get new_driver_ride_url
     assert_response :success
