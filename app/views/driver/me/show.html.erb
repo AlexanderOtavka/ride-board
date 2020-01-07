@@ -1,4 +1,6 @@
-<%= render "me/account_bar" %>
+<%= render "me/account_bar" do %>
+  <%= link_to 'Notification Preferences', driver_notify_path, class: 'btn' %>
+<% end %>
 
 <%= render "me/ride_list",
            upcoming_rides: @upcoming_rides, past_rides: @past_rides,

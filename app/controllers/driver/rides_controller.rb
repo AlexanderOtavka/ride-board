@@ -33,6 +33,10 @@ class Driver::RidesController < Driver::BaseController
     @ride = Ride.new(driver_ride_params.merge(
       driver: current_user,
       created_by: current_user,
+      notification_subscriptions: [RideNotificationSubscription.new(
+        user: current_user,
+        app: :driver
+      )],
     ))
 
     respond_to do |format|
@@ -54,7 +58,7 @@ class Driver::RidesController < Driver::BaseController
       if @ride.update(driver_ride_params)
 
         notifier = Notifier::Service.new
-        @ride.passengers.each do |passenger|
+        @ride.notified_passengers.each do |passenger|
           notifier.notify(passenger,
             "Your driver made a change to your ride. " +
             "See #{share_ride_url(@ride)} for details")
@@ -84,7 +88,10 @@ class Driver::RidesController < Driver::BaseController
   def join
     valid = true
 
-    unless @ride.driver.nil?
+    if @ride.driver == current_user
+      @ride.errors[:base] << "you are already the driver"
+      valid = false
+    elsif !@ride.driver.nil?
       @ride.errors[:driver] << "has already taken this ride"
       valid = false
     end
@@ -93,8 +100,14 @@ class Driver::RidesController < Driver::BaseController
 
     respond_to do |format|
       if valid && @ride.save
-        @ride.passengers.each do |passenger|
-          Notifier::Service.new.notify(passenger,
+        unless @ride.notification_subscribers.include? current_user
+          @ride.notification_subscriptions.create!(
+            user: current_user, app: :driver)
+        end
+
+        notifier = Notifier::Service.new
+        @ride.notified_passengers.each do |passenger|
+          notifier.notify(passenger,
             "A driver (#{current_user.email}) just accepted your ride request. " +
             "See #{share_ride_url(@ride)} for details.")
         end
@@ -118,8 +131,11 @@ class Driver::RidesController < Driver::BaseController
         @ride.driver = nil
         @ride.save
 
-        @ride.passengers.each do |passenger|
-          Notifier::Service.new.notify(passenger,
+        @ride.notification_subscribers.delete current_user
+
+        notifier = Notifier::Service.new
+        @ride.notified_passengers.each do |passenger|
+          notifier.notify(passenger,
             "Your driver (#{current_user.email}) will no longer be driving for you! " +
             "See #{share_ride_url(@ride)} for details.")
         end

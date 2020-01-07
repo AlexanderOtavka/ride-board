@@ -16,3 +16,11 @@ admin:
 creator:
   id: 4
   email: "creator@grinnell.edu"
+
+other_passenger:
+  id: 5
+  email: "other_passenger@grinnell.edu"
+
+several_rides_passenger:
+  id: 6
+  email: "several_rides_passenger@grinnell.edu"

@@ -1,11 +1,15 @@
 class Driver::NotificationsController < Driver::BaseController
   include NotificationManager
 
-  def notify_url
-    driver_ride_notify_url(@ride)
+  def app
+    :driver
+  end
+
+  def root_notify_url
+    driver_notify_url
   end
 
   def redirect_path
-    driver_ride_path(@ride)
+    driver_root_path
   end
 end

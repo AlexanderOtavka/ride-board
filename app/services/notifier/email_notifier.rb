@@ -13,18 +13,15 @@ module Notifier
     end
 
     def real_message(user, message)
-      send_message(user, message, "Someone commented on your post!")
+      send_message(user, message, "Update on Your Ride")
     end
 
     # user: a user model
     # message: string
-    def send_message(user,
-                     message,
-                     subject,
-                     tracking: true,
-                     tracking_click: true,
-                     tracking_opens: true,
-                     tags: "Comment Notifications")
+    def send_message(user, message, subject, tags: "Notifications")
+      tracking = false
+      tracking_click = false
+      tracking_opens = false
       msg = _build_message_and_log(user, message, subject,
                                    tracking, tracking_click,
                                    tracking_opens, tags)
@@ -32,7 +29,7 @@ module Notifier
     end
 
     def log_message(user, message)
-      send_log(user, message, "Someone commented on your post!")
+      send_log(user, message, "Update on Your Ride")
     end
 
     def send_log(user, message, subject)
@@ -47,11 +44,11 @@ module Notifier
                                tracking=true,
                                tracking_click=true,
                                tracking_opens=true,
-                               tags="Comment Notifications") # tags are used to categorize email traffic
+                               tags="Notifications") # tags are used to categorize email traffic
 
       msg = {
           :from => @from_email,
-          :to => user,
+          :to => user.email,
           :subject => email_subject,
           :text => body,
           # rubocop:disable Style/StringHashKeys

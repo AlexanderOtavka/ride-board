@@ -1,3 +1,5 @@
 <h1 class="rb-notifications__heading">Notification Preferences</h1>
 
-<%= render 'notifications/form', url: passenger_ride_notify_path(@ride) %>
+<%= render 'notifications/form', url: passenger_notify_path %>
+
+<%= link_to 'Back', passenger_root_path, class: "rb-notifications__back" %>

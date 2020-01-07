@@ -1,6 +1,10 @@
 class Driver::MessagesController < Driver::BaseController
   include MessageManager
 
+  def app
+    :driver
+  end
+
   def ride_path(ride)
     driver_ride_path(ride)
   end

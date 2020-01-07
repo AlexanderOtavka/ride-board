@@ -31,7 +31,11 @@ class Passenger::RidesController < Passenger::BaseController
     @ride = Ride.new(passenger_ride_params.merge(
       driver: nil,
       created_by: current_user,
-      passengers: [current_user]
+      passengers: [current_user],
+      notification_subscriptions: [RideNotificationSubscription.new(
+        user: current_user,
+        app: :passenger
+      )],
     ))
 
     respond_to do |format|
@@ -76,14 +80,23 @@ class Passenger::RidesController < Passenger::BaseController
   def join
     valid = false
     SeatAssignment.transaction do
-      @ride.passengers << current_user
-      valid = @ride.save
+      if @ride.passengers.include? current_user
+        @ride.errors[:base] << "you have already joined this ride"
+      else
+        @ride.passengers << current_user
+        valid = @ride.save
+      end
       raise ActiveRecord::Rollback unless valid
     end
 
     respond_to do |format|
       if valid
-        unless @ride.driver.nil?
+        unless @ride.notification_subscribers.include? current_user
+          @ride.notification_subscriptions.create!(
+            user: current_user, app: :passenger)
+        end
+
+        if @ride.notification_subscribers.include? @ride.driver
           Notifier::Service.new.notify(@ride.driver,
             "A new passenger (#{current_user.email}) just joined your ride. " +
             "See #{short_driver_ride_url(@ride)} for details.")
@@ -107,8 +120,9 @@ class Passenger::RidesController < Passenger::BaseController
       SeatAssignment.transaction do
         if @ride.passengers.include? current_user
           @ride.passengers.delete current_user
+          @ride.notification_subscribers.delete current_user
 
-          unless @ride.driver.nil?
+          if @ride.notification_subscribers.include? @ride.driver
             Notifier::Service.new.notify(@ride.driver,
               "A passenger (#{current_user.email}) just left your ride. " +
               "See #{short_driver_ride_url(@ride)} for details.")
