@@ -22,8 +22,10 @@
 <% end %>
 
 <section class="rb-ride-nav-links">
-  <%= link_to passenger_rides_path, class: "rb-ride-nav-link rb-ride-nav-link--back" do %>
-    < Back to Available Rides
+  <%= link_to passenger_rides_path,
+              class: "rb-ride-nav-link rb-ride-nav-link--back" do %>
+    <i class="material-icons left">arrow_back</i>
+    Available Rides
   <% end %>
 
   <% if @ride.authorized_editor? current_user %>
