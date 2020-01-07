@@ -11,7 +11,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   test "should get index showing rides without drivers" do
     get driver_rides_url
     assert_response :success
-    assert_select ".ride-thumbnail", 2
+    assert_select ".ride-thumbnail", 3
   end
 
   test "should get rides for location search" do
@@ -21,7 +21,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
         }
     }
     assert_response :success
-    assert_select ".ride-thumbnail", 1
+    assert_select ".ride-thumbnail", 2
   end
 
   test "should get rides for time search" do
@@ -37,7 +37,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   test "should get my rides" do
     get driver_my_rides_url
     assert_response :success
-    assert_select ".ride-thumbnail", 2
+    assert_select ".ride-thumbnail", 3
   end
 
   test "should get new" do

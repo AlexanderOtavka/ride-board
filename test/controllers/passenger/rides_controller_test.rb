@@ -32,7 +32,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_select "#other-rides" do
-      assert_select ".ride-thumbnail", 1
+      assert_select ".ride-thumbnail", 2
     end
   end
 
