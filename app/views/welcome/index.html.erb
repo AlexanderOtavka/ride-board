@@ -14,24 +14,28 @@
   <nav>
     <div class="nav-wrapper">
       <a href="/" class="brand-logo">RideBoard.app</a>
-      <% if !user_signed_in? %>
-        <a href="#" data-target="mobile-sidenav" class="sidenav-trigger">
-          <i class="material-icons">menu</i>
-        </a>
-        <ul class="right hide-on-med-and-down">
+      <a href="#" data-target="mobile-sidenav" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <% if user_signed_in? %>
+          <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+        <% else %>
           <li><%= link_to 'Sign In', new_user_session_path %></li>
-          <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-        </ul>
-      <% end %>
+          <li><%= link_to 'Sign Up', new_user_registration_path, class: 'btn' %></li>
+        <% end %>
+      </ul>
     </div>
   </nav>
 
-  <% if !user_signed_in? %>
-    <ul class="sidenav" id="mobile-sidenav">
+  <ul class="sidenav" id="mobile-sidenav">
+    <% if user_signed_in? %>
+      <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+    <% else %>
       <li><%= link_to 'Sign In', new_user_session_path %></li>
       <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-    </ul>
-  <% end %>
+    <% end %>
+  </ul>
 
   <div class="row container">
     <h1 class="white-text">Need a ride?</h1>
