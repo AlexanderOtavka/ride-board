@@ -1,3 +1,5 @@
+<%= render "me/account_bar" %>
+
 <%= render "me/ride_list",
            upcoming_rides: @upcoming_rides, past_rides: @past_rides,
            ride_path: -> (ride) {driver_ride_path(ride)},
