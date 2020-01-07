@@ -2,6 +2,163 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-.fb-share-button {
-  margin: 2rem 0;
+@import "colors";
+
+.rb-ride-nav-links {
+  margin: .5rem 0;
+  display: flex;
+}
+
+.rb-ride-nav-link {
+  color: $secondary-color;
+
+  &--back {
+    flex: 1;
+  }
+}
+
+.rb-ride-locations {
+  margin: .5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.rb-ride-location {
+  flex: 1;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+
+  &--start {
+    background-color: $light-grey;
+  }
+
+  &__heading {
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    font-weight: 300;
+  }
+
+  &__name {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__time {
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-weight: 100;
+  }
+}
+
+.rb-ride-driver {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+
+  &__heading {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 0.7em;
+    margin-right: 1rem;
+  }
+
+  &__name {
+    display: inline-block;
+    flex: 1;
+  }
+}
+
+.rb-ride-join {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  &__seats {
+    flex: 1;
+    font-weight: 100;
+  }
+
+  &__button {
+    margin: 0;
+    margin-left: 1rem;
+
+    &.btn-flat {
+      background-color: $light-grey;
+    }
+  }
+}
+
+.rb-ride-share {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+
+  &__description {
+    margin: 0;
+    padding: 0;
+    font-weight: 100;
+  }
+
+  &__bar {
+    display: flex;
+    align-items: center;
+  }
+
+  &__link {
+    flex: 1;
+    // margin: 0 !important;
+  }
+
+  .fb-share-button {
+    margin: 0;
+    padding: 0;
+    margin-left: 1rem;
+  }
+}
+
+.rb-ride-notifications {
+  margin: 0.5rem 0;
+  padding: 0;
+  border: 1px solid $light-grey;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  &__description {
+    font-weight: 100;
+    margin: 1rem;
+    padding: 0;
+  }
+
+  &__spacer {
+    flex: 1;
+  }
+
+  &__button {
+    margin: 1rem;
+
+    &.btn-flat {
+      background-color: $light-grey;
+    }
+  }
+}
+
+.rb-ride-notifications-status {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+  background-color: $light-grey;
 }

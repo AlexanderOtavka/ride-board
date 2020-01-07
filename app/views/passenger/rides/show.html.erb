@@ -15,86 +15,128 @@
   <meta property="fb:app_id" content="2479083255670794" />
 <% end %>
 
+<% content_for :body do %>
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+<% end %>
+
+<section class="rb-ride-nav-links">
+  <%= link_to passenger_rides_path, class: "rb-ride-nav-link rb-ride-nav-link--back" do %>
+    < Back to Available Rides
+  <% end %>
+
+  <% if @ride.authorized_editor? current_user %>
+    <%= link_to 'Edit', edit_passenger_ride_path(@ride), class: "rb-ride-nav-link rb-ride-nav-link--edit" %>
+  <% end %>
+</section>
+
 <%= render "shared/error_explanation", problem: @problem, errors: @errors %>
 
-<p>
-  <strong>Departure:</strong>
-  <%= @ride.start_location.name %>
-</p>
+<section class="rb-ride-locations">
+  <div class="rb-ride-location rb-ride-location--start">
+    <strong class="rb-ride-location__heading">Pickup</strong>
+    <p class="rb-ride-location__name"><%= @ride.start_location.name %></p>
+    <p class="rb-ride-location__time">
+      <%= @ride.start_datetime.to_s(:short_ampm) %>
+    </p>
+  </div>
 
-<p>
-  <strong>Departure Time:</strong>
-  <%= @ride.start_datetime.to_s(:short_ampm) %>
-</p>
+  <div class="rb-ride-location rb-ride-location--end">
+    <strong class="rb-ride-location__heading">Destination</strong>
+    <p class="rb-ride-location__name"><%= @ride.end_location.name %></p>
+  </div>
+</section>
 
-<p>
-  <strong>Destination:</strong>
-  <%= @ride.end_location.name %>
-</p>
-
-<p>
-  <strong>Arrival Time:</strong>
-  <%= @ride.end_datetime.to_s(:short_ampm) %>
-</p>
-
-<p>
-  <strong>Driver:</strong>
-  <%= @ride.driver ? user_display_name(@ride.driver) : "None" %>
-</p>
-
-<p>
-  <strong>Seats remaining:</strong>
-  <%= seats_remaining @ride %>
-</p>
-
-<% unless @ride.driver.nil? %>
-  <% if @ride.driver.notified_by_ride?(@ride) %>
-    <p>Your driver is receiving notifications</p>
+<p class="rb-ride-driver">
+  <% if @ride.driver.nil? %>
+    <span class="rb-ride-driver__name">
+      No driver yet
+    </span>
   <% else %>
-    <p>Your driver is not receiving notifications</p>
+    <strong class="rb-ride-driver__heading">Driver</strong>
+    <span class="rb-ride-driver__name">
+      <%= user_display_name(@ride.driver) %>
+    </span>
   <% end %>
+</p>
+
+<p class="rb-ride-join">
+  <span class="rb-ride-join__seats">
+    <%= seats_text @ride %>
+  </span>
+
+  <% unless @ride.driver == current_user %>
+    <% if @ride.passengers.include? current_user %>
+      <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete,
+                           class: "rb-ride-join__button btn-flat waves-effect" %>
+    <% elsif @ride.seats.nil? || @ride.passengers.count < @ride.seats %>
+      <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post,
+                          class: 'rb-ride-join__button rb-ride-join__button--join btn-large waves-effect' %>
+    <% end %>
+  <% end %>
+</p>
+
+<% if user_signed_in? %>
+  <p class="rb-ride-notifications">
+    <% if current_user.notified_by_ride?(@ride) %>
+      <span class="rb-ride-notifications__spacer"></span>
+
+      <%= link_to passenger_ride_notify_path(@ride),
+                  class: "rb-ride-notifications__button btn-flat waves-effect" do %>
+        <i class="material-icons left">notifications_active</i>
+        Notification Preferences
+      <% end %>
+    <% else %>
+      <span class="rb-ride-notifications__description">
+        Receive notifications about messages and changes to this ride
+      </span>
+      <span class="rb-ride-notifications__spacer"></span>
+
+      <% if @ride.notification_subscribers.include? current_user %>
+        <% notify_btn_class = "btn" %>
+      <% else %>
+        <% notify_btn_class = "btn-flat" %>
+      <% end %>
+
+      <%= link_to passenger_ride_notify_path(@ride),
+                  class: "rb-ride-notifications__button " +
+                         "#{notify_btn_class} waves-effect" do %>
+        <i class="material-icons left">notifications</i>
+        Notify Me
+      <% end %>
+    <% end %>
+  </p>
 <% end %>
+
+<section class="rb-ride-share">
+  <p class="rb-ride-share__description">
+    Get the word out!  Find a driver or more passengers
+  </p>
+
+  <div class="rb-ride-share__bar">
+    <input class="rb-ride-share__link" type="text" readonly
+          value="<%= share_ride_url(@ride) %>">
+
+    <div class="fb-share-button" data-href="<%= share_ride_url(@ride)%>"
+        data-layout="button" data-size="large">
+      <a target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=<% url_encode share_ride_url(@ride) %>&amp;src=sdkpreparse"
+        class="fb-xfbml-parse-ignore">
+        Share
+      </a>
+    </div>
+  </div>
+</section>
 
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
-<% if user_signed_in? %>
-  <% if current_user.notified_by_ride?(@ride) %>
-    <%= link_to '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe,
-                passenger_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
-  <% else %>
-    <%= link_to '<i class="material-icons left">notifications</i>Notify Me'.html_safe,
-                passenger_ride_notify_path(@ride), class: "btn waves-effect" %>
+<p class="rb-ride-notifications-status">
+  <% unless @ride.driver.nil? %>
+    <% if @ride.driver.notified_by_ride?(@ride) %>
+      Your driver is receiving notifications
+    <% else %>
+      Your driver is not receiving notifications
+    <% end %>
   <% end %>
-  <br />
-<% end %>
-
-<% unless @ride.driver == current_user %>
-  <% if @ride.passengers.include? current_user %>
-    <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %>
-  <% else %>
-    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post,
-                        class: 'btn-large' %>
-  <% end %>
-<% end %>
-
-<% if @ride.authorized_editor? current_user %>
-  <%= link_to 'Edit', edit_passenger_ride_path(@ride) %>
-<% end %>
-
-<%= link_to 'Back', passenger_rides_path %>
-
-  <!-- Load Facebook SDK for JavaScript -->
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-
-  <!-- Your share button code -->
-  <div class="fb-share-button"
-    data-href=<%= share_ride_url(@ride)%>
-    data-layout="button_count">
-  </div>
+</p>
