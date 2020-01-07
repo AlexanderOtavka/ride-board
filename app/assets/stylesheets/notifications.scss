@@ -1,3 +1,25 @@
-// Place all the styles related to the driver/notifications controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.rb-notifications__heading {
+  font-size: 2rem;
+  margin: 0;
+  padding: 2rem;
+  background-color: #F2C94C;
+}
+
+.rb-notification-form__section {
+  margin: 2rem;
+}
+
+.rb-notification-form__section-heading {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.rb-notification-form__field {
+  margin: 1rem -0.5rem;
+  padding: 0.5rem;
+  background-color: #eee;
+}
+
+.rb-notification-form__controls {
+  margin: 2rem;
+}

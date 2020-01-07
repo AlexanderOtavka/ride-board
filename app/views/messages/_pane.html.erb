@@ -6,8 +6,15 @@
     <% end %>
   </ul>
 
-  <%= form_with(model: [namespace, ride, Message.new(ride: ride)], local: true) do |form| %>
-    <%= form.text_area :content %>
-    <%= form.submit "Post a Message" %>
+  <%= form_with(model: [namespace, ride, Message.new(ride: ride)], class: "input-field", local: true) do |form| %>
+    <div class="row">
+      <div class="col l8 m8 s6">
+        <i class="material-icons prefix">sms</i>
+        <%= form.text_area :content, class: "materialize-textarea"%>
+      </div>
+      <div class="col">
+        <%= form.button "Post a Message", class: "btn waves-effect waves-light" %>
+      </div>
+    </div>
   <% end %>
 </section>
