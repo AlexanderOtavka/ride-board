@@ -5,7 +5,7 @@ class Passenger::MessagesController < Passenger::BaseController
     :passenger
   end
 
-  def ride_path(ride)
-    passenger_ride_path(ride)
+  def ride_path(ride, *args)
+    passenger_ride_path(ride, *args)
   end
 end

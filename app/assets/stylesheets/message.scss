@@ -1,3 +1,56 @@
 // Place all the styles related to the message controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "colors";
+
+.rb-message-form {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+  display: flex;
+  align-items: center;
+  // background-color: $light-grey;
+
+  &__input {
+    flex: 1;
+  }
+}
+
+.rb-message {
+  margin: 0.5rem 0;
+  display: block;
+  text-align: left;
+
+  &--self {
+    text-align: right;
+  }
+
+  &__content {
+    margin: 0;
+    padding: 1rem;
+    display: inline-block;
+    max-width: 70%;
+    background-color: $light-grey;
+    text-align: left;
+  }
+
+  &--driver &__content {
+    background-color: $primary-color;
+  }
+
+  &--self &__content {
+    background-color: $secondary-color;
+  }
+
+  &__sender {
+    margin: 0;
+    padding: 0;
+    display: block;
+    font-size: 0.7em;
+  }
+
+  &--driver &__sender::after {
+    content: "(Driver)";
+  }
+}
