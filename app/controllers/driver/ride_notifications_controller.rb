@@ -1,4 +1,4 @@
-class Driver::RideNotificationsController < ApplicationController
+class Driver::RideNotificationsController < Driver::BaseController
   include RideNotificationManager
 
   def app
