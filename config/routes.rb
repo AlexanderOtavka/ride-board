@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, path: 'account'
   resources :locations
 
-  get "/s/:id", to: redirect('/passenger/rides/%{id}'), as: :share_ride
+  get "/s/:ride_id", to: "welcome#share", as: :share_ride
   get "/d/:id", to: redirect('/driver/rides/%{id}'), as: :short_driver_ride
   get "/p/:id", to: redirect('/passenger/rides/%{id}'), as: :short_passenger_ride
 
