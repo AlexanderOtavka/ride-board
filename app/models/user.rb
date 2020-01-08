@@ -29,7 +29,7 @@ class User < ApplicationRecord
   validate do |user|
     # Make sure that someone isn't squatting another person's email
     if user.name.match(/\A\[\w+\]\Z/)
-      user_slug_match = user.email.match(/\A.*@/)
+      user_slug_match = user.email.match(/\A(.*)@/)
       if user.name != "[#{user_slug_match.captures[0]}]"
         user.errors[:name] << "cannot use someone else's email handle"
       end

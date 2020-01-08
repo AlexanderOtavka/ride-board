@@ -26,4 +26,22 @@ class UserTest < ActiveSupport::TestCase
     u.email = "bar@grinnell.edu"
     assert_equal "[bar]", u.display_name
   end
+
+  def create_valid_user(
+        name: "defaultName",
+        email: "default@grinnell.edu",
+        password: "GreatBigOldDefaultPassword1@!5")
+    u = User.new
+    u.name = name
+    u.email = email
+    u.password = password
+    return u
+  end
+  test "can be the same as email" do
+    assert create_valid_user(name: "bar@grinnell.edu", email: "bar@grinnell.edu").valid?
+  end
+
+  test "can use grinnell username in brackets" do
+    assert create_valid_user(name: "[bar]", email: "bar@grinnell.edu").valid?
+  end
 end
