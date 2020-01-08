@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
-  devise_for :users
+  devise_for :users, path: 'account'
   resources :locations
 
   get "/s/:id", to: redirect('/passenger/rides/%{id}'), as: :share_ride
@@ -10,9 +10,10 @@ Rails.application.routes.draw do
   namespace :passenger do
     root to: "rides#index"
 
+    get "/me", to: "me#show", as: :me
+
     resource :notifications, as: :notify, only: [:show, :update]
 
-    get    "/myrides",        to: "rides#mine", as: :my_rides
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do
@@ -25,9 +26,10 @@ Rails.application.routes.draw do
   namespace :driver do
     root to: "rides#index"
 
+    get "/me", to: "me#show", as: :me
+
     resource :notifications, as: :notify, only: [:show, :update]
 
-    get    "/myrides",        to: "rides#mine", as: :my_rides
     post   "/rides/:id/join", to: "rides#join", as: :join_ride
     delete "/rides/:id/join", to: "rides#leave"
     resources :rides do

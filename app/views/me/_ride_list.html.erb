@@ -1,7 +1,5 @@
-<h1>Rides</h1>
-
-<section id="available-rides">
-  <h2>Available Rides with Drivers</h2>
+<section id="upcoming-rides">
+  <h2>Upcoming Rides</h2>
 
   <table>
     <thead>
@@ -16,17 +14,17 @@
     </thead>
 
     <tbody>
-      <% @available_rides.each do |ride| %>
+      <% upcoming_rides.each do |ride| %>
         <%= render "rides/ride_thumbnail", ride: ride,
-                   ride_path: passenger_ride_path(ride),
-                   edit_path: edit_passenger_ride_path(ride) %>
+                  ride_path: ride_path[ride],
+                  edit_path: edit_path[ride] %>
       <% end %>
     </tbody>
   </table>
 </section>
 
-<section id="other-rides">
-  <h2>Other People Requested Rides</h2>
+<section id="past-rides">
+  <h2>Past Rides</h2>
 
   <table>
     <thead>
@@ -41,15 +39,11 @@
     </thead>
 
     <tbody>
-      <% @other_rides.each do |ride| %>
+      <% past_rides.each do |ride| %>
         <%= render "rides/ride_thumbnail", ride: ride,
-                   ride_path: passenger_ride_path(ride),
-                   edit_path: edit_passenger_ride_path(ride) %>
+                  ride_path: ride_path[ride],
+                  edit_path: edit_path[ride] %>
       <% end %>
     </tbody>
   </table>
 </section>
-
-<br>
-
-<%= link_to 'New Ride', new_passenger_ride_path %>

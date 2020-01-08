@@ -8,6 +8,10 @@ creator_in_driverless:
   ride_id: 3
   user_id: 4
 
+creator_in_past_without_driver:
+  ride_id: 5
+  user_id: 4
+
 other_passenger_in_driver_created:
   ride_id: 2
   user_id: 5

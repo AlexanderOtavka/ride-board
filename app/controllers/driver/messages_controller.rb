@@ -1,13 +1,11 @@
-module Driver
-  class MessagesController < ApplicationController
-    include MessageManager
+class Driver::MessagesController < Driver::BaseController
+  include MessageManager
 
-    def app
-      :driver
-    end
+  def app
+    :driver
+  end
 
-    def ride_path(ride)
-      driver_ride_path(ride)
-    end
+  def ride_path(ride)
+    driver_ride_path(ride)
   end
 end

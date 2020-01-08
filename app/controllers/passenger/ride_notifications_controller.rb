@@ -1,4 +1,4 @@
-class Passenger::RideNotificationsController < ApplicationController
+class Passenger::RideNotificationsController < Passenger::BaseController
   include RideNotificationManager
 
   def app

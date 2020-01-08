@@ -22,9 +22,9 @@
           <span>Send me text message notifications</span>
         </label>
 
-        <div class="rb-notification-form__sub-field">
-          <%= user.label :phone_number %>
+        <div class="rb-notification-form__sub-field input-field">
           <%= user.text_field :phone_number %>
+          <%= user.label :phone_number %>
         </div>
       </div>
     <% end %>

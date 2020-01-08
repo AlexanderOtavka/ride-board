@@ -1,4 +1,4 @@
-class Passenger::NotificationsController < ApplicationController
+class Passenger::NotificationsController < Passenger::BaseController
   include NotificationManager
 
   def app
