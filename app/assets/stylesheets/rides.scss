@@ -64,7 +64,22 @@
   border: 1px solid $light-grey;
 
   &__heading {
-    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 0.7em;
+    margin-right: 1rem;
+    vertical-align: top;
+  }
+}
+
+.rb-ride-passengers {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: 1px solid $light-grey;
+  display: flex;
+  flex-wrap: wrap;
+
+  &__heading {
     text-transform: uppercase;
     font-weight: 100;
     font-size: 0.7em;
@@ -72,9 +87,8 @@
     vertical-align: top;
   }
 
-  &__name {
-    display: inline-block;
-    vertical-align: top;
+  &__seats {
+    font-weight: 100;
   }
 }
 
@@ -86,7 +100,7 @@
   align-items: center;
   flex-direction: row;
 
-  &__seats {
+  &__message {
     flex: 1;
     font-weight: 100;
   }
@@ -101,7 +115,7 @@
   }
 }
 
-.rb-ride-share {
+.rb-share-ride {
   margin: 0.5rem 0;
   padding: 1rem;
   border: 1px solid $light-grey;
@@ -119,7 +133,6 @@
 
   &__link {
     flex: 1;
-    // margin: 0 !important;
   }
 
   .fb-share-button {
@@ -144,8 +157,10 @@
     padding: 0;
   }
 
-  &__spacer {
+  &__button-wrapper {
     flex: 1;
+    flex-basis: auto;
+    text-align: right;
   }
 
   &__button {

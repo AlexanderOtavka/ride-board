@@ -35,20 +35,7 @@
 
 <%= render "shared/error_explanation", problem: @problem, errors: @errors %>
 
-<section class="rb-ride-locations">
-  <div class="rb-ride-location rb-ride-location--start">
-    <strong class="rb-ride-location__heading">Pickup</strong>
-    <p class="rb-ride-location__name"><%= @ride.start_location.name %></p>
-    <p class="rb-ride-location__time">
-      <%= @ride.start_datetime.to_s(:short_ampm) %>
-    </p>
-  </div>
-
-  <div class="rb-ride-location rb-ride-location--end">
-    <strong class="rb-ride-location__heading">Destination</strong>
-    <p class="rb-ride-location__name"><%= @ride.end_location.name %></p>
-  </div>
-</section>
+<%= render "rides/ride_locations", ride: @ride %>
 
 <p class="rb-ride-driver">
   <% if @ride.driver.nil? %>
@@ -64,7 +51,7 @@
 </p>
 
 <p class="rb-ride-join">
-  <span class="rb-ride-join__seats">
+  <span class="rb-ride-join__message">
     <%= seats_text @ride %>
   </span>
 
@@ -79,57 +66,16 @@
   <% end %>
 </p>
 
-<% if user_signed_in? %>
-  <p class="rb-ride-notifications">
-    <% if current_user.notified_by_ride?(@ride) %>
-      <span class="rb-ride-notifications__spacer"></span>
+<%= render "rides/ride_notifications", ride: @ride,
+           notify_path: passenger_ride_notify_path(@ride) %>
 
-      <%= link_to passenger_ride_notify_path(@ride),
-                  class: "rb-ride-notifications__button btn-flat waves-effect" do %>
-        <i class="material-icons left">notifications_active</i>
-        Notification Preferences
-      <% end %>
-    <% else %>
-      <span class="rb-ride-notifications__description">
-        Receive notifications about messages and changes to this ride
-      </span>
-      <span class="rb-ride-notifications__spacer"></span>
-
-      <% if @ride.notification_subscribers.include? current_user %>
-        <% notify_btn_class = "btn" %>
-      <% else %>
-        <% notify_btn_class = "btn-flat" %>
-      <% end %>
-
-      <%= link_to passenger_ride_notify_path(@ride),
-                  class: "rb-ride-notifications__button " +
-                         "#{notify_btn_class} waves-effect" do %>
-        <i class="material-icons left">notifications</i>
-        Notify Me
-      <% end %>
-    <% end %>
-  </p>
+<%= render "rides/share_ride", ride: @ride do %>
+  Get the word out!  Find
+  <% if @ride.driver.nil? %>
+    a driver or
+  <% end %>
+  more passengers
 <% end %>
-
-<section class="rb-ride-share">
-  <p class="rb-ride-share__description">
-    Get the word out!  Find a driver or more passengers
-  </p>
-
-  <div class="rb-ride-share__bar">
-    <input class="rb-ride-share__link" type="text" readonly
-          value="<%= share_ride_url(@ride) %>">
-
-    <div class="fb-share-button" data-href="<%= share_ride_url(@ride)%>"
-        data-layout="button" data-size="large">
-      <a target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=<% url_encode share_ride_url(@ride) %>&amp;src=sdkpreparse"
-        class="fb-xfbml-parse-ignore">
-        Share
-      </a>
-    </div>
-  </div>
-</section>
 
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
