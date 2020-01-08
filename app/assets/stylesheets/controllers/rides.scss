@@ -4,6 +4,26 @@
 
 @import "theme";
 
+.rb-rides {
+  &__heading {
+    @include large-heading();
+    @include section-margin();
+    @include section-padding();
+  }
+
+  &__prompt {
+    text-align: center;
+  }
+}
+
+.rb-ride-thumbnail {
+  color: currentColor;
+
+  &::hover {
+    background-color: $light-grey;
+  }
+}
+
 .rb-ride-nav-links {
   @include section-margin();
   @include section-padding();
@@ -21,6 +41,7 @@
 
 .rb-ride-locations {
   @include section-margin();
+  @include section-border();
 
   padding: 0;
   display: flex;
@@ -30,7 +51,6 @@
 
 .rb-ride-location {
   @include section-padding();
-  @include section-border();
 
   flex: 1;
   margin: 0;

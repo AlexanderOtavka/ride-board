@@ -11,13 +11,8 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   test "should get index showing ride groups with empty seats" do
     get passenger_rides_url
     assert_response :success
-    assert_select "#available-rides" do
-      assert_select ".ride-thumbnail", 1
-    end
-
-    assert_select "#other-rides" do
-      assert_select ".ride-thumbnail", 1
-    end
+    assert_select "#available-rides .rb-ride-thumbnail", 1
+    assert_select "#other-rides .rb-ride-thumbnail", 1
   end
 
   test "should get new" do
