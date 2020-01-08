@@ -23,7 +23,9 @@ class User < ApplicationRecord
   validates_format_of :phone_number, with: /\A[0-9]{10}\z/, allow_nil: true,
                                      message: 'must be a valid US phone number'
 
-  validates :name, presence: { message: 'must provide a name' }
+  # Leave this commented until we have moved most/all of the production DB
+  # users over to having names
+  # validates :name, presence: { message: 'is required' }
 
   def notify?
     notify_sms? || notify_email?
