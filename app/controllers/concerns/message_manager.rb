@@ -19,9 +19,9 @@ module MessageManager
         @ride.notification_subscriptions.create!(user: current_user, app: app)
       end
 
-      redirect_to ride_path(@ride, anchor: 'messages')
+      redirect_to ride_path(@ride, anchor: 'latest-message')
     else
-      redirect_to ride_path(@ride, anchor: 'messages'),
+      redirect_to ride_path(@ride, anchor: 'latest-message'),
                   notice: 'Cannot post message.'
     end
   end
