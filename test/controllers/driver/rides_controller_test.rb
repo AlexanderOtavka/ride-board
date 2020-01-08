@@ -66,7 +66,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     ride = rides(:creator_created)
     delete driver_join_ride_url(ride)
     assert_nil ride.reload.driver
-    assert_redirected_to driver_rides_url
+    assert_redirected_to driver_ride_url(ride)
   end
 
   test "leaving a ride unsubscribes you" do
@@ -92,7 +92,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_not ride.notification_subscribers.include? user
-    assert_redirected_to driver_rides_url
+    assert_redirected_to driver_ride_url(ride)
   end
 
   test "should create ride" do

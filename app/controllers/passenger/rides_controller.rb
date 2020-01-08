@@ -128,14 +128,13 @@ class Passenger::RidesController < Passenger::BaseController
               "See #{short_driver_ride_url(@ride)} for details.")
           end
 
-          format.html { redirect_to passenger_rides_path,
+          format.html { redirect_to passenger_ride_path(@ride),
                                     notice: 'You have left this ride.' }
           format.json { render :show, status: :created, location: @ride }
         else
           message = 'You have already left this ride'
-          format.html { redirect_to passenger_rides_path, notice: message }
-          format.json { render json: { message: message },
-                                status: :forbidden }
+          format.html { redirect_to passenger_ride_path(@ride), notice: message }
+          format.json { render json: { message: message }, status: :forbidden }
         end
       end
     end
