@@ -23,12 +23,42 @@ class User < ApplicationRecord
   validates_format_of :phone_number, with: /\A[0-9]{10}\z/, allow_nil: true,
                                      message: 'must be a valid US phone number'
 
+  # Leave this commented until we have moved most/all of the production DB
+  # users over to having names
+  # validates :name, presence: { message: 'is required' }
+  validate do |user|
+    # Make sure that someone isn't squatting another person's email
+    if user.name.match(/\A\[\w+\]\Z/)
+      user_slug_match = user.email.match(/\A.*@/)
+      if user.name != "[#{user_slug_match.captures[0]}]"
+        user.errors[:name] << "cannot use someone else's email handle"
+      end
+    end
+
+    if user.name.match(/@grinnell\.edu/)
+      user_slug_match = user.name.match(/\A(\w+@grinnell\.edu)/)
+      if user.email != "#{user_slug_match.captures[0]}"
+        user.errors[:name] << "cannot use someone else's email"
+      end
+    end
+  end
+
   def notify?
     notify_sms? || notify_email?
   end
 
   def notified_by_ride?(ride)
     notify? && notifying_rides.include?(ride)
+  end
+
+  def display_name
+    # Display email if name not present
+    if name.presence
+      return name
+    end
+
+    match = email.match(/\A(.*)@/)
+    "[#{match.captures[0]}]"
   end
 
   def formatted_phone_number

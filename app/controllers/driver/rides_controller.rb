@@ -102,7 +102,7 @@ class Driver::RidesController < Driver::BaseController
         notifier = Notifier::Service.new
         @ride.notified_passengers.each do |passenger|
           notifier.notify(passenger,
-            "A driver (#{current_user.email}) just accepted your ride request. " +
+            "A driver (#{current_user.display_name}) just accepted your ride request. " +
             "See #{short_passenger_ride_url(@ride)} for details.")
         end
 
@@ -130,7 +130,7 @@ class Driver::RidesController < Driver::BaseController
         notifier = Notifier::Service.new
         @ride.notified_passengers.each do |passenger|
           notifier.notify(passenger,
-            "Your driver (#{current_user.email}) will no longer be driving for you! " +
+            "Your driver (#{current_user.display_name}) will no longer be driving for you! " +
             "See #{short_passenger_ride_url(@ride)} for details.")
         end
 

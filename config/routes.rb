@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
-  devise_for :users, path: 'account'
+  devise_for :users, path: 'account', controllers: {
+               registrations: 'users/registrations'
+             }
   resources :locations
 
   get "/s/:ride_id", to: "welcome#share", as: :share_ride
