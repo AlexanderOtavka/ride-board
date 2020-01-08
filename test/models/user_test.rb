@@ -26,4 +26,34 @@ class UserTest < ActiveSupport::TestCase
     u.email = "bar@grinnell.edu"
     assert_equal "[bar]", u.display_name
   end
+
+  test "can be the same as email" do
+    user = User.new(name: "bar@grinnell.edu",
+                    email: "bar@grinnell.edu",
+                    password: "GreatBigOldDefaultPassword1@!5")
+    assert user.valid?
+  end
+
+  test "cannot use someone else's grinnell email as name" do
+    user = User.new(name: "foo@grinnell.edu",
+                    email: "bar@grinnell.edu",
+                    password: "GreatBigOldDefaultPassword1@!5")
+    assert_not user.valid?
+    assert_equal [:name], user.errors.keys
+  end
+
+  test "can use grinnell username in brackets" do
+    user = User.new(name: "[bar]",
+                    email: "bar@grinnell.edu",
+                    password: "GreatBigOldDefaultPassword1@!5")
+    assert user.valid?
+  end
+
+  test "cannot use someone elses grinnell username in brackets" do
+    user = User.new(name: "[foo]",
+                    email: "bar@grinnell.edu",
+                    password: "GreatBigOldDefaultPassword1@!5")
+    assert_not user.valid?
+    assert_equal [:name], user.errors.keys
+  end
 end
