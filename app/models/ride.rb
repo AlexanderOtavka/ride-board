@@ -28,6 +28,12 @@ class Ride < ApplicationRecord
     )
   end
 
+  validate on: :create do |ride|
+    if ride.start_datetime <= Time.now
+      ride.errors[:start_datetime] << "must come after current time"
+    end
+  end
+
   validate do |ride|
     if ride.seats == 0
       ride.errors[:seats] << "cannot have zero seats"
