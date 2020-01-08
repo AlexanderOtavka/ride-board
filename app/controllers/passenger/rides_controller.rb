@@ -98,7 +98,7 @@ class Passenger::RidesController < Passenger::BaseController
 
         if @ride.notification_subscribers.include? @ride.driver
           Notifier::Service.new.notify(@ride.driver,
-            "A new passenger (#{current_user.email}) just joined your ride. " +
+            "A new passenger (#{current_user.display_name}) just joined your ride. " +
             "See #{short_driver_ride_url(@ride)} for details.")
         end
 
@@ -124,7 +124,7 @@ class Passenger::RidesController < Passenger::BaseController
 
           if @ride.notification_subscribers.include? @ride.driver
             Notifier::Service.new.notify(@ride.driver,
-              "A passenger (#{current_user.email}) just left your ride. " +
+              "A passenger (#{current_user.display_name}) just left your ride. " +
               "See #{short_driver_ride_url(@ride)} for details.")
           end
 

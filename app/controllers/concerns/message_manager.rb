@@ -51,7 +51,7 @@ module MessageManager
         if message.created_by == ride.driver
           sender = "Your driver"
         else
-          sender = message.created_by.email
+          sender = message.created_by.display_name
         end
 
         drivers.each do |driver|
@@ -72,7 +72,7 @@ module MessageManager
 
             sender = "Your passenger"
           else
-            sender = message.created_by.email
+            sender = message.created_by.display_name
           end
 
           notifier.notify(driver,
