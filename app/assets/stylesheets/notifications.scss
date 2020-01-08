@@ -1,34 +1,39 @@
+@import "theme";
+
 .rb-notifications__heading {
-  font-size: 2rem;
-  margin: 2rem 0;
-  padding: 0;
+  @include large-heading();
+  @include section-margin();
+  @include section-padding();
 }
 
 .rb-notifications__back {
-  margin: 2rem 0;
+  @include section-margin();
+  @include section-padding();
+
+  color: $secondary-color;
 }
 
 .rb-notification-form__section {
-  margin: 2rem 0;
+  @include section-border();
+  @include section-margin();
 }
 
 .rb-notification-form__section-heading {
-  margin: 0;
-  font-size: 1.6rem;
+  @include medium-heading();
+  @include section-padding();
 }
 
 .rb-notification-form__field {
-  margin: 1rem -0.5rem;
-  padding: 0.5rem;
-  background-color: #eee;
+  @include section-padding();
 }
 
 .rb-notification-form__field-description {
-  color: #777;
+  @include small-text();
+
   margin: 1rem 0 0 0;
-  font-size: 1rem;
 }
 
 .rb-notification-form__controls {
-  margin: 2rem 0;
+  @include section-margin();
+  @include section-padding();
 }
