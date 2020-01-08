@@ -22,20 +22,28 @@
 <%= render "rides/ride_locations", ride: @ride %>
 
 <p class="rb-ride-passengers">
-  <strong class="rb-ride-passengers__heading">
-    Passengers
-  </strong>
+  <% unless @ride.passengers.empty? %>
+    <strong class="rb-ride-passengers__heading">
+      Passengers
+    </strong>
+  <% end %>
 
   <span class="rb-ride-passengers__names">
-    <%= @ride.passengers
-      .map {|passenger| user_display_name passenger}
-      .to_sentence %>
+    <% if @ride.passengers.empty? %>
+      No passengers yet
+    <% else %>
+      <%= @ride.passengers
+        .map {|passenger| user_display_name passenger}
+        .to_sentence %>
+    <% end %>
   </span>
 
   <span class="rb-ride-passengers__seats">
     &nbsp;&mdash;
     <% if @ride.seats.nil? %>
       Seating Unlimited
+    <% elsif @ride.passengers.empty? %>
+      <%= pluralize(@ride.seats, "seat") %> available
     <% else %>
       <%= @ride.passengers.count %> of
       <%= pluralize(@ride.seats, "seat") %> filled
