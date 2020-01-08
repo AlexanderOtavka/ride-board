@@ -39,7 +39,7 @@ class User < ApplicationRecord
       return name
     end
 
-    match = user.email.match(/\A(.*)@/)
+    match = email.match(/\A(.*)@/)
     "[#{match.captures[0]}]"
   end
 
