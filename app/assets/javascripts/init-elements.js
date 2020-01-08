@@ -67,10 +67,8 @@ var MaterialDateTimePicker = {
 document.addEventListener("turbolinks:load", function() {
   M.AutoInit();
   var start_datetime = document.getElementById('ride_start_datetime');
-  var end_datetime = document.getElementById('ride_end_datetime');
-  if(start_datetime && end_datetime){
-        MaterialDateTimePicker.create(start_datetime);
-        MaterialDateTimePicker.create(end_datetime);
+  if(start_datetime){
+    MaterialDateTimePicker.create(start_datetime);
   }
 });
 

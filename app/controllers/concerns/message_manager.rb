@@ -63,7 +63,7 @@ module MessageManager
         passengers.each do |passenger|
           notifier.notify(passenger,
             ellipsize("#{sender} says: \"", message.content,
-                      "\" See #{share_ride_url(ride)} for details"))
+                      "\" See #{short_passenger_ride_url(ride)} for details"))
         end
       else
         drivers.each do |driver|

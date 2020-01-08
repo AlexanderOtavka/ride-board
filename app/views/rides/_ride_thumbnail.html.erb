@@ -1,13 +1,3 @@
-<tr class="ride-thumbnail">
-  <td><%= ride.start_location.name %></td>
-  <td><%= ride.start_datetime.to_s(:short_ampm) %></td>
-  <td><%= ride.end_location.name %></td>
-  <td><%= ride.end_datetime.to_s(:short_ampm) %></td>
-  <td><%= ride.driver ? user_display_name(ride.driver) : "" %></td>
-  <td><%= link_to 'Show', ride_path %></td>
-  <% if ride.authorized_editor? current_user %>
-    <td><%= link_to 'Edit', edit_path %></td>
-    <td><%= link_to 'Destroy', ride_path, method: :delete,
-                              data: { confirm: 'Are you sure?' } %></td>
-  <% end %>
-</tr>
+<%= link_to [app, ride], class: "rb-ride-thumbnail" do %>
+  <%= render "rides/ride_locations", ride: ride %>
+<% end %>

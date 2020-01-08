@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8">
-    <title>Ride Board</title>
+    <title>RideBoard.app</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <meta property="og:site_name" content="RideBoard.app" />
+    <meta property="og:image" content="<%= image_url 'background.jpg' %>" />
+    <meta property="fb:app_id" content="2479083255670794" />
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
