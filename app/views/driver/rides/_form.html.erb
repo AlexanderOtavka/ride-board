@@ -4,22 +4,17 @@
 
   <div class="input-field">
     <%= form.collection_select :start_location_id, Location.all, :id, :name, prompt: true %>
-    <%= form.label :start_location %>
+    <%= form.label :start_location, "Pickup Location" %>
   </div>
 
   <div class="input-field">
     <%= form.text_field :start_datetime, default: Time.zone.now, class:"datetimepicker"%>
-    <%= form.label :start_datetime %>
+    <%= form.label :start_datetime, "Pickup Time" %>
   </div>
 
   <div class="input-field">
     <%= form.collection_select :end_location_id, Location.all, :id, :name, prompt: true %>
-    <%= form.label :end_location %>
-  </div>
-
-  <div class="input-field">
-    <%= form.text_field :end_datetime, class:"datetimepicker", default: Time.zone.now %>
-    <%= form.label :end_datetime %>
+    <%= form.label :end_location, "Destination" %>
   </div>
 
   <div class="input-field">
