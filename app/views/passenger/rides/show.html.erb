@@ -1,19 +1,4 @@
-<% content_for :head do %>
-  <meta property="og:url"   content="<%=share_ride_url(@ride)%>" />
-  <meta property="og:type"  content="website" />
-  <% if @ride.driver.nil? %>
-    <meta property="og:title"
-          content="Requesting ride to <%=@ride.end_location.name%> on <%= @ride.start_datetime.to_s(:short_ampm) %>"/>
-    <meta property="og:description"
-          content="I need a driver to take me from <%= @ride.start_location.name %> to <%= @ride.end_location.name %> on <%=@ride.start_datetime.to_s(:short_ampm)%>. Please click on this link to drive or join." />
-  <% else %>
-    <meta property="og:title"
-          content="Offering ride to <%=@ride.end_location.name%> on <%= @ride.start_datetime.to_s(:short_ampm) %>"/>
-    <meta property="og:description"
-          content="I am riding from <%= @ride.start_location.name %> to <%= @ride.end_location.name %> on <%=@ride.start_datetime.to_s(:short_ampm)%>. Please click on this link to join." />
-  <% end %>
-  <meta property="fb:app_id" content="2479083255670794" />
-<% end %>
+<%= render "rides/ride_og_meta", ride: @ride %>
 
 <% content_for :body do %>
   <!-- Load Facebook SDK for JavaScript -->

@@ -1,0 +1,47 @@
+<%= render "rides/ride_og_meta", ride: @ride %>
+
+<% content_for :head do %>
+  <style>
+    .welcome {
+      background-image: url('<%= image_path('background.jpg') %>');
+    }
+  </style>
+<% end %>
+
+<div class="welcome">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">RideBoard.app</a>
+    </div>
+  </nav>
+
+  <div class="row container">
+    <h1 class="white-text">Ride to <%= @ride.end_location.name %></h1>
+
+    <div class="col s12 m6 l4">
+      <div class="card z-depth-3">
+        <div class="card-image">
+          <%= image_tag 'driver.jpg' %>
+          <span class="card-title">Looking to drive</span>
+        </div>
+        <div class="card-action">
+          <%= link_to "View as Driver", driver_ride_path(@ride),
+                      class: "waves-effect waves-light btn-large" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m6 l4">
+      <div class="card z-depth-3">
+        <div class="card-image">
+          <%= image_tag 'passenger.jpg' %>
+          <span class="card-title">Looking to join in</span>
+        </div>
+        <div class="card-action">
+          <%= link_to "View as Passenger", passenger_ride_path(@ride),
+                      class: "waves-effect waves-light btn-large" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
