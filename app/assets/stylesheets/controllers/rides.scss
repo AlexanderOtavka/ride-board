@@ -134,7 +134,8 @@
 }
 
 .rb-ride-notifications {
-  @include section();
+  @include section-margin();
+  @include section-border();
 
   display: flex;
   align-items: center;
@@ -143,23 +144,19 @@
 
   &__description {
     @include deemphasized-text();
-
-    margin: 1rem;
-    padding: 0;
+    @include section-padding();
   }
 
   &__button-wrapper {
+    @include section-padding();
+
     flex: 1;
     flex-basis: auto;
     text-align: right;
   }
 
-  &__button {
-    margin: 1rem;
-
-    &.btn-flat {
-      background-color: $light-grey;
-    }
+  &__button.btn-flat {
+    background-color: $light-grey;
   }
 }
 
