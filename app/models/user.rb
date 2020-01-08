@@ -26,6 +26,22 @@ class User < ApplicationRecord
   # Leave this commented until we have moved most/all of the production DB
   # users over to having names
   # validates :name, presence: { message: 'is required' }
+  validate do |user|
+    # Make sure that someone isn't squatting another person's email
+    if user.name.match(/\A\[\w+\]\Z/)
+      user_slug_match = user.email.match(/\A.*@/)
+      if user.name != "[#{user_slug_match.captures[0]}]"
+        user.errors[:name] << "cannot use someone else's email handle"
+      end
+    end
+
+    if user.name.match(/@grinnell\.edu/)
+      user_slug_match = user.name.match(/\A(\w+@grinnell\.edu)/)
+      if user.email != "#{user_slug_match.captures[0]}"
+        user.errors[:name] << "cannot use someone else's email"
+      end
+    end
+  end
 
   def notify?
     notify_sms? || notify_email?
