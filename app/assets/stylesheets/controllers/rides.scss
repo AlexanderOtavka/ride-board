@@ -1,0 +1,167 @@
+// Place all the styles related to the rides controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "theme";
+
+.rb-ride-nav-links {
+  @include section-margin();
+  @include section-padding();
+
+  display: flex;
+}
+
+.rb-ride-nav-link {
+  color: $secondary-color;
+
+  &--back {
+    flex: 1;
+  }
+}
+
+.rb-ride-locations {
+  @include section-margin();
+
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.rb-ride-location {
+  @include section-padding();
+  @include section-border();
+
+  flex: 1;
+  margin: 0;
+
+  &--start {
+    background-color: $light-grey;
+  }
+
+  &__heading {
+    @include small-heading();
+  }
+
+  &__name {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__time {
+    @include deemphasized-text();
+
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.rb-ride-driver {
+  @include section();
+
+  &__heading {
+    @include small-heading();
+
+    display: inline;
+    vertical-align: top;
+    margin-right: 1rem;
+  }
+}
+
+.rb-ride-passengers {
+  @include section();
+
+  &__heading {
+    @include small-heading();
+
+    margin-right: 1rem;
+  }
+
+  &__seats {
+    @include deemphasized-text();
+  }
+}
+
+.rb-ride-join {
+  @include section();
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  &__message {
+    @include deemphasized-text();
+
+    flex: 1;
+  }
+
+  &__button {
+    margin: 0;
+    margin-left: 1rem;
+
+    &.btn-flat {
+      background-color: $light-grey;
+    }
+  }
+}
+
+.rb-share-ride {
+  @include section();
+
+  &__description {
+    @include deemphasized-text();
+
+    margin: 0;
+    padding: 0;
+  }
+
+  &__bar {
+    display: flex;
+    align-items: center;
+  }
+
+  &__link {
+    flex: 1;
+  }
+
+  .fb-share-button {
+    margin: 0;
+    padding: 0;
+    margin-left: 1rem;
+  }
+}
+
+.rb-ride-notifications {
+  @include section-margin();
+  @include section-border();
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  &__description {
+    @include deemphasized-text();
+    @include section-padding();
+  }
+
+  &__button-wrapper {
+    @include section-padding();
+
+    flex: 1;
+    flex-basis: auto;
+    text-align: right;
+  }
+
+  &__button.btn-flat {
+    background-color: $light-grey;
+  }
+}
+
+.rb-ride-notifications-status {
+  @include section();
+
+  background-color: $light-grey;
+}

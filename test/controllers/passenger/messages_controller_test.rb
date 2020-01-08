@@ -16,7 +16,7 @@ class PassengerMessagesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to passenger_ride_url(ride)
+    assert_redirected_to passenger_ride_url(ride, anchor: "latest-message")
   end
 
   test "posting a message subscribes you to the ride" do
@@ -57,6 +57,6 @@ class PassengerMessagesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to passenger_ride_url(ride)
+    assert_redirected_to passenger_ride_url(ride, anchor: "latest-message")
   end
 end

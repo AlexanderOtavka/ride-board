@@ -5,7 +5,7 @@ class Driver::MessagesController < Driver::BaseController
     :driver
   end
 
-  def ride_path(ride)
-    driver_ride_path(ride)
+  def ride_path(ride, *args)
+    driver_ride_path(ride, *args)
   end
 end
