@@ -2,7 +2,5 @@
   <%= link_to 'Notification Preferences', passenger_notify_path, class: 'btn' %>
 <% end %>
 
-<%= render "me/ride_list",
-           upcoming_rides: @upcoming_rides, past_rides: @past_rides,
-           ride_path: -> (ride) {passenger_ride_path(ride)},
-           edit_path: -> (ride) {edit_passenger_ride_path(ride)} %>
+<%= render "me/ride_list", app: :passenger,
+           upcoming_rides: @upcoming_rides, past_rides: @past_rides %>
