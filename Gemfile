@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 2.7'
 # Aws sdk for SMS
 gem 'aws-sdk', '~> 3'
 
+# Required for flightaware api, i.e. plane stuff
+gem 'savon', '~> 2'
+
 # Dotenv for environment variable management
 gem 'dotenv-rails', '~> 2'
 
