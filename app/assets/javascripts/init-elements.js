@@ -70,6 +70,20 @@ document.addEventListener("turbolinks:load", function() {
   if(start_datetime){
     MaterialDateTimePicker.create(start_datetime);
   }
+
+  var clipboard = new Clipboard(".rb-copy-to-clipboard")
+  clipboard.on("success", function (e) {
+    var button = e.trigger
+    button.classList.add("rb-copy-to-clipboard--copied")
+    clearTimeout(button.copiedTimeout)
+    button.copiedTimeout = setTimeout(function () {
+      button.classList.remove("rb-copy-to-clipboard--copied")
+    }, 1000)
+  })
+
+  clipboard.on("error", function (e) {
+    console.error(e)
+  })
 });
 
 document.addEventListener("turbolinks:before-visit", function() {

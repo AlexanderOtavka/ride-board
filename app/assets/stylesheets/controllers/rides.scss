@@ -146,10 +146,27 @@
     flex: 1;
   }
 
+  &__copy-button {
+    background-color: $light-grey;
+
+    &.rb-copy-to-clipboard--copied{
+      & > * {
+        display: none;
+      }
+
+      &::after {
+        content: "Copied!";
+      }
+    }
+  }
+
+  &__or {
+    margin: 1rem;
+  }
+
   .fb-share-button {
     margin: 0;
     padding: 0;
-    margin-left: 1rem;
   }
 }
 

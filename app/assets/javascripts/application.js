@@ -11,4 +11,5 @@
 // about supported directives.
 //
 // = require materialize-sprockets
+// = require clipboard
 // = require_tree .
