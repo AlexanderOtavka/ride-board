@@ -1020,6 +1020,8 @@ GEM
       rest-client (~> 2.0.2)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
+    material_icons (2.2.1)
+      railties (>= 3.2)
     materialize-sass (1.0.0)
       autoprefixer-rails (>= 6.0.3)
     method_source (0.9.2)
@@ -1185,6 +1187,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   mailgun-ruby (~> 1.1.6)
+  material_icons
   materialize-sass
   minitest-reporters
   pg (~> 1.1)
