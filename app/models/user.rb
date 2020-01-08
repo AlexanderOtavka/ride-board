@@ -23,7 +23,8 @@ class User < ApplicationRecord
   validates_format_of :phone_number, with: /\A[0-9]{10}\z/, allow_nil: true,
                                      message: 'must be a valid US phone number'
 
-  validates :name, :presence, on: :create
+  validates :name, presence: true, on: :create
+
   validate do |user|
     # Make sure that someone isn't squatting another person's email
     if user.name.match(/\A\[\w+\]\Z/)
