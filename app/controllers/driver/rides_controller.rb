@@ -55,7 +55,7 @@ class Driver::RidesController < Driver::BaseController
         @ride.notified_passengers.each do |passenger|
           notifier.notify(passenger,
             "Your driver made a change to your ride. " +
-            "See #{share_ride_url(@ride)} for details")
+            "See #{short_passenger_ride_url(@ride)} for details")
         end
 
         format.html { redirect_to driver_ride_path(@ride),
@@ -103,7 +103,7 @@ class Driver::RidesController < Driver::BaseController
         @ride.notified_passengers.each do |passenger|
           notifier.notify(passenger,
             "A driver (#{current_user.email}) just accepted your ride request. " +
-            "See #{share_ride_url(@ride)} for details.")
+            "See #{short_passenger_ride_url(@ride)} for details.")
         end
 
         format.html { redirect_to driver_ride_path(@ride),
@@ -131,7 +131,7 @@ class Driver::RidesController < Driver::BaseController
         @ride.notified_passengers.each do |passenger|
           notifier.notify(passenger,
             "Your driver (#{current_user.email}) will no longer be driving for you! " +
-            "See #{share_ride_url(@ride)} for details.")
+            "See #{short_passenger_ride_url(@ride)} for details.")
         end
 
         format.html { redirect_to driver_rides_path,
