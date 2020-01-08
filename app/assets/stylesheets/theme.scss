@@ -5,6 +5,8 @@ $secondary-color: #219653 !default;
 
 $light-grey: #eee;
 
+// Spacing Mixins
+
 @mixin section-margin {
   margin: 0.5rem -1rem;
 }
@@ -22,6 +24,8 @@ $light-grey: #eee;
   @include section-padding();
   @include section-border();
 }
+
+// Font mixins
 
 @mixin small-text {
   font-size: 0.7em;

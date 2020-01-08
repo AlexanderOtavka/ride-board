@@ -13,8 +13,7 @@
  * statement. It is generally better to create a new file per style scope.
  *
  *= require materialize-config
- *= require defaults
- *= require_tree .
+ *= require_directory ./controllers
  *= require_self
  */
 

@@ -1,3 +1,17 @@
 @import "materialize/components/color-variables";
 @import "theme";
 @import "materialize";
+
+// Override styles applied by materialize
+
+nav ul a {
+  font-size: 1.6rem;
+}
+
+label{
+  font-size: 1.6rem;
+}
+
+.input-field {
+  margin: 2rem 0 0 0;
+}
