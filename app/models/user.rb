@@ -33,6 +33,16 @@ class User < ApplicationRecord
     notify? && notifying_rides.include?(ride)
   end
 
+  def display_name
+    # Display email if name not present
+    if name.presence
+      return name
+    end
+
+    match = user.email.match(/\A(.*)@/)
+    "[#{match.captures[0]}]"
+  end
+
   def formatted_phone_number
     phone_number.match(/(.{3})(.{3})(.{4})/) do |area_code, prefix, suffix|
       "(#{area_code}) #{prefix}-#{suffix}"
