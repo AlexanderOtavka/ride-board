@@ -11,11 +11,11 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
     get passenger_rides_url
     assert_response :success
     assert_select "#available-rides" do
-      assert_select ".ride-thumbnail", 2
+      assert_select ".ride-thumbnail", 3
     end
 
     assert_select "#other-rides" do
-      assert_select ".ride-thumbnail", 2
+      assert_select ".ride-thumbnail", 3
     end
   end
 
@@ -37,7 +37,7 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get rides for time search" do
-    get driver_rides_url, params: {
+    get passenger_rides_url, params: {
         q: {
             end_datetime_lteq: "2018-11-20 07:08:36"
         }
