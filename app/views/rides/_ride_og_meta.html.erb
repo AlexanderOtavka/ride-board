@@ -1,0 +1,13 @@
+<% content_for :head do %>
+  <meta property="og:url"   content="<%=share_ride_url(ride)%>" />
+  <meta property="og:type"  content="website" />
+  <% if ride.driver.nil? %>
+    <meta property="og:title"
+          content="Requesting ride to <%=ride.end_location.name%> on <%= ride.start_datetime.to_s(:short_ampm) %>"/>
+  <% else %>
+    <meta property="og:title"
+          content="Offering ride to <%=ride.end_location.name%> on <%= ride.start_datetime.to_s(:short_ampm) %>"/>
+  <% end %>
+  <meta property="og:description"
+        content="Ride from <%= ride.start_location.name %> to <%= ride.end_location.name %> on <%=ride.start_datetime.to_s(:short_ampm)%>." />
+<% end %>

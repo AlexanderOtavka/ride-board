@@ -1,11 +1,6 @@
-<% content_for :head do %>
-  <meta property="og:url"   content="<%=share_ride_url(@ride)%>" />
-  <meta property="og:type"  content="website" />
-  <meta property="og:title"
-        content="Requesting ride to <%= @ride.end_location.name %> on <%= @ride.start_datetime.to_s(:short_ampm) %>"/>
-  <meta property="og:description"
-        content="Ride from <%= @ride.start_location.name %> to <%= @ride.end_location.name %> on <%=@ride.start_datetime.to_s(:short_ampm)%>." />
+<%= render "rides/ride_og_meta", ride: @ride %>
 
+<% content_for :head do %>
   <style>
     .welcome {
       background-image: url('<%= image_path('background.jpg') %>');
