@@ -90,14 +90,16 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should leave a ride" do
-    sign_in users(:creator)
+    user = users(:creator)
+    ride = rides(:creator_created)
+    sign_in user
 
     assert_difference -> {SeatAssignment.count}, -1 do
-      delete passenger_join_ride_url(rides(:creator_created))
+      delete passenger_join_ride_url(ride)
     end
 
-    assert_not rides(:creator_created).passengers.include? users(:creator)
-    assert_redirected_to passenger_rides_url
+    assert_not ride.passengers.include? user
+    assert_redirected_to passenger_ride_url(ride)
   end
 
   test "leaving a ride unsubscribes you" do
@@ -111,14 +113,16 @@ class PassengerRidesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "can leave a ride you aren't subscribed to" do
-    sign_in users(:creator)
+    user = users(:creator)
+    ride = rides(:driverless)
+    sign_in user
 
     assert_no_difference -> {RideNotificationSubscription.count} do
-      delete passenger_join_ride_url(rides(:driverless))
+      delete passenger_join_ride_url(ride)
     end
 
-    assert_not rides(:driverless).notification_subscribers.include? users(:creator)
-    assert_redirected_to passenger_rides_url
+    assert_not ride.notification_subscribers.include? user
+    assert_redirected_to passenger_ride_url(ride)
   end
 
   test "should create ride" do

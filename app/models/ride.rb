@@ -51,10 +51,4 @@ class Ride < ApplicationRecord
       ride.errors[:passengers] << "do not have enough seats"
     end
   end
-
-  after_save do |ride|
-    if ride.driver.nil? && ride.passengers.empty?
-      ride.destroy
-    end
-  end
 end

@@ -67,15 +67,19 @@ class RideTest < ActiveSupport::TestCase
     assert_not rides(:driver_created).valid?
   end
 
-  test "ride destorys itself when it has no more driver or passengers" do
-    assert_difference -> {Ride.count}, -1 do
-      rides(:driverless).passengers = []
-      rides(:driverless).save
+  test "ride stays when it has no more drivers or passengers" do
+    no_driver = rides(:driverless)
+    no_passengers = rides(:past_with_driver)
+    assert no_passengers.passengers.empty?
+
+    assert_no_difference -> {Ride.count} do
+      no_driver.passengers = []
+      no_driver.save
     end
 
-    assert_difference -> {Ride.count}, -1 do
-      rides(:past_with_driver).driver = nil
-      rides(:past_with_driver).save
+    assert_no_difference -> {Ride.count} do
+      no_passengers.driver = nil
+      no_passengers.save
     end
   end
 end
