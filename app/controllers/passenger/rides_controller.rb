@@ -4,11 +4,8 @@ class Passenger::RidesController < Passenger::BaseController
   # GET /rides
   # GET /rides.json
   def index
-    @available_rides = future_rides
-      .where.not(driver_id: nil)
-      .filter {|ride| ride.seats.nil? || ride.seats > ride.passengers.count}
-
-    @other_rides = future_rides.where(driver_id: nil)
+    @available_rides = Ride.available_for_passenger  current_user
+    @other_rides     = Ride.driverless_for_passenger current_user
   end
 
   # GET /rides/1

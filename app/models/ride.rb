@@ -14,6 +14,36 @@ class Ride < ApplicationRecord
 
   has_many :messages, dependent: :destroy
 
+  def self.list(query)
+    query
+      .order(:start_datetime, price: :desc)
+  end
+
+  def self.upcoming(query = all)
+    list(query).where("start_datetime > ?", Time.zone.now)
+  end
+
+  def self.past(query = all)
+    list(query).where("start_datetime <= ?", Time.zone.now)
+  end
+
+  def self.available_for_passenger(passenger)
+    upcoming
+      .where.not(driver: nil)
+      .filter {|ride| ride.seats.nil? || ride.seats > ride.passengers.count}
+      # Possible N+1 performance issue
+  end
+
+  def self.driverless_for_passenger(passenger)
+    upcoming
+      .where(driver: nil)
+  end
+
+  def self.driverless_for_driver(driver)
+    upcoming
+      .where(driver: nil)
+  end
+
   def notified_passengers
     User.joins(:seat_assignments, :ride_notification_subscriptions)
       .where("seat_assignments.ride_id = ride_notification_subscriptions.ride_id")
