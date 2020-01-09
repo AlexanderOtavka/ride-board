@@ -1,6 +1,16 @@
+# SMS api keys
+
 Dotenv.require_keys('SEND_REAL_MESSAGES')
 ENV['SEND_REAL_MESSAGES'] = ENV['SEND_REAL_MESSAGES'].downcase
 
 if ENV['SEND_REAL_MESSAGES'] == "true"
   Dotenv.require_keys('AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'AWS_REGION','MAILGUN_API_KEY', 'MAILGUN_DOMAIN')
+end
+
+# Flightaware API
+Dotenv.require_keys('USE_REAL_FLIGHTAWARE_API')
+ENV['USE_REAL_FLIGHTAWARE_API'] = ENV['USE_REAL_FLIGHTAWARE_API'].downcase
+
+if ENV['USE_REAL_FLIGHTAWARE_API'] == "true"
+  Dotenv.require_keys('FLIGHTAWARE_API_USERNAME', 'FLIGHTAWARE_API_KEY')
 end
