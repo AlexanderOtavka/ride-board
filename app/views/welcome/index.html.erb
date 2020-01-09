@@ -1,4 +1,11 @@
 <% content_for :head do %>
+  <meta property="og:url"   content="<%= root_url %>" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:title"
+        content="Need a Ride?"/>
+  <meta property="og:description"
+        content="Find drivers or passengers from the Grinnell College community to share a ride with. Whether you need help getting somewhere or have a car already and want to carpool, we've got you covered." />
+
   <style>
     .welcome {
       background-image: url('<%= image_path('background.jpg') %>');
