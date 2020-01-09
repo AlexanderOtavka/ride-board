@@ -10,6 +10,6 @@ class Passenger::NotificationsController < Passenger::BaseController
   end
 
   def redirect_path
-    passenger_rides_path
+    passenger_me_path
   end
 end

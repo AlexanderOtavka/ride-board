@@ -10,6 +10,6 @@ class Driver::NotificationsController < Driver::BaseController
   end
 
   def redirect_path
-    driver_root_path
+    driver_me_path
   end
 end
