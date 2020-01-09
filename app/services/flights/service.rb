@@ -33,7 +33,12 @@ module Flights
                     destination_airport: nil)
     end
 
-    # Errors to handle: SocketError -> Failed to open TCP connection due to name resolution failure
+    # Converts a Time object into [8 pm night before, 4am next day] in an attempt
+    # to cover "all flights that day"
+    CHICAGO_TZ = "-06:00"
+    def _day_to_time_range(time)
+      [Time.new(2019, time.month, time.day - 1, 20, 0, 0, CHICAGO_TZ),
+       Time.new(2019, time.month, time.day + 1, 4, 0, 0, CHICAGO_TZ)]
+    end
   end
-
 end
