@@ -1,10 +1,14 @@
 <% content_for :head do %>
+  <meta property="og:url"   content="<%= root_url %>" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:title"
+        content="Need a Ride?"/>
+  <meta property="og:description"
+        content="Find drivers or passengers from the Grinnell College community to share a ride with. Whether you need help getting somewhere or have a car already and want to carpool, we've got you covered." />
+
   <style>
     .welcome {
       background-image: url('<%= image_path('background.jpg') %>');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
     }
   </style>
 <% end %>
@@ -14,31 +18,23 @@
   <nav>
     <div class="nav-wrapper">
       <a href="/" class="brand-logo">RideBoard.app</a>
-      <a href="#" data-target="mobile-sidenav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href="#" data-target="mobile-sidenav" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
       <ul class="right hide-on-med-and-down">
-        <% if user_signed_in? && current_user.admin? %>
-          <li><%= link_to 'Locations', locations_path %></li>
-        <% end %>
-
         <% if user_signed_in? %>
-          <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
-                  destroy_user_session_path, method: :delete %></li>
+          <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
         <% else %>
           <li><%= link_to 'Sign In', new_user_session_path %></li>
-          <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+          <li><%= link_to 'Sign Up', new_user_registration_path, class: 'btn' %></li>
         <% end %>
       </ul>
     </div>
   </nav>
 
   <ul class="sidenav" id="mobile-sidenav">
-    <% if user_signed_in? && current_user.admin? %>
-      <li><%= link_to 'Locations', locations_path %></li>
-    <% end %>
-
     <% if user_signed_in? %>
-      <li><%= link_to "Sign Out: #{user_display_name(current_user)}",
-              destroy_user_session_path, method: :delete %></li>
+      <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
     <% else %>
       <li><%= link_to 'Sign In', new_user_session_path %></li>
       <li><%= link_to 'Sign Up', new_user_registration_path %></li>
@@ -111,6 +107,7 @@
       <li>Patrick Nuckolls - Engineer</li>
       <li>Yash Gupta - Engineer</li>
       <li>Tran Le - Engineer</li>
+      <li>Halle Remash - Graphic Designer</li>
     </ul>
   </section>
 </div>

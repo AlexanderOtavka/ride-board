@@ -7,7 +7,18 @@ class Ride < ApplicationRecord
   has_many :seat_assignments, dependent: :destroy
   has_many :passengers, through: :seat_assignments, source: :user
 
+  has_many :notification_subscriptions, class_name: "RideNotificationSubscription",
+                                        dependent: :destroy
+  has_many :notification_subscribers, through: :notification_subscriptions,
+                                      source: :user
+
   has_many :messages, dependent: :destroy
+
+  def notified_passengers
+    User.joins(:seat_assignments, :ride_notification_subscriptions)
+      .where("seat_assignments.ride_id = ride_notification_subscriptions.ride_id")
+      .where(seat_assignments: {ride_id: id})
+  end
 
   def authorized_editor?(editor)
     !editor.nil? && (
@@ -15,6 +26,12 @@ class Ride < ApplicationRecord
       (driver.nil? && created_by == editor) ||
       editor.admin?
     )
+  end
+
+  validate on: :create do |ride|
+    if ride.start_datetime <= Time.now
+      ride.errors[:start_datetime] << "must come after current time"
+    end
   end
 
   validate do |ride|
@@ -32,12 +49,6 @@ class Ride < ApplicationRecord
 
     unless ride.seats.nil? || ride.passengers.count <= ride.seats
       ride.errors[:passengers] << "do not have enough seats"
-    end
-  end
-
-  after_save do |ride|
-    if ride.driver.nil? && ride.passengers.empty?
-      ride.destroy
     end
   end
 end

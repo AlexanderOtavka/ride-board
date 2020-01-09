@@ -13,28 +13,16 @@ module MessageManager
     ))
 
     if message.save
-      notifier = Notifier::Service.new
-      if @ride.driver == nil || @ride.driver == current_user
-        @ride.passengers.each do |passenger|
-          notifier.notify(passenger,
-            ellipsize(
-              "Your driver says: \"",
-              message.content,
-              "\" See #{share_ride_url(@ride)} for details"
-            ))
-        end
-      else
-        notifier.notify(@ride.driver,
-          ellipsize(
-            "Your passenger says: \"",
-            message.content,
-            "\" See #{short_driver_ride_url(@ride)} for details"
-          ))
+      send_notification(message)
+
+      unless @ride.notification_subscribers.include? current_user
+        @ride.notification_subscriptions.create!(user: current_user, app: app)
       end
 
-      redirect_to ride_path(message.ride), notice: 'Message posted.'
+      redirect_to ride_path(@ride, anchor: 'latest-message')
     else
-      redirect_to ride_path(message.ride), notice: 'Cannot post message.'
+      redirect_to ride_path(@ride, anchor: 'latest-message'),
+                  notice: 'Cannot post message.'
     end
   end
 
@@ -45,6 +33,56 @@ module MessageManager
 
     def message_params
       params.require(:message).permit(:content)
+    end
+
+    def send_notification(message)
+      ride = message.ride
+
+      notifier = Notifier::Service.new
+
+      subscribers = ride.notification_subscribers.where.not(
+        id: message.created_by.id)
+      drivers = subscribers.where(
+        ride_notification_subscriptions: {app: :driver})
+      passengers = subscribers.where(
+        ride_notification_subscriptions: {app: :passenger})
+
+      if ride.driver == nil || message.created_by == ride.driver
+        if message.created_by == ride.driver
+          sender = "Your driver"
+        else
+          sender = message.created_by.display_name
+        end
+
+        drivers.each do |driver|
+          notifier.notify(driver,
+            ellipsize("#{sender} says: \"", message.content,
+                      "\" See #{short_driver_ride_url(ride)} for details"))
+        end
+
+        passengers.each do |passenger|
+          notifier.notify(passenger,
+            ellipsize("#{sender} says: \"", message.content,
+                      "\" See #{short_passenger_ride_url(ride)} for details"))
+        end
+      else
+        drivers.each do |driver|
+          if driver == ride.driver &&
+             ride.passengers.include?(message.created_by)
+
+            sender = "Your passenger"
+          else
+            sender = message.created_by.display_name
+          end
+
+          notifier.notify(driver,
+            ellipsize(
+              "#{sender} says: \"",
+              message.content,
+              "\" See #{short_driver_ride_url(ride)} for details"
+            ))
+        end
+      end
     end
 
     def ellipsize(prefix, long_text, suffix, max_length: 160)

@@ -12,9 +12,9 @@
  * directory. Styles in this file should be added after the last require_*
  * statement. It is generally better to create a new file per style scope.
  *
+ *= require material_icons
  *= require materialize-config
- *= require defaults
- *= require_tree .
+ *= require_directory ./controllers
  *= require_self
  */
 

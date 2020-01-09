@@ -1,100 +1,75 @@
-<% content_for :head do %>
-  <meta property="og:url"   content="<%=share_ride_url(@ride)%>" />
-  <meta property="og:type"  content="website" />
-  <% if @ride.driver.nil? %>
-    <meta property="og:title"
-          content="Requesting ride to <%=@ride.end_location.name%> on <%= @ride.start_datetime.to_s(:short_ampm) %>"/>
-    <meta property="og:description"
-          content="I need a driver to take me from <%= @ride.start_location.name %> to <%= @ride.end_location.name %> on <%=@ride.start_datetime.to_s(:short_ampm)%>. Please click on this link to drive or join." />
-  <% else %>
-    <meta property="og:title"
-          content="Offering ride to <%=@ride.end_location.name%> on <%= @ride.start_datetime.to_s(:short_ampm) %>"/>
-    <meta property="og:description"
-          content="I am riding from <%= @ride.start_location.name %> to <%= @ride.end_location.name %> on <%=@ride.start_datetime.to_s(:short_ampm)%>. Please click on this link to join." />
-  <% end %>
-  <meta property="fb:app_id" content="2479083255670794" />
+<%= render "rides/ride_og_meta", ride: @ride %>
+
+<% content_for :body do %>
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
 <% end %>
+
+<section class="rb-ride-nav-links">
+  <%= link_to passenger_rides_path,
+              class: "rb-ride-nav-link rb-ride-nav-link--back" do %>
+    <i class="material-icons left">arrow_back</i>
+    Available Rides
+  <% end %>
+
+  <% if @ride.authorized_editor? current_user %>
+    <%= link_to 'Edit', edit_passenger_ride_path(@ride), class: "rb-ride-nav-link rb-ride-nav-link--edit" %>
+  <% end %>
+</section>
 
 <%= render "shared/error_explanation", problem: @problem, errors: @errors %>
 
-<p>
-  <strong>Departure:</strong>
-  <%= @ride.start_location.name %>
-</p>
+<%= render "rides/ride_locations", ride: @ride %>
 
-<p>
-  <strong>Departure Time:</strong>
-  <%= @ride.start_datetime.to_s(:short_ampm) %>
-</p>
-
-<p>
-  <strong>Destination:</strong>
-  <%= @ride.end_location.name %>
-</p>
-
-<p>
-  <strong>Arrival Time:</strong>
-  <%= @ride.end_datetime.to_s(:short_ampm) %>
-</p>
-
-<p>
-  <strong>Driver:</strong>
-  <%= @ride.driver ? user_display_name(@ride.driver) : "None" %>
-</p>
-
-<p>
-  <strong>Seats remaining:</strong>
-  <%= seats_remaining @ride %>
-</p>
-
-<% unless @ride.driver.nil? %>
-  <% if @ride.driver.notify? %>
-    <p>Your driver is receiving notifications</p>
+<p class="rb-ride-driver">
+  <% if @ride.driver.nil? %>
+    <span class="rb-ride-driver__name">
+      No driver yet
+    </span>
   <% else %>
-    <p>Your driver is not receiving notifications</p>
+    <strong class="rb-ride-driver__heading">Driver</strong>
+    <span class="rb-ride-driver__name">
+      <%= user_display_name(@ride.driver) %>
+    </span>
   <% end %>
+</p>
+
+<p class="rb-ride-join">
+  <span class="rb-ride-join__message">
+    <%= seats_text @ride %>
+  </span>
+
+  <% unless @ride.driver == current_user %>
+    <% if @ride.passengers.include? current_user %>
+      <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete,
+                           class: "rb-ride-join__button btn-flat waves-effect" %>
+    <% elsif @ride.seats.nil? || @ride.passengers.count < @ride.seats %>
+      <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post,
+                          class: 'rb-ride-join__button rb-ride-join__button--join btn-large waves-effect' %>
+    <% end %>
+  <% end %>
+</p>
+
+<%= render "rides/ride_notifications", ride: @ride,
+           notify_path: passenger_ride_notify_path(@ride) %>
+
+<%= render "rides/share_ride", ride: @ride do %>
+  Get the word out!  Find
+  <% if @ride.driver.nil? %>
+    a driver or
+  <% end %>
+  more passengers
 <% end %>
 
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
-<% if user_signed_in? && @ride.passengers.include?(current_user) %>
-  <% if current_user.notify? %>
-    <%= link_to '<i class="material-icons left">notifications_active</i>Notification Preferences'.html_safe,
-                passenger_ride_notify_path(@ride), class: "btn-flat waves-effect" %>
-  <% else %>
-    <%= link_to '<i class="material-icons left">notifications</i>Notify Me'.html_safe,
-                passenger_ride_notify_path(@ride), class: "btn waves-effect" %>
-  <% end %>
-  <br />
+<% unless @ride.driver.nil? %>
+  <p class="rb-ride-notifications-status">
+    <% if @ride.driver.notified_by_ride?(@ride) %>
+      Your driver is receiving notifications
+    <% else %>
+      Your driver is not receiving notifications
+    <% end %>
+  </p>
 <% end %>
-
-<% unless @ride.driver == current_user %>
-  <% if @ride.passengers.include? current_user %>
-    <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %>
-  <% else %>
-    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post,
-                        class: 'btn-large' %>
-  <% end %>
-<% end %>
-
-<% if @ride.authorized_editor? current_user %>
-  <%= link_to 'Edit', edit_passenger_ride_path(@ride) %>
-<% end %>
-
-<%= link_to 'Back', passenger_rides_path %>
-
-  <!-- Load Facebook SDK for JavaScript -->
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-
-  <!-- Your share button code -->
-  <div class="fb-share-button"
-    data-href=<%= share_ride_url(@ride)%>
-    data-layout="button_count">
-  </div>

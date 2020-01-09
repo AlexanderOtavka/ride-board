@@ -4,20 +4,15 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    sign_in users(:driver)
+    @user = users(:driver)
     @ride = rides(:creator_created)
+    sign_in @user
   end
 
   test "should get index showing rides without drivers" do
     get driver_rides_url
     assert_response :success
-    assert_select ".ride-thumbnail", 1
-  end
-
-  test "should get my rides" do
-    get driver_my_rides_url
-    assert_response :success
-    assert_select ".ride-thumbnail", 2
+    assert_select ".rb-ride-thumbnail", 1
   end
 
   test "should get new" do
@@ -28,6 +23,31 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   test "should join ride as driver" do
     post driver_join_ride_url(rides(:driverless))
     assert_equal users(:driver), rides(:driverless).reload.driver
+  end
+
+  test "joining a ride subscribes you" do
+    assert_difference -> {RideNotificationSubscription.count} do
+      post driver_join_ride_url(rides(:driverless))
+    end
+
+    assert rides(:driverless).notification_subscribers.include? users(:driver)
+    assert_equal(
+      "driver",
+      rides(:driverless).notification_subscriptions
+        .where(user: users(:driver)).first.app
+    )
+  end
+
+  test "subscription on join is idempotent" do
+    user = users(:admin)
+    ride = rides(:driverless)
+    sign_in user
+
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      post driver_join_ride_url(ride)
+    end
+
+    assert ride.notification_subscribers.include? user
   end
 
   test "should not be able join ride that has a driver" do
@@ -46,7 +66,33 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
     ride = rides(:creator_created)
     delete driver_join_ride_url(ride)
     assert_nil ride.reload.driver
-    assert_redirected_to driver_rides_url
+    assert_redirected_to driver_ride_url(ride)
+  end
+
+  test "leaving a ride unsubscribes you" do
+    user = users(:driver)
+    ride = rides(:driver_created)
+    sign_in user
+
+    assert_difference -> {Ride.count} => 0,
+                      -> {RideNotificationSubscription.count} => -1 do
+      delete driver_join_ride_url(ride)
+    end
+
+    assert_not ride.notification_subscribers.include? user
+  end
+
+  test "can leave a ride you aren't subscribed to" do
+    user = users(:driver)
+    ride = rides(:creator_created)
+    sign_in user
+
+    assert_no_difference -> {RideNotificationSubscription.count} do
+      delete driver_join_ride_url(ride)
+    end
+
+    assert_not ride.notification_subscribers.include? user
+    assert_redirected_to driver_ride_url(ride)
   end
 
   test "should create ride" do
@@ -81,6 +127,25 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
         }
       }
     end
+  end
+
+  test "creating a ride subscribes to it" do
+    assert_difference -> {RideNotificationSubscription.count} do
+      post driver_rides_url, params: {
+        ride: {
+          start_location_id: @ride.start_location_id,
+          start_datetime: @ride.start_datetime,
+          end_location_id: @ride.end_location_id,
+          end_datetime: @ride.end_datetime,
+          seats: @ride.seats,
+        }
+      }
+    end
+
+    ride = Ride.last
+
+    assert ride.notification_subscribers.include? @user
+    assert_equal "driver", ride.notification_subscriptions.where(user: @user).first.app
   end
 
   test "should show ride" do

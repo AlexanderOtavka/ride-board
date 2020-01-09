@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_030308) do
+ActiveRecord::Schema.define(version: 2020_01_08_062848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,17 @@ ActiveRecord::Schema.define(version: 2019_12_13_030308) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_by_id"], name: "index_messages_on_created_by_id"
     t.index ["ride_id"], name: "index_messages_on_ride_id"
+  end
+
+  create_table "ride_notification_subscriptions", force: :cascade do |t|
+    t.bigint "ride_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "app", default: 0, null: false
+    t.index ["ride_id", "user_id"], name: "index_ride_notification_subscriptions_on_ride_id_and_user_id", unique: true
+    t.index ["ride_id"], name: "index_ride_notification_subscriptions_on_ride_id"
+    t.index ["user_id"], name: "index_ride_notification_subscriptions_on_user_id"
   end
 
   create_table "rides", force: :cascade do |t|
@@ -70,12 +81,15 @@ ActiveRecord::Schema.define(version: 2019_12_13_030308) do
     t.boolean "notify_sms"
     t.boolean "notify_email"
     t.string "phone_number"
+    t.string "name", default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "messages", "rides"
   add_foreign_key "messages", "users", column: "created_by_id"
+  add_foreign_key "ride_notification_subscriptions", "rides"
+  add_foreign_key "ride_notification_subscriptions", "users"
   add_foreign_key "rides", "locations", column: "end_location_id"
   add_foreign_key "rides", "locations", column: "start_location_id"
   add_foreign_key "rides", "users", column: "created_by_id"

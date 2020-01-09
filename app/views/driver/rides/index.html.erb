@@ -1,27 +1,15 @@
-<h1>Rides</h1>
+<% unless @rides.empty? %>
+  <section>
+    <h1 class="rb-rides__heading">Requested Rides</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Start location</th>
-      <th>Start datetime</th>
-      <th>End location</th>
-      <th>End datetime</th>
-      <th>Driver</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
     <% @rides.each do |ride| %>
-      <%= render "rides/ride_thumbnail", ride: ride,
-                 ride_path: driver_ride_path(ride),
-                 edit_path: edit_driver_ride_path(ride) %>
+      <%= render "rides/ride_thumbnail", ride: ride, app: :driver %>
     <% end %>
-  </tbody>
-</table>
+  </section>
+<% end %>
 
-<br>
+<div class="rb-rides__prompt">
+  <p>Don't see what you're looking for?</p>
 
-<%= link_to 'My Rides', driver_my_rides_path %> |
-<%= link_to 'New Ride', new_driver_ride_path %>
+  <%= link_to 'Offer a Ride', new_driver_ride_path, class: "btn" %>
+</div>

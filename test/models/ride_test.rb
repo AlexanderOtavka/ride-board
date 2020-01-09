@@ -21,16 +21,40 @@ class RideTest < ActiveSupport::TestCase
     assert_not rides(:creator_created).authorized_editor? users(:passenger)
   end
 
-  test "has a passenger with a seating assignment" do
-    assert rides(:creator_created).passengers.include? users(:creator)
+  test "has passengers with a seating assignments" do
+    ride = rides(:driver_created)
+    assert_equal 2, ride.passengers.count
+    assert ride.passengers.include? users(:several_rides_passenger)
+    assert ride.passengers.include? users(:other_passenger)
   end
 
   test "doesn't have a passenger with no seating assignment" do
-    assert_not rides(:creator_created).passengers.include? users(:driver)
+    assert_not rides(:driver_created).passengers.include? users(:creator)
   end
 
   test "doesn't have nil passenger" do
-    assert_not rides(:creator_created).passengers.include? nil
+    assert_not rides(:driver_created).passengers.include? nil
+  end
+
+  test "has subscribers with subscriptions" do
+    ride = rides(:driver_created)
+    assert_equal 3, ride.notification_subscribers.count
+    assert ride.notification_subscribers.include? users(:driver)
+    assert ride.notification_subscribers.include? users(:passenger)
+    assert ride.notification_subscribers.include? users(:several_rides_passenger)
+  end
+
+  test "doesn't have a subscriber with no subscription" do
+    assert_not rides(:driver_created).notification_subscribers.include? users(:creator)
+  end
+
+  test "doesn't have nil subscriber" do
+    assert_not rides(:driver_created).notification_subscribers.include? nil
+  end
+
+  test "not all subscribers or passengers are passenger subscribers" do
+    assert_equal 1, rides(:driver_created).notified_passengers.count
+    assert rides(:driver_created).notified_passengers.include? users(:several_rides_passenger)
   end
 
   test "ride does not allow a passenger to become the driver" do
@@ -43,15 +67,19 @@ class RideTest < ActiveSupport::TestCase
     assert_not rides(:driver_created).valid?
   end
 
-  test "ride destorys itself when it has no more driver or passengers" do
-    assert_difference -> {Ride.count}, -1 do
-      rides(:driverless).passengers = []
-      rides(:driverless).save
+  test "ride stays when it has no more drivers or passengers" do
+    no_driver = rides(:driverless)
+    no_passengers = rides(:past_with_driver)
+    assert no_passengers.passengers.empty?
+
+    assert_no_difference -> {Ride.count} do
+      no_driver.passengers = []
+      no_driver.save
     end
 
-    assert_difference -> {Ride.count}, -1 do
-      rides(:driver_created).driver = nil
-      rides(:driver_created).save
+    assert_no_difference -> {Ride.count} do
+      no_passengers.driver = nil
+      no_passengers.save
     end
   end
 end

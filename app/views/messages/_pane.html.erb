@@ -1,20 +1,31 @@
-<section class="messages">
-  <strong>Messages:</strong>
+<section class="rb-messages">
   <ul>
     <% ride.messages.each do |message| %>
-      <li><%= user_display_name message.created_by %>: <%= message.content %></li>
+      <% if message.created_by == current_user %>
+        <% message_class = "rb-message--self" %>
+      <% elsif message.created_by == ride.driver %>
+        <% message_class = "rb-message--driver" %>
+      <% else %>
+        <% message_class = "" %>
+      <% end %>
+
+      <li class="rb-message <%= message_class %>">
+        <p class="rb-message__content"><%= message.content %></p>
+        <span class="rb-message__sender">
+          <%= user_display_name message.created_by %>
+        </span>
+      </li>
     <% end %>
   </ul>
 
-  <%= form_with(model: [namespace, ride, Message.new(ride: ride)], class: "input-field", local: true) do |form| %>
-    <div class="row">
-      <div class="col l8 m8 s6">
-        <i class="material-icons prefix">sms</i>
-        <%= form.text_area :content, class: "materialize-textarea"%>
-      </div>
-      <div class="col">
-        <%= form.button "Post a Message", class: "btn waves-effect waves-light" %>
-      </div>
-    </div>
+  <a name="latest-message"></a>
+
+  <%= form_with(model: [namespace, ride, Message.new(ride: ride)],
+                class: "rb-message-form input-field", local: true) do |form| %>
+    <%= form.text_field :content, placeholder: "Post a Message",
+                                  class: "rb-message-form__input" %>
+    <%= form.button class: "rb-message-form__submit btn waves-effect" do %>
+      <i class="material-icons">send</i>
+    <% end %>
   <% end %>
 </section>

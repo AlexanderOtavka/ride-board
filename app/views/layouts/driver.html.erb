@@ -1,0 +1,8 @@
+<% content_for :link do %>
+  <li><%= link_to user_signed_in? ? user_display_name(current_user) : "Me",
+                  driver_me_path %></li>
+  <li><%= link_to 'Rides', driver_rides_path %></li>
+  <li><%= link_to 'Passenger App', passenger_root_path %></li>
+<% end %>
+
+<%= render template: "layouts/nav_view" %>
