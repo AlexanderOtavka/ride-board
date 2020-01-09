@@ -64,12 +64,12 @@
 
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
-<p class="rb-ride-notifications-status">
-  <% unless @ride.driver.nil? %>
+<% unless @ride.driver.nil? %>
+  <p class="rb-ride-notifications-status">
     <% if @ride.driver.notified_by_ride?(@ride) %>
       Your driver is receiving notifications
     <% else %>
       Your driver is not receiving notifications
     <% end %>
-  <% end %>
-</p>
+  </p>
+<% end %>
