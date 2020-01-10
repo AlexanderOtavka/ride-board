@@ -1,10 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# Tests will start failing in November 2024, but that will Never Happen (TM)
-
 creator_created:
   start_location: grinnell
-  start_datetime: 2024-11-10 07:08:36
+  start_datetime: <%= 1.day.from_now.to_s(:db) %>
   end_location: walmart
   driver: driver
   created_by: creator
@@ -13,7 +11,7 @@ creator_created:
 
 creator_created_with_open_seats:
   start_location: des_moines
-  start_datetime: 2024-11-11 07:08:36
+  start_datetime: <%= 2.days.from_now.to_s(:db) %>
   end_location: grinnell
   driver: admin
   created_by: creator
@@ -22,7 +20,7 @@ creator_created_with_open_seats:
 
 driver_created:
   start_location: grinnell
-  start_datetime: 2024-11-12 07:08:36
+  start_datetime: <%= 3.days.from_now.to_s(:db) %>
   end_location: walmart
   driver: driver
   created_by: driver
@@ -30,7 +28,7 @@ driver_created:
 
 driver_created_full:
   start_location: des_moines
-  start_datetime: 2024-11-13 07:08:36
+  start_datetime: <%= 4.days.from_now.to_s(:db) %>
   end_location: grinnell
   driver: driver
   created_by: driver
@@ -39,28 +37,28 @@ driver_created_full:
 
 driverless:
   start_location: grinnell
-  start_datetime: 2024-11-14 07:08:36
+  start_datetime: <%= 5.days.from_now.to_s(:db) %>
   end_location: walmart
   created_by: creator
   price: 9.99
 
 driverless2:
   start_location: des_moines
-  start_datetime: 2024-11-15 07:08:36
+  start_datetime: <%= 6.days.from_now.to_s(:db) %>
   end_location: grinnell
   created_by: creator
   price: 9.99
 
 abandoned:
   start_location: des_moines
-  start_datetime: 2024-12-01 07:08:36
+  start_datetime: <%= 7.days.from_now.to_s(:db) %>
   end_location: grinnell
   created_by: creator
   price: 9.99
 
 past_with_driver:
   start_location: grinnell
-  start_datetime: 2018-11-17 07:08:36
+  start_datetime: <%= 2.days.ago.to_s(:db) %>
   end_location: walmart
   driver: driver
   created_by: driver
@@ -68,7 +66,7 @@ past_with_driver:
 
 past_without_driver:
   start_location: grinnell
-  start_datetime: 2018-11-18 07:08:36
+  start_datetime: <%= 1.day.ago.to_s(:db) %>
   end_location: walmart
   created_by: creator
   price: 9.99
