@@ -1,10 +1,9 @@
 require 'savon'
 
 module Flights
-  SOAP_URL = 'http://flightxml.flightaware.com/soap/FlightXML2/wsdl'
-
-
+  SOAP_URL = 'http://flightxml.flightaware.com/soap/FlightXML2/wsdl'.freeze
   class Service
+    attr_reader :client
     def initialize
       if ENV['USE_REAL_FLIGHTAWARE_API'] == "true"
         @client = Savon.client(
@@ -15,30 +14,36 @@ module Flights
       end
     end
 
-    # Takes date, and either a flight number (with carrier) or airports,
+    # Takes date, and a flight number
     # and returns precise flight times, and hopefully a flightaware faFlightID
     # we can use to keep track of the flight in the future
     #
     # Possible return values: ApiError, [Flight]
     #
-    # Will stem mostly from https://flightaware.com/commercial/flightxml/explorer/#op_AirlineFlightSchedules
+    # Backing api call: https://flightaware.com/commercial/flightxml/explorer/#op_AirlineFlightSchedules
     #
-    # Caller note: there do not appear to be guarantees that there will only be one
-    # flight for a given flight number, so we should be prepared to handle the case
-    # where we get multiple back
+    # Caller note: the same flight can have multiple legs
     def find_flight(date:,
-                    airline: nil,
-                    flight_number: nil,
-                    departure_airport: nil,
-                    destination_airport: nil)
+                    flight_number:,
+                    airline: nil)
+      time_range = _day_to_time_range(date)
+      message = {
+        startDate: time_range[0].to_i,
+        endDate: time_range[1].to_i,
+        airline: airline,
+        flight_number: flight_number,
+        howMany: 10
+      }.compact!
+      @client.call(:airline_flight_schedules, message: message)
+        &.to_hash[:airline_flight_schedules_results][:airline_flight_schedules_result][:data]
     end
 
     # Converts a Time object into [8 pm night before, 4am next day] in an attempt
     # to cover "all flights that day"
-    CHICAGO_TZ = "-06:00"
+    CHICAGO_TZ = "-06:00".freeze
     def _day_to_time_range(time)
-      [Time.new(2019, time.month, time.day - 1, 20, 0, 0, CHICAGO_TZ),
-       Time.new(2019, time.month, time.day + 1, 4, 0, 0, CHICAGO_TZ)]
+      [Time.new(time.year, time.month, time.day - 1, 20, 0, 0, CHICAGO_TZ),
+       Time.new(time.year, time.month, time.day + 1, 4,  0, 0, CHICAGO_TZ)]
     end
   end
 end
