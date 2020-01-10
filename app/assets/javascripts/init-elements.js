@@ -8,22 +8,24 @@ this.Facebook = (function() {
   eventsBound = false;
 
   Facebook.load = function() {
-    var facebookScript, firstScript, initialRoot;
-    if (!(document.getElementById('fb-root').size() > 0)) {
-      initialRoot = document.createElement('div');
-      initialRoot.setAttribute("id", "fb-root");
-      document.body.prepend(initialRoot);
-    }
-    if (!(document.getElementById('facebook-jssdk').size() > 0)) {
-      facebookScript = document.createElement("script");
-      facebookScript.id = 'facebook-jssdk';
-      facebookScript.async = 1;
-      facebookScript.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=" + (Facebook.appId()) + "&version=v2.0";
-      firstScript = document.getElementsByTagName("script")[0];
-      firstScript.parentNode.insertBefore(facebookScript, firstScript);
-    }
-    if (!Facebook.eventsBound) {
-      return Facebook.bindEvents();
+    if(document.getElementById('fb-root')){
+      var facebookScript, firstScript, initialRoot;
+      if (!(document.getElementById('fb-root').size() > 0)) {
+        initialRoot = document.createElement('div');
+        initialRoot.setAttribute("id", "fb-root");
+        document.body.prepend(initialRoot);
+      }
+      if (!(document.getElementById('facebook-jssdk').size() > 0)) {
+        facebookScript = document.createElement("script");
+        facebookScript.id = 'facebook-jssdk';
+        facebookScript.async = 1;
+        facebookScript.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=" + (Facebook.appId()) + "&version=v2.0";
+        firstScript = document.getElementsByTagName("script")[0];
+        firstScript.parentNode.insertBefore(facebookScript, firstScript);
+      }
+      if (!Facebook.eventsBound) {
+        return Facebook.bindEvents();
+      }
     }
   };
 
