@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
+  as :user do
+    patch '/user/confirmation' => 'confirmations#update', :via => :patch, :as => :update_user_confirmation
+  end
+
   devise_for :users, path: 'account', controllers: {
-               registrations: 'users/registrations'
-             }
+               registrations: 'users/registrations',
+               confirmations: "confirmations"
+  }
   resources :locations
 
   get "/s/:ride_id", to: "welcome#share", as: :share_ride
