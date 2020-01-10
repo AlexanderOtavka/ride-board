@@ -1,31 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 creator_and_ride_they_created:
-  ride_id: 1
-  user_id: 4
+  ride: creator_created
+  user: creator
   app: 0
 
 driver_and_ride_they_created:
-  ride_id: 2
-  user_id: 2
+  ride: driver_created
+  user: driver
   app: 1
 
 passenger_and_a_ride_they_are_not_in:
-  ride_id: 2
-  user_id: 1
+  ride: driver_created
+  user: passenger
   app: 0
 
 admin_and_a_ride_they_dont_drive_for:
-  ride_id: 3
-  user_id: 3
+  ride: driverless
+  user: admin
   app: 1
 
 several_rides_passenger_in_driver_created:
-  ride_id: 2
-  user_id: 6
+  ride: driver_created
+  user: several_rides_passenger
   app: 0
 
 several_rides_passenger_in_driverless:
-  ride_id: 3
-  user_id: 6
+  ride: driverless
+  user: several_rides_passenger
   app: 0

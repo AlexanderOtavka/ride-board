@@ -3,50 +3,45 @@
 # Tests will start failing in November 2024, but that will Never Happen (TM)
 
 creator_created:
-  id: 1
-  start_location_id: 1
+  start_location: grinnell
   start_datetime: 2024-11-18 07:08:36
-  end_location_id: 2
+  end_location: walmart
   end_datetime: 2024-11-18 07:08:36
-  driver_id: 2
-  created_by_id: 4
+  driver: driver
+  created_by: creator
   seats: 1
   price: 9.99
 
 driver_created:
-  id: 2
-  start_location_id: 1
+  start_location: grinnell
   start_datetime: 2024-11-18 07:08:36
-  end_location_id: 2
+  end_location: walmart
   end_datetime: 2024-11-18 07:08:36
-  driver_id: 2
-  created_by_id: 2
+  driver: driver
+  created_by: driver
   price: 9.99
 
 driverless:
-  id: 3
-  start_location_id: 1
+  start_location: grinnell
   start_datetime: 2024-11-18 07:08:36
-  end_location_id: 2
+  end_location: walmart
   end_datetime: 2024-11-18 07:08:36
-  created_by_id: 4
+  created_by: creator
   price: 9.99
 
 past_with_driver:
-  id: 4
-  start_location_id: 1
+  start_location: grinnell
   start_datetime: 2018-11-18 07:08:36
-  end_location_id: 2
+  end_location: walmart
   end_datetime: 2018-11-18 07:08:36
-  driver_id: 2
-  created_by_id: 2
+  driver: driver
+  created_by: driver
   price: 9.99
 
 past_without_driver:
-  id: 5
-  start_location_id: 1
+  start_location: grinnell
   start_datetime: 2018-11-18 07:08:36
-  end_location_id: 2
+  end_location: walmart
   end_datetime: 2018-11-18 07:08:36
-  created_by_id: 4
+  created_by: creator
   price: 9.99

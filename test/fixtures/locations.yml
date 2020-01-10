@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 grinnell:
-  id: 1
   name: Grinnell
 
 walmart:
-  id: 2
   name: Walmart
 
+des_moines:
+  name: Des Moines
+
 unused:
-  id: 3
   name: Unused
