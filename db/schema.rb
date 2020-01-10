@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_08_062848) do
+ActiveRecord::Schema.define(version: 2020_01_10_125855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,24 @@ ActiveRecord::Schema.define(version: 2020_01_08_062848) do
     t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
     t.index ["created_by_id"], name: "index_messages_on_created_by_id"
     t.index ["ride_id"], name: "index_messages_on_ride_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "passwordless_sessions", force: :cascade do |t|
+    t.string "authenticatable_type"
+    t.bigint "authenticatable_id"
+    t.datetime "timeout_at", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "claimed_at"
+    t.text "user_agent", null: false
+    t.string "remote_addr", null: false
+    t.string "token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["authenticatable_type", "authenticatable_id"], name: "authenticatable"
   end
 
   create_table "ride_notification_subscriptions", force: :cascade do |t|
@@ -81,12 +97,22 @@ ActiveRecord::Schema.define(version: 2020_01_08_062848) do
     t.boolean "notify_sms"
     t.boolean "notify_email"
     t.string "phone_number"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
     t.string "name", default: "", null: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "messages", "rides"
+  add_foreign_key "messages", "users"
   add_foreign_key "messages", "users", column: "created_by_id"
   add_foreign_key "ride_notification_subscriptions", "rides"
   add_foreign_key "ride_notification_subscriptions", "users"
