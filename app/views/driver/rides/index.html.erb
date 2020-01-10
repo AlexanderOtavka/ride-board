@@ -1,10 +1,11 @@
 <% unless @rides.empty? %>
   <section>
     <h1 class="rb-rides__heading">Requested Rides</h1>
-
-    <% @rides.each do |ride| %>
-      <%= render "rides/ride_thumbnail", ride: ride, app: :driver %>
-    <% end %>
+    <div class="cards-container">
+      <% @rides.each do |ride| %>
+        <%= render "rides/ride_card", ride: ride, app: :driver %>
+      <% end %>
+    </div>
   </section>
 <% end %>
 

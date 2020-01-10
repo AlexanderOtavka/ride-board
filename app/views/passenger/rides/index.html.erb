@@ -2,9 +2,11 @@
   <section id="available-rides">
     <h1 class="rb-rides__heading">Rides with Drivers</h1>
 
-    <% @available_rides.each do |ride| %>
-      <%= render "rides/ride_thumbnail", ride: ride, app: :passenger %>
-    <% end %>
+    <div class="cards-container">
+      <% @available_rides.each do |ride| %>
+        <%= render "rides/ride_card", ride: ride, app: :passenger %>
+      <% end %>
+    </div>
   </section>
 <% end %>
 
@@ -12,9 +14,11 @@
   <section id="other-rides">
     <h1 class="rb-rides__heading">Others Requested Rides</h1>
 
-    <% @other_rides.each do |ride| %>
-      <%= render "rides/ride_thumbnail", ride: ride, app: :passenger %>
-    <% end %>
+    <div class="cards-container">
+      <% @other_rides.each do |ride| %>
+        <%= render "rides/ride_card", ride: ride, app: :passenger %>
+      <% end %>
+    </div>
   </section>
 <% end %>
 

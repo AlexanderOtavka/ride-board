@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-image">
+    <%= image_tag 'passenger.jpg' %>
+    <span class="card-title"><%= ride.end_location.name %></span>
+  </div>
+  <div class="card-content">
+    <strong class="rb-ride-location__heading">Pickup</strong>
+    <p class="rb-ride-location__name"><%= ride.start_location.name %></p>
+    <p class="rb-ride-location__time"><%= ride.start_datetime.to_s(:short_ampm) %></p>
+    <strong class="rb-ride-location__heading">Destination</strong>
+    <p class="rb-ride-location__name"><%= ride.end_location.name %></p>
+  </div>
+  <div class="card-action">
+    <%= link_to 'View Ride', [app, ride], class: "btn" %>
+  </div>
+</div>
