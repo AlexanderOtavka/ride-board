@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  ride: 1
-  created_by: 1
+creator_in_their_ride:
+  ride: creator_created
+  created_by: creator
   content: MyText
 
-two:
-  ride: 1
-  created_by: 1
+admin_in_creator_created:
+  ride: creator_created
+  created_by: admin
   content: MyText

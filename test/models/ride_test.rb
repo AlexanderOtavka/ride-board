@@ -82,4 +82,60 @@ class RideTest < ActiveSupport::TestCase
       no_passengers.save
     end
   end
+
+  test "list sorts rides and excludes abandoned rides" do
+    assert_equal(
+      [
+        rides(:past_with_driver),
+        rides(:past_without_driver),
+        rides(:creator_created),
+        rides(:creator_created_with_open_seats),
+        rides(:driver_created),
+        rides(:driver_created_full),
+        rides(:driverless),
+        rides(:driverless2),
+      ],
+      Ride.list(Ride.all)
+    )
+  end
+
+  test "lists available rides for a passenger" do
+    user = users(:passenger)
+    assert_equal(
+      [rides(:creator_created_with_open_seats), rides(:driver_created)],
+      Ride.available_for_passenger(current_user: user)
+    )
+  end
+
+  test "available rides don't include rides the passenger is in" do
+    user = users(:other_passenger)
+    assert_equal(
+      [rides(:creator_created_with_open_seats)],
+      Ride.available_for_passenger(current_user: user)
+    )
+  end
+
+  test "available rides don't include rides the current user is this driver" do
+    user = users(:admin)
+    assert_equal(
+      [rides(:driver_created)],
+      Ride.available_for_passenger(current_user: user)
+    )
+  end
+
+  test "lists driverless rides for a driver" do
+    user = users(:driver)
+    assert_equal(
+      [rides(:driverless), rides(:driverless2)],
+      Ride.driverless(current_user: user)
+    )
+  end
+
+  test "lists driverless rides that passenger is not in" do
+    user = users(:several_rides_passenger)
+    assert_equal(
+      [rides(:driverless2)],
+      Ride.driverless(current_user: user)
+    )
+  end
 end

@@ -5,10 +5,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :seat_assignments, dependent: :destroy
-  has_many :rides_taken, through: :seat_assignments, source: :ride
+  has_many :rides_taking, -> {Ride.upcoming(self)}, through: :seat_assignments,
+                          source: :ride
+  has_many :rides_taken, -> {Ride.past(self)}, through: :seat_assignments,
+                         source: :ride
 
-  has_many :rides_driven, class_name: "Ride", foreign_key: :driver_id,
-                          dependent: :nullify
+  has_many :rides_driving, -> {Ride.upcoming(self)}, class_name: "Ride",
+                           foreign_key: :driver_id, dependent: :nullify
+  has_many :rides_driven, -> {Ride.past(self)}, class_name: "Ride",
+                          foreign_key: :driver_id, dependent: :nullify
 
   has_many :ride_notification_subscriptions, dependent: :destroy
   has_many :notifying_rides, through: :ride_notification_subscriptions,
