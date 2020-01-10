@@ -16,10 +16,18 @@ other_passenger_in_driver_created:
   ride: driver_created
   user: other_passenger
 
+other_passenger_in_driver_created_full:
+  ride: driver_created_full
+  user: other_passenger
+
 several_rides_passenger_in_driver_created:
   ride: driver_created
   user: several_rides_passenger
 
 several_rides_passenger_in_driverless:
   ride: driverless
+  user: several_rides_passenger
+
+several_rides_passenger_in_driver_created_full:
+  ride: driver_created_full
   user: several_rides_passenger

@@ -4,7 +4,7 @@ class Driver::RidesController < Driver::BaseController
   # GET /rides
   # GET /rides.json
   def index
-    @rides = Ride.driverless_for_driver current_user
+    @rides = Ride.driverless current_user: current_user
   end
 
   # GET /rides/1

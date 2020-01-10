@@ -27,19 +27,14 @@ class Ride < ApplicationRecord
     list(query).where("start_datetime <= ?", Time.zone.now)
   end
 
-  def self.available_for_passenger(passenger)
+  def self.available_for_passenger(current_user:)
     upcoming
       .where.not(driver: nil)
       .filter {|ride| ride.seats.nil? || ride.seats > ride.passengers.count}
       # Possible N+1 performance issue
   end
 
-  def self.driverless_for_passenger(passenger)
-    upcoming
-      .where(driver: nil)
-  end
-
-  def self.driverless_for_driver(driver)
+  def self.driverless(current_user:)
     upcoming
       .where(driver: nil)
   end

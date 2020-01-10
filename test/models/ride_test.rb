@@ -82,4 +82,26 @@ class RideTest < ActiveSupport::TestCase
       no_passengers.save
     end
   end
+
+  test "lists available rides for a passenger" do
+    user = users(:passenger)
+    assert_equal(
+      [
+        rides(:creator_created_with_open_seats),
+        rides(:driver_created),
+      ],
+      Ride.available_for_passenger(current_user: user)
+    )
+  end
+
+  test "lists driverless rides for a driver" do
+    user = users(:driver)
+    assert_equal(
+      [
+        rides(:driverless),
+        rides(:driverless2),
+      ],
+      Ride.driverless(current_user: user)
+    )
+  end
 end

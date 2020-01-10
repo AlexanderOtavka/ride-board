@@ -4,36 +4,57 @@
 
 creator_created:
   start_location: grinnell
-  start_datetime: 2024-11-18 07:08:36
+  start_datetime: 2024-11-10 07:08:36
   end_location: walmart
-  end_datetime: 2024-11-18 07:08:36
   driver: driver
   created_by: creator
   seats: 1
   price: 9.99
 
+creator_created_with_open_seats:
+  start_location: des_moines
+  start_datetime: 2024-11-11 07:08:36
+  end_location: grinnell
+  driver: admin
+  created_by: creator
+  seats: 3
+  price: 9.99
+
 driver_created:
   start_location: grinnell
-  start_datetime: 2024-11-18 07:08:36
+  start_datetime: 2024-11-12 07:08:36
   end_location: walmart
-  end_datetime: 2024-11-18 07:08:36
   driver: driver
   created_by: driver
   price: 9.99
 
+driver_created_full:
+  start_location: des_moines
+  start_datetime: 2024-11-13 07:08:36
+  end_location: grinnell
+  driver: driver
+  created_by: driver
+  seats: 2
+  price: 9.99
+
 driverless:
   start_location: grinnell
-  start_datetime: 2024-11-18 07:08:36
+  start_datetime: 2024-11-14 07:08:36
   end_location: walmart
-  end_datetime: 2024-11-18 07:08:36
+  created_by: creator
+  price: 9.99
+
+driverless2:
+  start_location: des_moines
+  start_datetime: 2024-11-15 07:08:36
+  end_location: grinnell
   created_by: creator
   price: 9.99
 
 past_with_driver:
   start_location: grinnell
-  start_datetime: 2018-11-18 07:08:36
+  start_datetime: 2018-11-17 07:08:36
   end_location: walmart
-  end_datetime: 2018-11-18 07:08:36
   driver: driver
   created_by: driver
   price: 9.99
@@ -42,6 +63,5 @@ past_without_driver:
   start_location: grinnell
   start_datetime: 2018-11-18 07:08:36
   end_location: walmart
-  end_datetime: 2018-11-18 07:08:36
   created_by: creator
   price: 9.99
