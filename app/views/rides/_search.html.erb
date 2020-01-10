@@ -1,4 +1,5 @@
-<div class="btns-bar">
+<div class="btns-bar col s4 m4 l3">
+  <h2>Filter</h2><br>
   <%= search_form_for @search, url: "", class: "rides-search" do |f| %>
 
     <div class="input-field">
@@ -25,10 +26,10 @@
       <%= f.label :end_datetime, "Arrives Before" %>
     </div>
 
-    </div>
 
     <div class="actions">
-      <%= f.submit "Search", class: "btn" %>
+      <%= f.submit "Filter", class: "btn" %>
 
     </div>
   <% end %>
+</div>
