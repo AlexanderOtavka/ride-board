@@ -16,6 +16,13 @@ class Ride < ApplicationRecord
 
   def self.list(query)
     query
+      .where(%q{
+        rides.driver_id is not null or
+        exists (
+          select * from seat_assignments
+          where seat_assignments.ride_id = rides.id
+        )
+      })
       .order(:start_datetime, price: :desc)
   end
 
@@ -30,13 +37,16 @@ class Ride < ApplicationRecord
   def self.available_for_passenger(current_user:)
     upcoming
       .where.not(driver: nil)
+      .where.not(driver: current_user)
       .filter {|ride| ride.seats.nil? || ride.seats > ride.passengers.count}
+      .filter {|ride| !ride.passengers.include?(current_user)}
       # Possible N+1 performance issue
   end
 
   def self.driverless(current_user:)
     upcoming
       .where(driver: nil)
+      .filter {|ride| !ride.passengers.include?(current_user)}
   end
 
   def notified_passengers

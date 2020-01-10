@@ -51,6 +51,13 @@ driverless2:
   created_by: creator
   price: 9.99
 
+abandoned:
+  start_location: des_moines
+  start_datetime: 2024-12-01 07:08:36
+  end_location: grinnell
+  created_by: creator
+  price: 9.99
+
 past_with_driver:
   start_location: grinnell
   start_datetime: 2018-11-17 07:08:36
