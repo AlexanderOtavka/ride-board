@@ -1,3 +1,10 @@
 <%= link_to [app, ride], class: "rb-ride-thumbnail" do %>
-  <%= render "rides/ride_locations", ride: ride %>
+  <%= render "rides/ride_locations", ride: ride do %>
+    <% if ride.passengers.count > 1 %>
+      <p class="rb-ride-thumbnail__passenger-count">
+        <i class="material-icons">person</i>
+        <span><%= ride.passengers.count %></span>
+      </p>
+    <% end %>
+  <% end %>
 <% end %>
