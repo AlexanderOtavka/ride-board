@@ -23,6 +23,7 @@ module Flights
     # Backing api call: https://flightaware.com/commercial/flightxml/explorer/#op_AirlineFlightSchedules
     #
     # Caller note: the same flight can have multiple legs
+    # Caller note: the flight number must only be the number part of the flight
     def find_flight(date:,
                     flight_number:,
                     airline: nil)
@@ -36,6 +37,22 @@ module Flights
       }.compact!
       @client.call(:airline_flight_schedules, message: message)
         &.to_hash[:airline_flight_schedules_results][:airline_flight_schedules_result][:data]
+        .map do |flight|
+        flight[:departuretime] = Time.at(flight[:departuretime].to_i)
+        flight[:arrivaltime] = Time.at(flight[:arrivaltime].to_i)
+        flight[:origin] = _get_airport_info(flight[:origin])
+        flight[:destination] = _get_airport_info(flight[:destination])
+        flight
+      end
+    end
+
+    def _get_airport_info(shortcode)
+      resp = @client.call(:airport_info, message: {airport_code: shortcode})
+      resp.to_hash[:airport_info_results][:airport_info_result]
+    end
+
+    def _get_airline_info(shortcode)
+      @client.call(:airline_info, message: {airline_code: shortcode})
     end
 
     # Converts a Time object into [8 pm night before, 4am next day] in an attempt
