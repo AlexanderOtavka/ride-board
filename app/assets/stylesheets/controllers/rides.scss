@@ -23,6 +23,12 @@
   &::hover {
     background-color: $light-grey;
   }
+
+  &__passenger-count {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .rb-ride-nav-links {

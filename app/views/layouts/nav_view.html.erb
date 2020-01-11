@@ -9,11 +9,22 @@
         <% if user_signed_in? && current_user.admin? %>
           <li><%= link_to 'Locations', locations_path %></li>
         <% end %>
-
         <% if !user_signed_in? %>
           <li><%= link_to 'Sign In', new_user_session_path %></li>
           <li><%= link_to 'Sign Up', new_user_registration_path %></li>
         <% end %>
+      </ul>
+      <ul class="right hide-on-large-only">
+        <li>
+          <%= link_to new_user_session_path do %>
+            <i class="material-icons">person</i>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to new_user_registration_path do %>
+            <i class="material-icons">person_add</i>
+          <% end %>
+        </li>
       </ul>
     </div>
   </nav>
