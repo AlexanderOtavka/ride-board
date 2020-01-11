@@ -29,10 +29,4 @@ class User < ApplicationRecord
     end
   end
 
-  protected
-
-   # Comment this out if we want to enforce email confirmation
-  #def confirmation_required?
-  #  false
-  #end
 end
