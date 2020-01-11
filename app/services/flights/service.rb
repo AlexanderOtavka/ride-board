@@ -14,7 +14,7 @@ module Flights
       end
     end
 
-    # Takes date, and a flight number
+    # Takes date, a flight number, an airline, and optionally airports,
     # and returns precise flight times, and hopefully a flightaware faFlightID
     # we can use to keep track of the flight in the future
     #
@@ -22,16 +22,30 @@ module Flights
     #
     # Backing api call: https://flightaware.com/commercial/flightxml/explorer/#op_AirlineFlightSchedules
     #
+    # Right now even specifying all available information can still lead to
+    #
     # Caller note: the same flight can have multiple legs
     # Caller note: the flight number must only be the number part of the flight
+    # Caller note: Airline codes are three letters, and different from the ticket
+    #  For example: United Airlines UA338 would be "UAL" for the airline and 338
+    #  for the flight number
+    # Caller note: Airports must be ICAO codes, which are 4 letters and different
+    # from the IATA codes that airline passengers are used to. In general for US
+    # airports the ICAO code is the IATA code prepended with a K, so LAX -> KLAX,
+    # DSM -> KDSM.
+    # A "full" table can be found here: https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat
     def find_flight(date:,
                     flight_number:,
-                    airline: nil)
+                    airline:,
+                    origin: nil,
+                    destination: nil)
       time_range = _day_to_time_range(date)
       message = {
         startDate: time_range[0].to_i,
         endDate: time_range[1].to_i,
         airline: airline,
+        origin: origin,
+        destination: destination,
         flight_number: flight_number,
         howMany: 10
       }.compact!
