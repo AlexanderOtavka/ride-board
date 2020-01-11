@@ -45,7 +45,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
-  
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -70,4 +70,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  # Turn off webpacker yarn integrity check - this is deprecated anyways:
+  # https://github.com/yarnpkg/rfcs/pull/106
+  config.webpacker.check_yarn_integrity = false
 end
