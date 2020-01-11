@@ -17,10 +17,10 @@ class Ride < ApplicationRecord
   def self.list(query)
     query
       .where("
-        rides.driver_id is not null or
-        exists (
-          select * from seat_assignments
-          where seat_assignments.ride_id = rides.id
+        rides.driver_id IS NOT NULL OR
+        EXISTS (
+          SELECT * FROM seat_assignments
+          WHERE seat_assignments.ride_id = rides.id
         )
       ")
       .order(:start_datetime, price: :desc)
@@ -34,7 +34,27 @@ class Ride < ApplicationRecord
     list(query).where("start_datetime <= ?", Time.zone.now)
   end
 
-  def self.available_for_passenger(current_user:)
+  def self.search(query, search)
+    search ||= {location: nil, date: nil}
+
+    unless search[:location].nil?
+      matches_start_location = query.where(start_location: search[:location])
+      matches_end_location = query.where(end_location: search[:location])
+      query = matches_start_location.or(matches_end_location)
+    end
+
+    unless search[:date].nil?
+      query = query.where(
+        "start_datetime BETWEEN ? AND ?",
+        search[:date].beginning_of_day,
+        search[:date].end_of_day,
+      )
+    end
+
+    query
+  end
+
+  def self.available_for_passenger(current_user:, search:)
     upcoming
       .where.not(driver: nil)
       .where.not(driver: current_user)
@@ -44,7 +64,7 @@ class Ride < ApplicationRecord
       # Possible N+1 performance issue
   end
 
-  def self.driverless(current_user:)
+  def self.driverless(current_user:, search:)
     upcoming
       .where(driver: nil)
       .includes(:passengers)

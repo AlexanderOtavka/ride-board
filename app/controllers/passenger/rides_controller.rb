@@ -4,8 +4,14 @@ class Passenger::RidesController < Passenger::BaseController
   # GET /rides
   # GET /rides.json
   def index
-    @available_rides = Ride.available_for_passenger current_user: current_user
-    @other_rides     = Ride.driverless              current_user: current_user
+    @available_rides = Ride.available_for_passenger(
+      current_user: current_user,
+      search: nil
+    )
+    @other_rides = Ride.driverless(
+      current_user: current_user,
+      search: nil
+    )
   end
 
   # GET /rides/1

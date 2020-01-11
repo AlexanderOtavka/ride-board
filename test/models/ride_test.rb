@@ -103,7 +103,7 @@ class RideTest < ActiveSupport::TestCase
     user = users(:passenger)
     assert_equal(
       [rides(:creator_created_with_open_seats), rides(:driver_created)],
-      Ride.available_for_passenger(current_user: user)
+      Ride.available_for_passenger(current_user: user, search: nil)
     )
   end
 
@@ -111,7 +111,7 @@ class RideTest < ActiveSupport::TestCase
     user = users(:other_passenger)
     assert_equal(
       [rides(:creator_created_with_open_seats)],
-      Ride.available_for_passenger(current_user: user)
+      Ride.available_for_passenger(current_user: user, search: nil)
     )
   end
 
@@ -119,7 +119,7 @@ class RideTest < ActiveSupport::TestCase
     user = users(:admin)
     assert_equal(
       [rides(:driver_created)],
-      Ride.available_for_passenger(current_user: user)
+      Ride.available_for_passenger(current_user: user, search: nil)
     )
   end
 
@@ -127,7 +127,7 @@ class RideTest < ActiveSupport::TestCase
     user = users(:driver)
     assert_equal(
       [rides(:driverless), rides(:driverless2)],
-      Ride.driverless(current_user: user)
+      Ride.driverless(current_user: user, search: nil)
     )
   end
 
@@ -135,7 +135,49 @@ class RideTest < ActiveSupport::TestCase
     user = users(:several_rides_passenger)
     assert_equal(
       [rides(:driverless2)],
-      Ride.driverless(current_user: user)
+      Ride.driverless(current_user: user, search: nil)
+    )
+  end
+
+  test "searches for a location in either the start or end field" do
+    assert_equal(
+      [
+        rides(:creator_created_with_open_seats),
+        rides(:driver_created_full),
+        rides(:driverless2),
+      ],
+      Ride.search(
+        Ride.list(Ride.all),
+        location: locations(:des_moines),
+        date: nil
+      )
+    )
+  end
+
+  test "searches for a date" do
+    assert_equal(
+      [
+        rides(:driverless),
+      ],
+      Ride.search(
+        Ride.list(Ride.all),
+        location: nil,
+        date: 5.days.from_now.to_date
+      )
+    )
+  end
+
+  test "searches for both a location and a date" do
+    assert_equal(
+      [
+        rides(:creator_created_with_open_seats),
+        rides(:driver_created_full),
+      ],
+      Ride.search(
+        Ride.list(Ride.all),
+        location: locations(:des_moines),
+        date: 2.days.from_now.to_date
+      )
     )
   end
 end
