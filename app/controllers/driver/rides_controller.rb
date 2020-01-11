@@ -94,6 +94,12 @@ module Driver
 
       respond_to do |format|
         if valid && @ride.save
+          @ride.passengers.each do |passenger|
+            Notifier::Service.new.notify(passenger,
+              "A driver (#{current_user.email}) just accepted your ride request. " +
+              "See #{share_ride_url(@ride)} for details.")
+          end
+
           format.html { redirect_to driver_ride_path(@ride),
                                     notice: 'You are now the driver.' }
           format.json { render :show, status: :created, location: @ride }
@@ -112,6 +118,13 @@ module Driver
         if @ride.driver == current_user
           @ride.driver = nil
           @ride.save
+
+          @ride.passengers.each do |passenger|
+            Notifier::Service.new.notify(passenger,
+              "Your driver (#{current_user.email}) will no longer be driving for you! " +
+              "See #{share_ride_url(@ride)} for details.")
+          end
+
           format.html { redirect_to driver_rides_path,
                                     notice: 'You have left this ride.' }
           format.json { render :show, status: :created, location: @ride }

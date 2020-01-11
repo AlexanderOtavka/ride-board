@@ -43,26 +43,28 @@
 </p>
 
 <p>
-  <strong>Fare:</strong>
-  <% if @ride.price %>
-  <%= dollars @ride.price %>
-    <% else %>
-  Contact Driver
-    <% end %>
-</p>
-
-<p>
   <strong>Seats remaining:</strong>
   <%= seats_remaining @ride %>
 </p>
 
+<% unless @ride.driver.nil? %>
+  <% if @ride.driver.notify? %>
+    <p>Your driver is receiving notifications</p>
+  <% else %>
+    <p>Your driver is not receiving notifications</p>
+  <% end %>
+<% end %>
+
 <%= render "messages/pane", namespace: :passenger, ride: @ride %>
 
 <% if user_signed_in? && @ride.passengers.include?(current_user) %>
-  <%= link_to current_user.notify? ?
-                'Notification Preferences' :
-                'Notify Me About Updates to this Ride',
-              passenger_ride_notify_path(@ride) %>
+  <% if current_user.notify? %>
+    <%= link_to 'Notification Preferences',
+                passenger_ride_notify_path(@ride) %>
+  <% else %>
+    <%= link_to 'Notify Me About Updates to this Ride',
+                passenger_ride_notify_path(@ride), class: 'big-boi' %>
+  <% end %>
   <br />
 <% end %>
 
@@ -70,7 +72,8 @@
   <% if @ride.passengers.include? current_user %>
     <%= link_to 'Leave', passenger_join_ride_path(@ride), method: :delete %>
   <% else %>
-    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post %>
+    <%= link_to 'Join', passenger_join_ride_path(@ride), method: :post,
+                class: 'big-boi' %>
   <% end %>
 <% end %>
 

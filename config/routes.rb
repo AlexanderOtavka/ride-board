@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
-  devise_for :user, path: '/devise'
+  devise_for :user
   resources :locations
 
   get "/s/:id", to: redirect('/passenger/rides/%{id}'), as: :share_ride

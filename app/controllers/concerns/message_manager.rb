@@ -14,7 +14,7 @@ module MessageManager
 
     if message.save
       notifier = Notifier::Service.new
-      if current_user == @ride.driver
+      if @ride.driver == nil || @ride.driver == current_user
         @ride.passengers.each do |passenger|
           notifier.notify(passenger,
             ellipsize(
