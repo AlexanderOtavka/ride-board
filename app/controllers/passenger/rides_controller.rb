@@ -6,11 +6,11 @@ class Passenger::RidesController < Passenger::BaseController
   def index
     @available_rides = Ride.available_for_passenger(
       current_user: current_user,
-      search: nil
+      search: search_params,
     )
     @other_rides = Ride.driverless(
       current_user: current_user,
-      search: nil
+      search: search_params,
     )
   end
 

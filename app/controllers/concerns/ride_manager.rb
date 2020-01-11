@@ -21,6 +21,21 @@ module RideManager
       )
   end
 
+  def search_params
+    if params.include? :q
+      filtered_params = params[:q].permit(:location_id, :date)
+
+      Parameters.new(
+        location: filtered_params[:location_id] ?
+          Location.find(filtered_params[:location_id]) : nil,
+        date: filtered_params[:date] ?
+          TimeZone.parse(filtered_params[:date]).to_date : nil
+      )
+    else
+      nil
+    end
+  end
+
   private
 
     def set_ride
