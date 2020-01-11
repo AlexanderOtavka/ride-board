@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create email: "otavkaal@grinnell.edu", password: "examplepassword",
-            admin: true
+            name: "Zander Otavka", admin: true
 
 Location.create name: "Grinnell College"
 Location.create name: "Walmart"

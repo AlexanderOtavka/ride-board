@@ -1,0 +1,16 @@
+<section class="rb-notification-form__section">
+  <h2 class="rb-notification-form__section-heading">Just This Ride</h2>
+
+  <%= form.fields :ride do |ride| %>
+    <div class="rb-notification-form__field">
+      <label>
+        <%= ride.check_box :notify, checked: @notify_this_ride %>
+        <span>Notify me about this ride</span>
+      </label>
+      <p class="rb-notification-form__field-description">
+        Notifications include messages posted, updates to the ride, and
+        changes in drivers or passengers that are relevant to you.
+      </p>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,19 @@
+<% unless @upcoming_rides.empty? %>
+  <section id="upcoming-rides">
+    <h2 class="rb-rides__heading">Upcoming Rides</h1>
+
+    <% upcoming_rides.each do |ride| %>
+      <%= render "rides/ride_thumbnail", ride: ride, app: app %>
+    <% end %>
+  </section>
+<% end %>
+
+<% unless @past_rides.empty? %>
+  <section id="past-rides">
+    <h2 class="rb-rides__heading">Past Rides</h1>
+
+    <% past_rides.each do |ride| %>
+      <%= render "rides/ride_thumbnail", ride: ride, app: app %>
+    <% end %>
+  </section>
+<% end %>

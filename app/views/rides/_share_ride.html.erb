@@ -1,0 +1,23 @@
+<section class="rb-share-ride">
+  <p class="rb-share-ride__description"><%= yield %></p>
+
+  <div class="rb-share-ride__bar">
+    <input class="rb-share-ride__link" type="text" readonly
+           value="<%= share_ride_url(ride) %>">
+    <button class="rb-share-ride__copy-button rb-copy-to-clipboard btn-flat"
+            data-clipboard-target=".rb-share-ride__link">
+      <span>Copy Link</span>
+    </button>
+
+    <span class="rb-share-ride__or">or</span>
+
+    <span class="fb-share-button" data-href="<%= share_ride_url(ride)%>"
+        data-layout="button" data-size="large">
+      <a target="_blank"
+         href="https://www.facebook.com/sharer/sharer.php?u=<%= url_encode share_ride_url(ride) %>&amp;src=sdkpreparse"
+         class="fb-xfbml-parse-ignore">
+         Share
+       </a>
+    </span>
+  </div>
+</section>

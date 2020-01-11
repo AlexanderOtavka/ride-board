@@ -1,6 +1,5 @@
 module ApplicationHelper
   def user_display_name(user)
-    match = user.email.match(/\A(.*)@/)
-    "[#{match.captures[0]}]"
+    user.display_name
   end
 end

@@ -1,11 +1,11 @@
 module Notifier::Errors
-  class InvalidStateError < Exception
+  class InvalidStateError < RuntimeError
   end
   class AuthError < StandardError
   end
   class ThrottledError < StandardError
   end
-  class MalformedRequestException < Exception
+  class MalformedRequestException < RuntimeError
   end
 
   # These should generally be retried

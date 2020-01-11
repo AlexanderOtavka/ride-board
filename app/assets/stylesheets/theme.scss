@@ -1,0 +1,68 @@
+// Colors
+
+$primary-color: #F2C94C !default;
+$secondary-color: #219653 !default;
+
+$light-grey: #eee;
+
+// Spacing Mixins
+
+@mixin section-margin {
+  margin: 0.5rem -1rem;
+}
+
+@mixin section-padding {
+  padding: 1rem;
+}
+
+@mixin section-border {
+  border: 1px solid $light-grey;
+}
+
+@mixin section {
+  @include section-margin();
+  @include section-padding();
+  @include section-border();
+}
+
+// Font mixins
+
+@mixin small-text {
+  font-size: 0.7em;
+}
+
+@mixin medium-text {
+  font-size: 1em;
+}
+
+@mixin large-text {
+  font-size: 1.3em;
+}
+
+@mixin deemphasized-text {
+  font-weight: 100;
+}
+
+@mixin heading {
+  display: block;
+  text-transform: uppercase;
+  font-weight: 100;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin small-heading {
+  @include heading();
+  @include small-text();
+}
+
+@mixin medium-heading {
+  @include heading();
+  @include medium-text();
+}
+
+@mixin large-heading {
+  @include heading();
+  @include large-text();
+  font-weight: 300;
+}

@@ -1,0 +1,24 @@
+name: Linting
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the Docker images
+        run: docker-compose build
+      - name: Ruby linting
+        run: docker-compose run web bin/lint.sh --ruby
+      #- name: Javascript linting
+      #  run: docker-compose run web bin/lint.sh --js
+      #- name: css/scss linting
+      #  run: docker-compose run web bin/lint.sh --css

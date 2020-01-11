@@ -1,0 +1,15 @@
+<section class="rb-ride-locations">
+  <div class="rb-ride-location rb-ride-location--start">
+    <strong class="rb-ride-location__heading">Pickup</strong>
+    <p class="rb-ride-location__name"><%= ride.start_location.name %></p>
+    <p class="rb-ride-location__time">
+      <%= ride.start_datetime.to_s(:short_ampm) %>
+    </p>
+  </div>
+
+  <div class="rb-ride-location rb-ride-location--end">
+    <strong class="rb-ride-location__heading">Destination</strong>
+    <p class="rb-ride-location__name"><%= ride.end_location.name %></p>
+    <%= yield %>
+  </div>
+</section>

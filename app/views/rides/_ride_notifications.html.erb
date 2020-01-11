@@ -1,0 +1,33 @@
+<% if user_signed_in? %>
+  <p class="rb-ride-notifications">
+    <% if current_user.notified_by_ride?(ride) %>
+      <span class="rb-ride-notifications__button-wrapper">
+        <%= link_to notify_path,
+                    class: "rb-ride-notifications__button " +
+                          "btn-flat waves-effect" do %>
+          <i class="material-icons left">notifications_active</i>
+          Notification Preferences
+        <% end %>
+      </span>
+    <% else %>
+      <span class="rb-ride-notifications__description">
+        Receive notifications about messages and changes to this ride
+      </span>
+
+      <span class="rb-ride-notifications__button-wrapper">
+        <% if ride.notification_subscribers.include? current_user %>
+          <% notify_btn_class = "btn" %>
+        <% else %>
+          <% notify_btn_class = "btn-flat" %>
+        <% end %>
+
+        <%= link_to notify_path,
+                    class: "rb-ride-notifications__button " +
+                          "#{notify_btn_class} waves-effect" do %>
+          <i class="material-icons left">notifications</i>
+          Notify Me
+        <% end %>
+      </span>
+    <% end %>
+  </p>
+<% end %>

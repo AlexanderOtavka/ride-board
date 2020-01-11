@@ -1,11 +1,15 @@
-class Passenger::NotificationsController < ApplicationController
+class Passenger::NotificationsController < Passenger::BaseController
   include NotificationManager
 
-  def notify_url
-    passenger_ride_notify_url(@ride)
+  def app
+    :passenger
+  end
+
+  def root_notify_url
+    passenger_notify_url
   end
 
   def redirect_path
-    passenger_ride_path(@ride)
+    passenger_me_path
   end
 end
