@@ -3,7 +3,6 @@
 SCRIPT_NAME="test.sh"
 
 RUBY_TESTS=false
-CHECK_YARN_INTEGRETY=false
 HELP=false
 
 # Parse command line args
@@ -13,10 +12,6 @@ do
     key="$1"
 
     case $key in
-        -Y|--yarn-integrity)
-            CHECK_YARN_INTEGRETY=true
-            shift # past argument
-            ;;
         -R|--ruby)
             RUBY_TESTS=true
             shift # past argument
@@ -44,7 +39,6 @@ if $HELP ; then
     echo "$SCRIPT_NAME [no parameters]"
     echo "  -h or --help           Print this message"
     echo "  -R or --ruby           Run ruby tests"
-    echo "  -Y or --yarn-integrity Run yarn integrity check"
     echo
     echo "Note: calling this script with no options will run all"
     echo "tests. Calling this script with any subset of the tests will"
@@ -54,19 +48,11 @@ fi
 
 EXIT_STATUS="0"
 
-if $RUBY_TESTS || ! $CHECK_YARN_INTEGRETY ; then
+if $RUBY_TESTS || true; then
     echo
     echo "Running ruby tests..."
     echo
     rake test || \
-        EXIT_STATUS="1"
-fi
-
-if $CHECK_YARN_INTEGRETY || ! $RUBY_TESTS ; then
-    echo
-    echo "Running yarn integrity check..."
-    echo
-    yarn check --integrity || \
         EXIT_STATUS="1"
 fi
 
