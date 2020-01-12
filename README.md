@@ -54,3 +54,7 @@ This project is deployed on heroku, and available at https://rideboard.app.
 The master branch is automatically deployed to a staging version of the app
 at https://ride-board-staging.herokuapp.com/ by CI. Promotion from staging to
 production is done manually.
+
+## Analytics
+
+See [Analytics.md](./Analytics.md).
