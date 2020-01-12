@@ -12,7 +12,7 @@ class DriverRidesControllerTest < ActionDispatch::IntegrationTest
   test "should get index showing rides without drivers" do
     get driver_rides_url
     assert_response :success
-    assert_select ".rb-ride-thumbnail", 1
+    assert_select ".rb-ride-thumbnail", 2
   end
 
   test "should get new" do
