@@ -57,4 +57,4 @@ production is done manually.
 
 ## Analytics
 
-See [Analytics.md](./Analytics.md).
+See [docs/Analytics.md](./docs/Analytics.md).
