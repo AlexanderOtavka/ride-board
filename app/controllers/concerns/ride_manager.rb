@@ -22,18 +22,15 @@ module RideManager
   end
 
   def search_params
-    if params.include? :q
-      filtered_params = params[:q].permit(:location_id, :date)
+    params[:location_id] ||= ""
+    params[:date] ||= ""
 
-      {
-        location: filtered_params[:location_id].empty? ?
-          nil : Location.find(filtered_params[:location_id]),
-        date: filtered_params[:date].empty? ?
-          nil : Time.zone.parse(filtered_params[:date]).to_date,
-      }
-    else
-      nil
-    end
+    {
+      location: params[:location_id].empty? ?
+        nil : Location.find(params[:location_id]),
+      date: params[:date].empty? ?
+        nil : Time.zone.parse(params[:date]).to_date,
+    }
   end
 
   private

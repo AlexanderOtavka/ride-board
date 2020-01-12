@@ -1,31 +1,29 @@
 <%= form_with url: url, method: :get, local: true,
               class: "rb-ride-search" do |form| %>
-  <%= form.fields_for :q do |query| %>
-    <div class="rb-ride-search__field input-field">
-      <%= query.collection_select(
-            :location_id, Location.all, :id, :name,
-            include_blank: "Anywhere",
-            selected: search.nil? ?
-              nil : search[:location].nil? ?
-                nil : search[:location].id) %>
-    </div>
+  <div class="rb-ride-search__field input-field">
+    <%= form.collection_select(
+          :location_id, Location.all, :id, :name,
+          include_blank: "Anywhere",
+          selected: search.nil? ?
+            nil : search[:location].nil? ?
+              nil : search[:location].id) %>
+  </div>
 
-    <div class="rb-ride-search__field input-field">
-      <%= query.text_field(
-            :date, placeholder: "Any Date", class: "datepicker",
-            id: "ride-search-date",
-            autocomplete: "off",
-            value: search.nil? ?
-              nil : search[:date].nil? ?
-                nil : search[:date].strftime('%b %e, %Y')) %>
-      <div class="rb-ride-search__clear-input rb-clear-input"
-           onclick="document.getElementById('ride-search-date').value = ''">
-        <i class="material-icons">close</i>
-      </div>
+  <div class="rb-ride-search__field input-field">
+    <%= form.text_field(
+          :date, placeholder: "Any Date", class: "datepicker",
+          id: "ride-search-date",
+          autocomplete: "off",
+          value: search.nil? ?
+            nil : search[:date].nil? ?
+              nil : search[:date].strftime('%b %e, %Y')) %>
+    <div class="rb-ride-search__clear-input rb-clear-input"
+          onclick="document.getElementById('ride-search-date').value = ''">
+      <i class="material-icons">close</i>
     </div>
-  <% end %>
+  </div>
 
-  <%= form.button class: "rb-ride-search__submit btn waves-effect waves-light" do %>
+  <%= form.button name: nil, class: "rb-ride-search__submit btn waves-effect waves-light" do %>
     <i class="material-icons">search</i>
   <% end %>
 <% end %>
