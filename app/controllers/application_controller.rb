@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
   # stored.
   before_action :store_user_location!, if: :storable_location?
 
+  # Hook tracking onto all requests
+  before_action :track_action
+
   def authorize_admin!
     unless current_user.admin?
       render_unauthorized
@@ -13,6 +16,11 @@ class ApplicationController < ActionController::Base
 
   def render_unauthorized
     render file: "public/401.html", status: :unauthorized
+  end
+
+  protected
+  def track_action
+    ahoy.track "Ran action", request.path_parameters
   end
 
   private
