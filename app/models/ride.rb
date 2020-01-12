@@ -55,7 +55,7 @@ class Ride < ApplicationRecord
   end
 
   def self.available_for_passenger(current_user:, search:)
-    upcoming
+    self.search(upcoming, search)
       .where.not(driver: nil)
       .where.not(driver: current_user)
       .includes(:passengers)
@@ -65,7 +65,7 @@ class Ride < ApplicationRecord
   end
 
   def self.driverless(current_user:, search:)
-    upcoming
+    self.search(upcoming, search)
       .where(driver: nil)
       .includes(:passengers)
       .filter {|ride| !ride.passengers.include?(current_user)}

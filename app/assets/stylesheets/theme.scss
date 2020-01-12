@@ -7,16 +7,20 @@ $light-grey: #eee;
 
 // Spacing Mixins
 
+$section-margin: 0.5rem -1rem;
+$section-padding: 1rem;
+$section-border: 1px solid $light-grey;
+
 @mixin section-margin {
-  margin: 0.5rem -1rem;
+  margin: $section-margin;
 }
 
 @mixin section-padding {
-  padding: 1rem;
+  padding: $section-padding;
 }
 
 @mixin section-border {
-  border: 1px solid $light-grey;
+  border: $section-border;
 }
 
 @mixin section {

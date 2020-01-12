@@ -25,12 +25,12 @@ module RideManager
     if params.include? :q
       filtered_params = params[:q].permit(:location_id, :date)
 
-      Parameters.new(
-        location: filtered_params[:location_id] ?
-          Location.find(filtered_params[:location_id]) : nil,
-        date: filtered_params[:date] ?
-          TimeZone.parse(filtered_params[:date]).to_date : nil
-      )
+      {
+        location: filtered_params[:location_id].empty? ?
+          nil : Location.find(filtered_params[:location_id]),
+        date: filtered_params[:date].empty? ?
+          nil : Time.zone.parse(filtered_params[:date]).to_date,
+      }
     else
       nil
     end

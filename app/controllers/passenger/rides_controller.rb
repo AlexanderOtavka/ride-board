@@ -4,13 +4,15 @@ class Passenger::RidesController < Passenger::BaseController
   # GET /rides
   # GET /rides.json
   def index
+    @search = search_params
+    Rails.logger.debug "SEARCH PARAMS #{@search.inspect}"
     @available_rides = Ride.available_for_passenger(
       current_user: current_user,
-      search: search_params,
+      search: @search,
     )
     @other_rides = Ride.driverless(
       current_user: current_user,
-      search: search_params,
+      search: @search,
     )
   end
 

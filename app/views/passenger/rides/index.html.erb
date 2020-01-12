@@ -1,3 +1,5 @@
+<%= render "rides/search", search: @search, url: passenger_rides_path %>
+
 <% unless @available_rides.empty? %>
   <section id="available-rides">
     <h1 class="rb-rides__heading">Rides with Drivers</h1>
