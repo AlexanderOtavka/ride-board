@@ -35,7 +35,7 @@ IFS=$'\n\t'
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 if $HELP ; then
-    echo "$SCRIPT_NAME initializes the imagine-grinnell rails application"
+    echo "$SCRIPT_NAME initializes the ride-board rails application"
     echo "$SCRIPT_NAME [no parameters]"
     echo "  -h or --help         Print this message"
     echo "  -R or --reset-all    Remove all temporary files and clear the database"
