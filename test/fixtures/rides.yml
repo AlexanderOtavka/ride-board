@@ -11,7 +11,7 @@ creator_created:
 
 creator_created_with_open_seats:
   start_location: des_moines
-  start_datetime: <%= 2.days.from_now.to_s(:db) %>
+  start_datetime: <%= 2.days.from_now.change(hour:12).to_s(:db) %>
   end_location: grinnell
   driver: admin
   created_by: creator
@@ -20,16 +20,16 @@ creator_created_with_open_seats:
 
 driver_created:
   start_location: grinnell
-  start_datetime: <%= 3.days.from_now.to_s(:db) %>
+  start_datetime: <%= 2.days.from_now.change(hour:14).to_s(:db) %>
   end_location: walmart
   driver: driver
   created_by: driver
   price: 9.99
 
 driver_created_full:
-  start_location: des_moines
-  start_datetime: <%= 4.days.from_now.to_s(:db) %>
-  end_location: grinnell
+  start_location: grinnell
+  start_datetime: <%= 2.days.from_now.change(hour:16).to_s(:db) %>
+  end_location: des_moines
   driver: driver
   created_by: driver
   seats: 2

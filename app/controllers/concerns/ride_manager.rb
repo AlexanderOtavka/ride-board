@@ -21,6 +21,18 @@ module RideManager
       )
   end
 
+  def search_params
+    params[:location_id] ||= ""
+    params[:date] ||= ""
+
+    {
+      location: params[:location_id].empty? ?
+        nil : Location.find(params[:location_id]),
+      date: params[:date].empty? ?
+        nil : Time.zone.parse(params[:date]).to_date,
+    }
+  end
+
   private
 
     def set_ride

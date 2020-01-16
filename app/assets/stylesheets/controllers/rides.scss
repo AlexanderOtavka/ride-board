@@ -17,6 +17,46 @@
   }
 }
 
+.rb-ride-search {
+  @include section-border();
+  @include section-margin();
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  & > * {
+    margin: $section-padding;
+  }
+
+  &__field {
+    flex: 1 0 auto;
+    position: relative;
+
+    input {
+      margin: 0 !important;
+
+      &::placeholder {
+        color: currentColor;
+      }
+    }
+  }
+
+  &__clear-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    i {
+      font-size: 2rem;
+    }
+  }
+}
+
 .rb-ride-thumbnail {
   color: currentColor;
 
