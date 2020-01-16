@@ -1,6 +1,6 @@
 # app/lib/my_failure_app.rb
 class MyFailureApp < Devise::FailureApp
-  def route(scope)
+  def route(*)
     :new_user_registration_url
   end
 end
