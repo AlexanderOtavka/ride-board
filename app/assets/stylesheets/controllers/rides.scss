@@ -111,14 +111,14 @@
   }
 
   &__name {
+    @include emphasized-text();
+
     display: block;
     margin: 0;
     padding: 0;
   }
 
   &__time {
-    @include deemphasized-text();
-
     display: block;
     margin: 0;
     padding: 0;

@@ -43,6 +43,10 @@ $section-border: 1px solid $light-grey;
   font-size: 1.3em;
 }
 
+@mixin emphasized-text {
+  font-weight: 500;
+}
+
 @mixin deemphasized-text {
   font-weight: 100;
 }
