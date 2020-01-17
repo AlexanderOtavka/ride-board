@@ -7,6 +7,7 @@ Rails.application.configure do
       # api_host: 'api.eu.mailgun.net'  # Uncomment this line for EU region domains
   }
   config.action_mailer.perform_deliveries = true
+  # TODO: set a proper host
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # In the development environment your application's code is reloaded on
