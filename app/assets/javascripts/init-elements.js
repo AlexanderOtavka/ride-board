@@ -86,6 +86,11 @@ document.addEventListener("turbolinks:load", function() {
   })
 });
 
-document.addEventListener("turbolinks:before-visit", function() {
+document.addEventListener("turbolinks:before-render", function() {
   M.Sidenav.getInstance(document.getElementById('mobile-sidenav')).destroy();
+
+  var selectElements = document.querySelectorAll("select")
+  for (var i in selectElements) {
+    M.FormSelect.getInstance(selectElements[i]).destroy()
+  }
 });
