@@ -3,6 +3,7 @@
 SCRIPT_NAME="initialize.sh"
 
 FULL_RESET=false
+INITIALIZE_BLAZER_AND_HYPERSHIELD=false
 HELP=false
 
 # Parse command line args
@@ -20,7 +21,11 @@ do
             HELP=true
             shift # past argument
             ;;
-        *)    # unknown option
+        --analyitics-dash)
+            INITIALIZE_BLAZER_AND_HYPERSHIELD=true
+            shift # past argument
+            ;;
+        *)  # unknown option
             POSITIONAL+=("$1") # save it in an array for later
             shift # past argument
             ;;
@@ -39,6 +44,7 @@ if $HELP ; then
     echo "$SCRIPT_NAME [no parameters]"
     echo "  -h or --help         Print this message"
     echo "  -R or --reset-all    Remove all temporary files and clear the database"
+    echo "  --analyitics-dash    Initialize blazer and hypershield for analytics dashboard"
     exit 0
 fi
 
@@ -48,9 +54,10 @@ if [[ -v RAILS_ON_DOCKER ]] && [[ "$RAILS_ON_DOCKER" == "YES" ]] ; then
     true # Pass for now
 fi
 
-PROJECT_DB_PREFIX="imagine_grinnell"
+PROJECT_DB_PREFIX="ride_board"
 DROP_TEST_DB_COMMAND="DROP DATABASE IF EXISTS ${PROJECT_DB_PREFIX}_test;"
 DROP_DEV_DB_COMMAND="DROP DATABASE IF EXISTS ${PROJECT_DB_PREFIX}_development;"
+
 
 if $FULL_RESET ; then
     echo "==Removing logs and temp files=="
@@ -63,6 +70,29 @@ if $FULL_RESET ; then
          -c "$DROP_DEV_DB_COMMAND"
 fi
 
+if $FULL_RESET || $INITIALIZE_BLAZER_AND_HYPERSHIELD ; then
+    BLAZER_PASSWORD="hello"
+    INITIALIZE_BLAZER_AND_HYPERSHIELD_COMMAND="BEGIN;
+CREATE ROLE blazer LOGIN PASSWORD '${BLAZER_PASSWORD}';
+CREATE SCHEMA hypershield;
+GRANT CONNECT ON DATABASE ${PROJECT_DB_PREFIX}_development TO blazer;
+/*GRANT CONNECT ON DATABASE ${PROJECT_DB_PREFIX}_production  TO blazer;*/
+GRANT USAGE ON SCHEMA hypershield TO blazer;
+ALTER ROLE blazer SET search_path TO hypershield, public;
+COMMIT;"
+    echo
+    echo "==Intializing blazer and hypershield in postgres=="
+    echo
+    psql -h db -U postgres \
+         -c "$INITIALIZE_BLAZER_AND_HYPERSHIELD_COMMAND"
 
-echo "==Setting up database=="
-rake db:setup --trace
+    echo
+    echo "==Initializing hypershield=="
+    echo
+    rake hypershield:refresh
+fi
+
+if ! $INITIALIZE_BLAZER_AND_HYPERSHIELD || $FULL_RESET ; then
+    echo "==Setting up database=="
+    rake db:setup --trace
+fi
