@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 2.7'
 # Aws sdk for SMS
 gem 'aws-sdk', '~> 3'
 
+# Twillio gem for fallback sms
+gem 'twilio-ruby', '~> 5.31.2'
+
 # Dotenv for environment variable management
 gem 'dotenv-rails', '~> 2'
 
