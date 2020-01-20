@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get "/d/:id", to: redirect('/driver/rides/%{id}'), as: :short_driver_ride
   get "/p/:id", to: redirect('/passenger/rides/%{id}'), as: :short_passenger_ride
 
+  mount Blazer::Engine, at: "analytics"
+
   namespace :passenger do
     root to: "rides#index"
 
