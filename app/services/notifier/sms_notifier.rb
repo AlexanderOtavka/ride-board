@@ -1,4 +1,5 @@
 require 'aws-sdk-sns'
+require 'twilio-ruby'
 
 module Notifier
   class SmsNotifier < Base
@@ -7,6 +8,11 @@ module Notifier
       if real_messages
         # Pulls in info from environment automatically
         @sns = Aws::SNS::Client.new#(credentials: )
+        @twillio = Twilio::REST::Client.new(
+          ENV['TWILIO_ACCOUNT_SID'],
+          ENV['TWILIO_AUTH_TOKEN']
+        )
+
       end
 
       @logger = Rails.logger
@@ -43,24 +49,30 @@ module Notifier
 
     def real_message(user, message)
       phone_str = _get_full_phone_number(user)
-      msg = _build_and_log_aws_message(phone_str, message)
-      begin
-        @sns.publish(msg)
-      rescue Aws::SNS::Errors::AuthorizationErrorException
-        raise Errors::AuthError
-      rescue Aws::Errors::MissingCredentialsError
-        raise Errors::AuthError
-      rescue Aws::SNS::Errors::ConcurrentAccessException
-        raise Errors::ExternalServiceError
-      rescue Aws::SNS::Errors::EndpointDisabledException
-        raise Errors::MalformedRequestException
-      rescue Aws::SNS::Errors::InternalErrorException
-        raise Errors::ExternalServiceError
-      rescue Aws::SNS::Errors::NotFoundException
-        raise Errors::MalformedRequestException
-      rescue Aws::SNS::Errors::StaleTagException
-        raise Errors::MalformedRequestException
-      end
+      # Undo _ when we get aws back
+      _msg = _build_and_log_aws_message(phone_str, message)
+      @twillio.messages.create(
+        from: ENV['TWILIO_PHONE_NUMBER'],
+        to: phone_str,
+        body: message
+      )
+      #begin
+      #  @sns.publish(msg)
+      #rescue Aws::SNS::Errors::AuthorizationErrorException
+      #  raise Errors::AuthError
+      #rescue Aws::Errors::MissingCredentialsError
+      #  raise Errors::AuthError
+      #rescue Aws::SNS::Errors::ConcurrentAccessException
+      #  raise Errors::ExternalServiceError
+      #rescue Aws::SNS::Errors::EndpointDisabledException
+      #  raise Errors::MalformedRequestException
+      #rescue Aws::SNS::Errors::InternalErrorException
+      #  raise Errors::ExternalServiceError
+      #rescue Aws::SNS::Errors::NotFoundException
+      #  raise Errors::MalformedRequestException
+      #rescue Aws::SNS::Errors::StaleTagException
+      #  raise Errors::MalformedRequestException
+      #end
     end
 
     def _get_full_phone_number(user)
