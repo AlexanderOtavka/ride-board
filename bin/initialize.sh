@@ -71,12 +71,17 @@ if $FULL_RESET ; then
 fi
 
 if $FULL_RESET || $INITIALIZE_BLAZER_AND_HYPERSHIELD ; then
+    if [ ! -z "$RAILS_ENV" ] && [[ "${RAILS_ENV^^}" == "PRODUCTION" ]] ; then
+        DB_SUFFIX="production"
+    else
+        DB_SUFFIX="development"
+    fi
+
     BLAZER_PASSWORD="hello"
     INITIALIZE_BLAZER_AND_HYPERSHIELD_COMMAND="BEGIN;
 CREATE ROLE blazer LOGIN PASSWORD '${BLAZER_PASSWORD}';
 CREATE SCHEMA hypershield;
-GRANT CONNECT ON DATABASE ${PROJECT_DB_PREFIX}_development TO blazer;
-/*GRANT CONNECT ON DATABASE ${PROJECT_DB_PREFIX}_production  TO blazer;*/
+GRANT CONNECT ON DATABASE ${PROJECT_DB_PREFIX}_${DB_SUFFIX} TO blazer;
 GRANT USAGE ON SCHEMA hypershield TO blazer;
 ALTER ROLE blazer SET search_path TO hypershield, public;
 COMMIT;"
@@ -84,6 +89,7 @@ COMMIT;"
     echo "==Intializing blazer and hypershield in postgres=="
     echo
     psql -h db -U postgres \
+         -d "${PROJECT_DB_PREFIX}_${DB_SUFFIX}" \
          -c "$INITIALIZE_BLAZER_AND_HYPERSHIELD_COMMAND"
 
     echo
