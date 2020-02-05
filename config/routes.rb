@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   root to: "welcome#index"
 
+  as :user do
+    patch '/user/confirmation' => 'users/confirmations#update', :via => :patch, :as => :update_user_confirmation
+  end
+
   devise_for :users, path: 'account', controllers: {
-               registrations: 'users/registrations'
+               registrations: 'users/registrations',
+               confirmations: "users/confirmations",
+               sessions: "users/sessions"
              }
   resources :locations
 

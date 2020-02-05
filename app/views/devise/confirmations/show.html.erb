@@ -1,0 +1,27 @@
+<%= image_tag 'background.jpg', class: 'background-image' %>
+<div class="center-content">
+  <div class="card">
+    <%= form_for resource, :as => resource_name, :url => update_user_confirmation_path, :html => {:method => 'patch'}, :id => 'activation-form' do |f| %>
+      <%= devise_error_messages! %>
+      <div class="card-content">
+        <span class="card-title">Account Activation<% if resource.try(:name) %> for <%= resource.name %><% end %></span>
+        <% if @requires_password %>
+          <div class="field">
+            <%= f.label :password,'Choose a Password:' %>
+            <%= f.password_field :password, autofocus: true %>
+          </div>
+          <div class="field">
+            <%= f.label :password_confirmation,'Password Confirmation:' %>
+            <%= f.password_field :password_confirmation, autofocus: true %>
+          </div>
+        <% end %>
+        <%= hidden_field_tag :confirmation_token,@confirmation_token %>
+      </div>
+
+      <div class="actions card-action">
+        <%= f.button "Activate", class: "btn-large waves-effect waves-light" %>
+      </div>
+
+    <% end %>
+  </div>
+</div>
