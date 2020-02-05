@@ -1,6 +1,6 @@
 // Colors
 
-$primary-color: #F2C94C !default;
+$primary-color: #219653 !default;
 $secondary-color: #219653 !default;
 
 $light-grey: #eee;
@@ -41,6 +41,10 @@ $section-border: 1px solid $light-grey;
 
 @mixin large-text {
   font-size: 1.3em;
+}
+
+@mixin emphasized-text {
+  font-weight: 500;
 }
 
 @mixin deemphasized-text {

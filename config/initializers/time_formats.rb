@@ -1,1 +1,1 @@
-Time::DATE_FORMATS[:short_ampm] = '%b %e, %l:%M%P' # Jan 14 @ 3:05pm
+Time::DATE_FORMATS[:short_ampm] = '%a, %b %e, %l:%M%P' # Tues, Jan 14, 3:05pm
