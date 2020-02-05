@@ -97,7 +97,6 @@ class User < ApplicationRecord
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
-  This conversation was marked as resolved by AlexanderOtavka
 
   def password_required?
     # Password is required if it is being set, but not for new records
