@@ -1,0 +1,72 @@
+<% content_for :head do %>
+  <meta property="og:url"   content="<%= root_url %>" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:title"
+        content="Need a Ride?"/>
+  <meta property="og:description"
+        content="Find drivers or passengers from the Grinnell College community to share a ride with. Whether you need help getting somewhere or have a car already and want to carpool, we've got you covered." />
+
+  <style>
+    .welcome {
+      background-image: url('<%= image_path('background.jpg') %>');
+    }
+  </style>
+<% end %>
+
+<div class="welcome">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">RideBoard.app</a>
+    </div>
+  </nav>
+
+  <div class="row container">
+    <h1 class="white-text">We are shutting down</h1>
+    <p class="white-text">
+      Since coronavirus has changed everything, I am shutting down the app
+      for the time being. Thank you to everyone who rode with us. It's been
+      fun. Follow
+      <a href="https://www.facebook.com/rideboardapp">our Facebook page</a>,
+      we will post updates if we bring the app back online in the future.
+    </p>
+    <p class="white-text">
+      Yours,<br/>
+      Zander
+    </p>
+  </div>
+</div>
+
+<div class="info">
+  <section class="container">
+    <h2>What is this app?</h2>
+    <p>
+      RideBoard.app is a passion project built by and for Grinnell students.
+      Our goal is to make a seamless ride sharing experience that is more
+      reliable and more transparent. The app is still in the early stages with
+      only a few features to start off. We would love to hear your feedback as
+      we iterate and improve the app to make the best experience for everyone.
+    </p>
+    <p>
+      If you have 3 minutes, please fill out our
+      <%= link_to 'form', 'https://docs.google.com/forms/d/e/1FAIpQLScL36vosPM6reoV8grxpYCvAB3ALlnzZJiu9_9sdnrRFfaw_g/viewform?usp=sf_link'%>.
+      Your feedback will help us make a better app!
+    </p>
+  </section>
+  <section class="container">
+    <h2>Meet the Team</h2>
+    <p>
+      We are a small team of Grinnell students dedicated to improving the
+      ride-sharing experience for the whole Grinnell community. If you are
+      interested joining the team or contributing in other ways, email us at
+      <%= link_to 'contribute@rideboard.app', 'mailto:contribute@rideboard.app' %>!
+    </p>
+    <ul>
+      <li>Zander Otavka - Team Lead</li>
+      <li>David Jin - User Experience Designer</li>
+      <li>Patrick Nuckolls - Engineer</li>
+      <li>Yash Gupta - Engineer</li>
+      <li>Tran Le - Engineer</li>
+      <li>Halle Remash - Graphic Designer</li>
+    </ul>
+  </section>
+</div>

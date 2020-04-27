@@ -1,46 +1,49 @@
 Rails.application.routes.draw do
-  root to: "welcome#index"
+  root to: "welcome#shutdown"
+  get "*path", to: redirect("/", status: 307) # temporary redirect
 
-  devise_for :users, path: 'account', controllers: {
-               registrations: 'users/registrations'
-             }
-  resources :locations
+  # root to: "welcome#index"
 
-  get "/s/:ride_id", to: "welcome#share", as: :share_ride
-  get "/d/:id", to: redirect('/driver/rides/%{id}'), as: :short_driver_ride
-  get "/p/:id", to: redirect('/passenger/rides/%{id}'), as: :short_passenger_ride
+  # devise_for :users, path: 'account', controllers: {
+  #              registrations: 'users/registrations'
+  #            }
+  # resources :locations
 
-  namespace :passenger do
-    root to: "rides#index"
+  # get "/s/:ride_id", to: "welcome#share", as: :share_ride
+  # get "/d/:id", to: redirect('/driver/rides/%{id}'), as: :short_driver_ride
+  # get "/p/:id", to: redirect('/passenger/rides/%{id}'), as: :short_passenger_ride
 
-    get "/me", to: "me#show", as: :me
+  # namespace :passenger do
+  #   root to: "rides#index"
 
-    resource :notifications, as: :notify, only: [:show, :update]
+  #   get "/me", to: "me#show", as: :me
 
-    post   "/rides/:id/join", to: "rides#join", as: :join_ride
-    delete "/rides/:id/join", to: "rides#leave"
-    resources :rides do
-      resources :messages, only: [:create]
-      resource :ride_notifications, as: :notify, path: "notifications",
-                                    only: [:show, :update]
-    end
-  end
+  #   resource :notifications, as: :notify, only: [:show, :update]
 
-  namespace :driver do
-    root to: "rides#index"
+  #   post   "/rides/:id/join", to: "rides#join", as: :join_ride
+  #   delete "/rides/:id/join", to: "rides#leave"
+  #   resources :rides do
+  #     resources :messages, only: [:create]
+  #     resource :ride_notifications, as: :notify, path: "notifications",
+  #                                   only: [:show, :update]
+  #   end
+  # end
 
-    get "/me", to: "me#show", as: :me
+  # namespace :driver do
+  #   root to: "rides#index"
 
-    resource :notifications, as: :notify, only: [:show, :update]
+  #   get "/me", to: "me#show", as: :me
 
-    post   "/rides/:id/join", to: "rides#join", as: :join_ride
-    delete "/rides/:id/join", to: "rides#leave"
-    resources :rides do
-      resources :messages, as: :messages, only: [:create]
-      resource :ride_notifications, as: :notify, path: "notifications",
-                                    only: [:show, :update]
-    end
-  end
+  #   resource :notifications, as: :notify, only: [:show, :update]
+
+  #   post   "/rides/:id/join", to: "rides#join", as: :join_ride
+  #   delete "/rides/:id/join", to: "rides#leave"
+  #   resources :rides do
+  #     resources :messages, as: :messages, only: [:create]
+  #     resource :ride_notifications, as: :notify, path: "notifications",
+  #                                   only: [:show, :update]
+  #   end
+  # end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
